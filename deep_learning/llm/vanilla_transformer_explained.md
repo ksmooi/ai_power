@@ -6,6 +6,7 @@
 2. [Overview of the Transformer Model](#overview-of-the-transformer-model)
     - [Architecture](#architecture)
     - [Key Components](#key-components)
+    - [Model Parameters](#model-parameters)
 3. [Class Introductions with Source Code](#class-introductions-with-source-code)
     - [LayerNorm](#layernorm)
     - [PositionwiseFeedForward](#positionwisefeedforward)
@@ -38,6 +39,20 @@
 
 ### Key Components
 - Explanation of key components like self-attention, feed-forward networks, and positional encoding.
+
+### Model Parameters
+Here is a detailed explanation of the model parameters provided in Transformer:
+
+| Parameter      | Description                                                                                         | Example Value | Example Explanation                                                                              |
+|----------------|-----------------------------------------------------------------------------------------------------|---------------|--------------------------------------------------------------------------------------------------|
+| `batch_size`   | The number of samples processed together in one forward and backward pass through the network.      | 128           | If you have 1,280 samples and `batch_size` is 128, you will complete 10 iterations per epoch.   |
+| `max_len`      | The maximum sequence length that the model will handle.                                             | 4096          | Sentences or sequences longer than 4096 tokens will be truncated or padded to this length.        |
+| `d_model`      | The dimension of the input embeddings and the hidden states in the model.                           | 512           | Each word/token is represented by a 512-dimensional vector (so called token embeddings).          |
+| `n_layers`     | The number of layers (or blocks) in the encoder and decoder of the transformer model.               | 6             | The encoder and decoder each have 6 stacked layers.                                              |
+| `n_heads`      | The number of attention heads in the multi-head attention mechanism.                                | 8             | The attention mechanism splits into 8 separate heads to focus on different parts of the sequence.|
+| `ffn_hidden`   | The number of units in the hidden layer of the position-wise feed-forward neural network.           | 2048          | The feed-forward network has a hidden layer with 2048 units.                                     |
+| `drop_prob`    | The dropout probability used in various layers to prevent overfitting by randomly setting neurons to zero during training. | 0.1           | 10% of the neurons are randomly set to zero during each forward pass to prevent overfitting.     |
+
 
 ## Class Introductions with Source Code
 
@@ -94,12 +109,15 @@ class LayerNorm(nn.Module):
 #### LayerNorm Class Explanation
 The LayerNorm (Layer Normalization) class normalizes the input tensor along the last dimension, which is typically the feature dimension in a sequence. This helps in stabilizing the learning process and improves the convergence speed.
 
-In terms of matrix processing:
+<img src="https://production-media.paperswithcode.com/methods/Screen_Shot_2020-05-19_at_4.24.42_PM.png" alt="Layer Normalization Diagram" width="300">
+
+Summary:
 - The input tensor `x` of shape `[batch_size, seq_len, d_model]` is normalized along the `d_model` dimension.
 - The normalization process ensures that for each position in the sequence (for each `[batch_size, seq_len]`), the features (of length `d_model`) have a mean of 0 and a variance of 1.
 - The learnable parameters `gamma` and `beta` then scale and shift these normalized values to allow the model to learn the optimal scaling and shifting for each feature dimension.
 
-This normalization helps stabilize the training process by reducing the internal covariate shift, making the model training more efficient and effective.
+Resources
+- **[Layer Normalization on Papers with Code](https://paperswithcode.com/method/layer-normalization)**
 
 
 ### PositionwiseFeedForward
@@ -145,7 +163,7 @@ class PositionwiseFeedForward(nn.Module):
 #### PositionwiseFeedForward Class Explanation
 The PositionwiseFeedForward class applies a feed-forward neural network to each position of the input sequence independently. This is an essential component of the Transformer model, providing non-linearity and mixing the features after the self-attention mechanism.
 
-- In terms of matrix processing:
+Summary:
 - Input: The input tensor x has shape [batch_size, seq_len, d_model].
 - Linear1: The input is linearly transformed to shape [batch_size, seq_len, hidden].
 - ReLU: The ReLU activation is applied, maintaining the shape [batch_size, seq_len, hidden].
@@ -219,16 +237,16 @@ class ScaleDotProductAttention(nn.Module):
 The ScaleDotProductAttention class performs the scaled dot-product attention mechanism, a fundamental part of the Transformer model. This mechanism calculates the attention weights and applies them to the values to produce the output.
 
 The self-attention mechanism can be mathematically described by the following formula:
-**Scaled Dot-Product Attention**:
-\[ \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V \]
+Scaled Dot-Product Attention:
+![](https://i.sstatic.net/t6qJz.png)
+
 Where:
 - \( Q \) (Query) is a matrix of query vectors.
 - \( K \) (Key) is a matrix of key vectors.
 - \( V \) (Value) is a matrix of value vectors.
 - \( d_k \) is the dimensionality of the key vectors (typically equal to the dimensionality of the queries and values).
-- \( \text{softmax} \) is the softmax function applied along the last axis of the matrix.
 
-In terms of matrix processing:
+Summary:
 - Input: The input tensors q, k, and v have the shape [batch_size, n_head, seq_len, d_tensor].
 - Transpose: The key tensor k is transposed to shape [batch_size, n_head, d_tensor, seq_len].
 - Matrix Multiplication: Calculate the attention scores using the scaled dot-product, resulting in a score tensor of shape [batch_size, n_head, seq_len, - seq_len].
@@ -240,9 +258,118 @@ In terms of matrix processing:
 
 ### MultiHeadAttention
 ```python
-# Include source code of MultiHeadAttention here
+class MultiHeadAttention(nn.Module):
+    def __init__(self, d_model, n_head):
+        """
+        Initializes the MultiHeadAttention module.
+
+        Args:
+            d_model (int): Dimension of token embeddings.
+            n_head (int): Number of attention heads.
+        """
+        super(MultiHeadAttention, self).__init__()
+        self.n_head = n_head
+        self.attention = ScaleDotProductAttention()
+        
+        # Why Do We Need Linear Projections?
+        # Dimensionality Transformation: The linear projections allow the model to transform the input tensor into different subspaces (query, key, and value spaces).
+        # Learnable Parameters: By using linear layers for projections, the model introduces learnable parameters that can adapt during training. 
+        # Handling Multiple Heads: When using multiple heads in multi-head attention, linear projections allow each head to have its own set of parameters for queries, keys, and values. 
+        self.w_q = nn.Linear(d_model, d_model)
+        self.w_k = nn.Linear(d_model, d_model)
+        self.w_v = nn.Linear(d_model, d_model)
+        
+        self.w_concat = nn.Linear(d_model, d_model)
+
+    def forward(self, q, k, v, mask=None):
+        """
+        Forward pass of the MultiHeadAttention module.
+
+        Args:
+            q (torch.Tensor): Query tensor of shape [batch_size, seq_len, d_model].
+            k (torch.Tensor): Key tensor of shape [batch_size, seq_len, d_model].
+            v (torch.Tensor): Value tensor of shape [batch_size, seq_len, d_model].
+            mask (torch.Tensor, optional): Mask tensor of shape [batch_size, 1, seq_len, seq_len].
+
+        Returns:
+            torch.Tensor: Output tensor of shape [batch_size, seq_len, d_model].
+        """
+        # Linear Projections: 
+        # The input tensors q, k, and v are projected into the query, key, and value spaces using linear transformations.
+        q, k, v = self.w_q(q), self.w_k(k), self.w_v(v)  # [batch_size, seq_len, d_model]
+
+        # Split into Multiple Heads: 
+        # The projected tensors are split into n_head heads. Each head has a dimensionality of d_tensor = d_model // n_head.
+        q, k, v = self.split(q), self.split(k), self.split(v)  # [batch_size, n_head, seq_len, d_tensor]
+
+        # Scaled Dot-Product Attention:
+        # The attention method applies scaled dot-product attention to the split tensors.
+        out, attention = self.attention(q, k, v, mask=mask)  # [batch_size, n_head, seq_len, d_tensor]
+
+        # Concatenate Heads:
+        # The outputs of the multiple heads are concatenated back into a single tensor.
+        out = self.concat(out)  # [batch_size, seq_len, d_model]
+
+        # Final Linear Transformation:
+        # The concatenated tensor is passed through a final linear transformation. 
+        out = self.w_concat(out)  # [batch_size, seq_len, d_model]
+
+        return out
+
+    def split(self, tensor):
+        """
+        Splits the input tensor into multiple heads.
+
+        Args:
+            tensor (torch.Tensor): Input tensor of shape [batch_size, seq_len, d_model].
+
+        Returns:
+            torch.Tensor: Tensor split into heads of shape [batch_size, n_head, seq_len, d_tensor].
+        """
+        batch_size, length, d_model = tensor.size()
+
+        # d_tensor is calculated as the integer division of 'dimension of token embeddings' by 'number of attention heads'.
+        d_tensor = d_model // self.n_head
+
+        # The tensor variable is then reshaped using the view method.
+        # This method swaps two dimensions of the tensor with transpose method.
+        tensor = tensor.view(batch_size, length, self.n_head, d_tensor).transpose(1, 2)
+        return tensor
+
+    def concat(self, tensor):
+        """
+        Concatenates the multi-head tensor back into a single tensor.
+
+        Args:
+            tensor (torch.Tensor): Input tensor of shape [batch_size, n_head, seq_len, d_tensor].
+
+        Returns:
+            torch.Tensor: Concatenated tensor of shape [batch_size, seq_len, d_model].
+        """
+        batch_size, head, length, d_tensor = tensor.size()
+
+        # d_model is calculated as the product of 'number of attention heads' and d_tensor
+        d_model = head * d_tensor
+
+        # The transpose method is called on the tensor to swap the second and third dimensions.
+        # The contiguous method is called to ensure that the tensor is stored in a contiguous block of memory.
+        # The view method is used to reshape the tensor to [batch_size, length, d_model] 
+        tensor = tensor.transpose(1, 2).contiguous().view(batch_size, length, d_model)
+        return tensor
 ```
-- Explanation of the MultiHeadAttention class.
+
+#### MultiHeadAttention Class Explanation
+The MultiHeadAttention class implements the multi-head attention mechanism used in the Transformer model. This mechanism allows the model to jointly attend to information from different representation subspaces at different positions.
+
+Summary:
+- Input: Tensors q, k, v with shape [batch_size, seq_len, d_model].
+- Linear Projections: Project to shape [batch_size, seq_len, d_model].
+- Split: Split into n_head heads, shape [batch_size, n_head, seq_len, d_tensor].
+- Attention: Apply scaled dot-product attention, shape [batch_size, n_head, seq_len, d_tensor].
+- Concat: Concatenate heads, shape [batch_size, seq_len, d_model].
+- Linear Transformation: Apply final linear transformation, shape [batch_size, seq_len, d_model].
+- Output: Return tensor of shape [batch_size, seq_len, d_model].
+
 
 ### TokenEmbedding
 ```python
