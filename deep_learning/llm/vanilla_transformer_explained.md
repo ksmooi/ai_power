@@ -1,15 +1,27 @@
 # The Vanilla Transformer Explained: Key Concepts and Source Code
 
 ## Introduction
-- Brief introduction to the importance of Transformer models in NLP.
+
+Transformer models have revolutionized the field of Natural Language Processing (NLP). Their ability to handle sequential data and capture long-range dependencies has made them a cornerstone in the development of state-of-the-art language models like BERT, GPT, and T5. Transformers eschew traditional recurrent neural network (RNN) architectures, enabling more efficient parallelization and improved performance on a wide array of NLP tasks.
 
 ## Overview of the Transformer Model
-
 ### Architecture
-- Description of the overall architecture of the Transformer model.
+The Transformer model, introduced by Vaswani et al. in 2017, features an encoder-decoder architecture. Unlike RNNs, Transformers rely entirely on self-attention mechanisms to draw global dependencies between input and output. This architecture consists of stacked layers of encoders and decoders, each containing multi-head self-attention mechanisms and position-wise fully connected feed-forward networks.
 
 ### Key Components
-- Explanation of key components like self-attention, feed-forward networks, and positional encoding.
+#### Self-Attention Mechanism
+Self-attention allows the model to weigh the importance of different words in a sentence when encoding a particular word. This mechanism computes a set of attention scores for each word pair in the input sequence, enabling the model to focus on relevant words when generating representations.
+
+#### Multi-Head Attention
+Multi-head attention extends the self-attention mechanism by employing multiple attention heads. Each head operates independently and the results are concatenated and linearly transformed. This allows the model to capture different aspects of the relationships between words.
+
+#### Positional Encoding
+Since Transformers do not inherently process input sequences in order, positional encoding is used to inject sequence order information. These encodings are added to the input embeddings and enable the model to recognize the position of each word within the sequence.
+
+#### Feed-Forward Networks
+Each encoder and decoder layer contains a position-wise feed-forward network that consists of two linear transformations with a ReLU activation in between. This network processes each position independently, contributing to the transformation of input embeddings into higher-level representations.
+
+Transformers' architecture and these key components work together to handle complex language tasks efficiently and effectively, making them a fundamental tool in modern NLP.
 
 ### Model Parameters
 Here is a detailed explanation of the model parameters provided in Transformer:
@@ -25,11 +37,10 @@ Here is a detailed explanation of the model parameters provided in Transformer:
 | `drop_prob`    | The dropout probability used in various layers to prevent overfitting by randomly setting neurons to zero during training. | 0.1           | 10% of the neurons are randomly set to zero during each forward pass to prevent overfitting.     |
 
 
-## Class Introductions with Source Code
+## Implementation of Transformer Model
 
 ### LayerNorm
 The LayerNorm (Layer Normalization) class normalizes the input tensor along the last dimension, which is typically the feature dimension in a sequence. This helps in stabilizing the learning process and improves the convergence speed.
-
 
 <img src="https://production-media.paperswithcode.com/methods/Screen_Shot_2020-05-19_at_4.24.42_PM.png" alt="Layer Normalization Diagram" width="400">
 <img src="res/layer_norm.jpg" alt="Layer Normalization Diagram" width="300">
@@ -82,7 +93,7 @@ class LayerNorm(nn.Module):
         # The final output tensor has shape [batch_size, seq_len, d_model].
         return out
 ```
-#### Summary:
+Summary:
 - The input tensor `x` of shape `[batch_size, seq_len, d_model]` is normalized along the `d_model` dimension.
 - The normalization process ensures that for each position in the sequence (for each `[batch_size, seq_len]`), the features (of length `d_model`) have a mean of 0 and a variance of 1.
 - The learnable parameters `gamma` and `beta` then scale and shift these normalized values to allow the model to learn the optimal scaling and shifting for each feature dimension.
@@ -134,7 +145,7 @@ class PositionwiseFeedForward(nn.Module):
         return x
 ```
 
-#### Summary:
+Summary:
 - Input: The input tensor x has shape [batch_size, seq_len, d_model].
 - Linear1: The input is linearly transformed to shape [batch_size, seq_len, hidden].
 - ReLU: The ReLU activation is applied, maintaining the shape [batch_size, seq_len, hidden].
@@ -216,7 +227,7 @@ class ScaleDotProductAttention(nn.Module):
         return v, score
 ```
 
-#### Summary:
+Summary:
 - Input: The input tensors q, k, and v have the shape [batch_size, n_head, seq_len, d_tensor].
 - Transpose: The key tensor k is transposed to shape [batch_size, n_head, d_tensor, seq_len].
 - Matrix Multiplication: Calculate the attention scores using the scaled dot-product, resulting in a score tensor of shape [batch_size, n_head, seq_len, - seq_len].
@@ -332,7 +343,7 @@ class MultiHeadAttention(nn.Module):
         return tensor
 ```
 
-#### Summary:
+Summary:
 - Input: Tensors q, k, v with shape [batch_size, seq_len, d_model].
 - Linear Projections: Project to shape [batch_size, seq_len, d_model].
 - Split: Split into n_head heads, shape [batch_size, n_head, seq_len, d_tensor].
@@ -391,7 +402,7 @@ Example:
         - The second dimension is the sequence length (3).
         - The third dimension is the embedding size (512).
 
-#### Summary:
+Summary:<br/>
 The `TokenEmbedding` class transforms token indices into dense vectors (embeddings) using an embedding matrix. The embedding matrix is learned during training, allowing the model to capture semantic information about the tokens. The process involves looking up each token index in the embedding matrix and returning the corresponding embedding vector. This is essential for converting discrete tokens into continuous representations that can be processed by neural networks.
 
 
@@ -499,7 +510,7 @@ class TransformerEmbedding(nn.Module):
         # This combined representation is then returned as the output of this code block.
         return self.drop_out(tok_emb + pos_emb)
 ```
-#### Summary:
+Summary:
 1. Token Embeddings:
     - The input tensor `x` of shape `(batch_size, seq_len)` contains token indices.
     - These indices are converted into dense vectors by the `TokenEmbedding` layer, resulting in a tensor of shape `(batch_size, seq_len, d_model)`.
@@ -568,56 +579,660 @@ class EncoderLayer(nn.Module):
         x = self.norm2(x + _x)  # [batch_size, seq_len, d_model]
         return x
 ```
-#### Summary:
+Summary: <br/>
 By processing the input tensor through these steps, the EncoderLayer effectively captures both local and global dependencies within the sequence, stabilizes training with normalization, and prevents overfitting with dropout. This process is repeated for each layer in the encoder stack, allowing the model to build increasingly complex representations of the input data.
 
+
 ### Encoder
+The Encoder class is part of the transformer architecture. It consists of multiple layers, each containing a multi-head self-attention mechanism and a feed-forward network. This class handles the embedding of input tokens, applies positional encodings, and processes the input through several encoder layers.
+
 ```python
-# Include source code of Encoder here
+class Encoder(nn.Module):
+    def __init__(self, enc_voc_size, max_len, d_model, ffn_hidden, n_head, n_layers, drop_prob, device):
+        """
+        Initializes the Encoder module.
+
+        Args:
+            enc_voc_size (int): Size of the encoder's vocabulary.
+            max_len (int): Maximum length of the input sequences.
+            d_model (int): Dimensionality of the model's hidden states.
+            ffn_hidden (int): Number of hidden units in the feed-forward network.
+            n_head (int): Number of attention heads.
+            n_layers (int): Number of encoder layers.
+            drop_prob (float): Dropout probability.
+            device (torch.device): Device to run the model on (CPU or GPU).
+        """
+        super().__init__()
+
+        # Initialize the embedding layer which combines token embeddings and positional encodings
+        self.emb = TransformerEmbedding(d_model=d_model,
+                                        max_len=max_len,
+                                        vocab_size=enc_voc_size,
+                                        drop_prob=drop_prob,
+                                        device=device)
+        
+        # Initialize a stack of encoder layers
+        self.layers = nn.ModuleList([EncoderLayer(d_model=d_model,
+                                                  ffn_hidden=ffn_hidden,
+                                                  n_head=n_head,
+                                                  drop_prob=drop_prob)
+                                     for _ in range(n_layers)])
+
+    def forward(self, x, src_mask):
+        """
+        Forward pass of the Encoder module.
+
+        Args:
+            x (torch.Tensor): Input tensor of shape [batch_size, seq_len].
+            src_mask (torch.Tensor): Source mask tensor of shape [batch_size, 1, 1, src_seq_len].
+
+        Returns:
+            torch.Tensor: Encoded tensor of shape [batch_size, seq_len, d_model].
+        """
+        # Apply token embedding and positional encoding
+        x = self.emb(x)  # [batch_size, seq_len, d_model]
+        
+        # Pass the input through each encoder layer
+        for layer in self.layers:
+            x = layer(x, src_mask)  # [batch_size, seq_len, d_model]
+        
+        return x
 ```
-- Explanation of the Encoder class.
+Summary:
+1. Token Embedding and Positional Encoding:
+    - The input tensor of token indices is transformed into a dense representation by the `TransformerEmbedding` layer.
+    - This layer combines token embeddings and positional encodings, resulting in a tensor of shape `[batch_size, seq_len, d_model]`.
+2. Encoder Layers:
+    - Each `EncoderLayer` applies the following operations:
+        - Multi-Head Attention:
+            - Computes attention scores, applies the source mask, and generates context vectors.
+            - Output Shape: `[batch_size, seq_len, d_model]`
+        - Add & Normalize:
+            - Applies residual connections and layer normalization.
+            - Output Shape: `[batch_size, seq_len, d_model]`
+        - Feed-Forward Network:
+            - Applies two linear transformations with a ReLU activation in between.
+            - Output Shape: `[batch_size, seq_len, d_model]`
+        - Add & Normalize:
+            - Applies residual connections and layer normalization.
+            - Output Shape: `[batch_size, seq_len, d_model]`
+
+By passing the input tensor through these steps, the `Encoder` class builds a complex representation of the input sequence, capturing both local and global dependencies within the data. The final output tensor can then be used as input to the decoder or for other downstream tasks.
+
 
 ### DecoderLayer
+The `DecoderLayer` class is part of the transformer architecture and represents a single layer in the decoder. Each decoder layer consists of three main components:
+
+1. **Self-Attention Mechanism**: Attends to the previous positions in the target sequence.
+2. **Encoder-Decoder Attention Mechanism**: Attends to the encoder's output.
+3. **Feed-Forward Network**: Applies non-linearity and projection.
+
+Layer normalization and dropout are applied at various points to ensure stability and prevent overfitting.
+
 ```python
-# Include source code of DecoderLayer here
+class DecoderLayer(nn.Module):
+    def __init__(self, d_model, ffn_hidden, n_head, drop_prob):
+        """
+        Initializes the DecoderLayer module.
+
+        Args:
+            d_model (int): Dimensionality of the model's hidden states.
+            ffn_hidden (int): Number of hidden units in the feed-forward network.
+            n_head (int): Number of attention heads.
+            drop_prob (float): Dropout probability.
+        """
+        super(DecoderLayer, self).__init__()
+
+        self.self_attention = MultiHeadAttention(d_model=d_model, n_head=n_head)    # Self-attention mechanism
+        self.norm1 = LayerNorm(d_model=d_model)     # Layer normalization after self-attention
+        self.dropout1 = nn.Dropout(p=drop_prob)     # Dropout after self-attention
+        self.enc_dec_attention = MultiHeadAttention(d_model=d_model, n_head=n_head) # Encoder-decoder attention mechanism
+        self.norm2 = LayerNorm(d_model=d_model)     # Layer normalization after encoder-decoder attention
+        self.dropout2 = nn.Dropout(p=drop_prob)     # Dropout after encoder-decoder attention
+        self.ffn = PositionwiseFeedForward(d_model=d_model, hidden=ffn_hidden, drop_prob=drop_prob) # Position-wise feed-forward network
+        self.norm3 = LayerNorm(d_model=d_model)     # Layer normalization after feed-forward network
+        self.dropout3 = nn.Dropout(p=drop_prob)     # Dropout after feed-forward network
+
+    def forward(self, dec, enc, trg_mask, src_mask):
+        """
+        Forward pass of the DecoderLayer module.
+
+        Args:
+            dec (torch.Tensor): Decoder input tensor of shape [batch_size, trg_seq_len, d_model].
+            enc (torch.Tensor): Encoded source tensor of shape [batch_size, src_seq_len, d_model].
+            trg_mask (torch.Tensor): Target mask tensor of shape [batch_size, 1, trg_seq_len, trg_seq_len].
+            src_mask (torch.Tensor): Source mask tensor of shape [batch_size, 1, 1, src_seq_len].
+
+        Returns:
+            torch.Tensor: Output tensor of shape [batch_size, trg_seq_len, d_model].
+        """
+        # 1. Self-attention with masking to prevent attending to future tokens
+        _x = dec
+
+        # Applies multi-head self-attention to the decoder input.
+        # Prevents attending to future tokens in the target sequence using `trg_mask`.
+        x = self.self_attention(q=dec, k=dec, v=dec, mask=trg_mask)  # [batch_size, trg_seq_len, d_model]
+        
+        # Applies dropout to the self-attention output.
+        # Adds the original input tensor `_x` (residual connection) and applies layer normalization. 
+        # The output tensor `x` retains the shape `[batch_size, trg_seq_len, d_model]`.
+        x = self.dropout1(x)    # [batch_size, trg_seq_len, d_model]
+        x = self.norm1(x + _x)  # [batch_size, trg_seq_len, d_model]
+        
+        # 2.Dropout after feed-forward network
+        if enc is not None:
+            _x = x
+            # Applies multi-head attention to the combined encoder and decoder outputs.
+            # Uses the encoder's output `enc` as the key and value, and the decoder's self-attention output `x` as the query.
+            # Applies `src_mask` to prevent attending to padding tokens in the source sequence.
+            x = self.enc_dec_attention(q=x, k=enc, v=enc, mask=src_mask)  # [batch_size, trg_seq_len, d_model]
+            x = self.dropout2(x)    # [batch_size, trg_seq_len, d_model]
+            x = self.norm2(x + _x)  # [batch_size, trg_seq_len, d_model]
+        
+        # 3. Feed-forward network
+        _x = x
+
+        # Consists of two linear transformations with a ReLU activation in between.
+        # The output tensor `x` retains the shape `[batch_size, trg_seq_len, d_model]`.
+        x = self.ffn(x)  # [batch_size, trg_seq_len, d_model]
+
+        # Applies dropout to the feed-forward network output.
+        # Adds the previous input tensor `_x` (residual connection) and applies layer normalization. 
+        # The final output tensor `x` has the shape `[batch_size, trg_seq_len, d_model]`.
+        x = self.dropout3(x)    # [batch_size, trg_seq_len, d_model]
+        x = self.norm3(x + _x)  # [batch_size, trg_seq_len, d_model]
+        return x
 ```
-- Explanation of the DecoderLayer class.
+Summary:<br/>
+By processing the input tensor through these steps, the `DecoderLayer` effectively attends to both the target sequence and the encoded source sequence, allowing the model to generate predictions that are informed by both the context of the target and the information in the source. This process is repeated for each layer in the decoder stack, enabling the model to build increasingly complex representations of the target sequence conditioned on the source sequence.
+
 
 ### Decoder
+The Decoder class is part of the transformer architecture and represents the entire decoder component of the model. It consists of multiple layers, each containing self-attention, encoder-decoder attention, and a feed-forward network. This class handles the embedding of target tokens, processes them through several decoder layers, and finally projects the output to the vocabulary size.
+
 ```python
-# Include source code of Decoder here
+class Decoder(nn.Module):
+    def __init__(self, dec_voc_size, max_len, d_model, ffn_hidden, n_head, n_layers, drop_prob, device):
+        """
+        Initializes the Decoder module.
+
+        Args:
+            dec_voc_size (int): Size of the decoder's vocabulary.
+            max_len (int): Maximum length of the input sequences.
+            d_model (int): Dimensionality of the model's hidden states.
+            ffn_hidden (int): Number of hidden units in the feed-forward network.
+            n_head (int): Number of attention heads.
+            n_layers (int): Number of decoder layers.
+            drop_prob (float): Dropout probability.
+            device (torch.device): Device to run the model on (CPU or GPU).
+        """
+        super().__init__()
+        
+        # Initialize the embedding layer which combines token embeddings and positional encodings
+        self.emb = TransformerEmbedding(d_model=d_model,
+                                        drop_prob=drop_prob,
+                                        max_len=max_len,
+                                        vocab_size=dec_voc_size,
+                                        device=device)
+        
+        # Initialize a stack of decoder layers
+        self.layers = nn.ModuleList([DecoderLayer(d_model=d_model,
+                                                  ffn_hidden=ffn_hidden,
+                                                  n_head=n_head,
+                                                  drop_prob=drop_prob)
+                                     for _ in range(n_layers)])
+        
+        # Linear layer to project the output to the size of the vocabulary
+        self.linear = nn.Linear(d_model, dec_voc_size)
+
+    def forward(self, trg, enc_src, trg_mask, src_mask):
+        """
+        Forward pass of the Decoder module.
+
+        Args:
+            trg (torch.Tensor): Target input sequences (decoder input), shape [batch_size, trg_seq_len].
+            enc_src (torch.Tensor): Encoded source sequences (encoder output), shape [batch_size, src_seq_len, d_model].
+            trg_mask (torch.Tensor): Target mask for self-attention, shape [batch_size, 1, trg_seq_len, trg_seq_len].
+            src_mask (torch.Tensor): Source mask for encoder-decoder attention, shape [batch_size, 1, 1, src_seq_len].
+
+        Returns:
+            torch.Tensor: Output logits for each token in the target vocabulary, shape [batch_size, trg_seq_len, dec_voc_size].
+        """
+        # Apply token embedding and positional encoding
+        trg = self.emb(trg)  # [batch_size, trg_seq_len, d_model]
+        
+        # Pass the input through each decoder layer
+        for layer in self.layers:
+            trg = layer(trg, enc_src, trg_mask, src_mask)  # [batch_size, trg_seq_len, d_model]
+        
+        # Apply the final linear layer to project to the vocabulary size
+        output = self.linear(trg)  # [batch_size, trg_seq_len, dec_voc_size]
+        return output
 ```
-- Explanation of the Decoder class.
+Summary:
+1. Token Embedding and Positional Encoding:
+    - The target token indices are transformed into a dense representation by the `TransformerEmbedding` layer.
+    - This layer combines token embeddings and positional encodings, resulting in a tensor of shape `[batch_size, trg_seq_len, d_model]`.
+2. Decoder Layers:
+    - Each `DecoderLayer` applies the following operations:
+        - Self-Attention:
+            - Computes attention scores within the target sequence.
+            - Prevents attending to future positions using the target mask `trg_mask`.
+            - Output Shape: `[batch_size, trg_seq_len, d_model]`
+        - Encoder-Decoder Attention:
+            - Computes attention scores using the encoder's output as key and value, and the decoder's self-attention output as query.
+            - Applies the source mask `src_mask` to prevent attending to padding tokens.
+            - Output Shape: `[batch_size, trg_seq_len, d_model]`
+        - Feed-Forward Network:
+            - Applies two linear transformations with a ReLU activation in between.
+            - Output Shape: `[batch_size, trg_seq_len, d_model]`
+        - Dropout and Residual Connections:
+            - Adds residual connections and applies dropout and layer normalization at each step.
+3. Final Linear Projection:
+    - The final decoder output tensor is projected to the size of the vocabulary using a linear layer.
+    - This produces the logits for each token in the target vocabulary.
+    - Final Output Shape: `[batch_size, trg_seq_len, dec_voc_size]`
+
+By processing the target tensor through these steps, the `Decoder` class generates predictions for each position in the target sequence, conditioned on both the previous positions in the target sequence and the encoded source sequence. This process allows the model to generate sequences in a sequential manner, effectively leveraging the context provided by the source sequence.
+
 
 ### Transformer
+The Transformer class is the core of the transformer architecture, combining both the encoder and decoder components. It handles input masking, processes the input sequences through the encoder and decoder, and outputs logits for each token in the target vocabulary.
+
+<img src="res/transformer_model_arch.jpg" alt="Layer Normalization Diagram" width="300">
+
 ```python
-# Include source code of Transformer here
+class Transformer(nn.Module):
+    def __init__(self, src_pad_idx, trg_pad_idx, trg_sos_idx, enc_voc_size, dec_voc_size, d_model, n_head, max_len,
+                 ffn_hidden, n_layers, drop_prob, device):
+        """
+        Initializes the Transformer module.
+
+        Args:
+            src_pad_idx (int): Padding index for source sequences.
+            trg_pad_idx (int): Padding index for target sequences.
+            trg_sos_idx (int): Start-of-sequence index for target sequences.
+            enc_voc_size (int): Size of the encoder's vocabulary.
+            dec_voc_size (int): Size of the decoder's vocabulary.
+            d_model (int): Dimensionality of the model's hidden states.
+            n_head (int): Number of attention heads.
+            max_len (int): Maximum length of the input sequences.
+            ffn_hidden (int): Number of hidden units in the feed-forward network.
+            n_layers (int): Number of encoder and decoder layers.
+            drop_prob (float): Dropout probability.
+            device (torch.device): Device to run the model on (CPU or GPU).
+        """
+        super().__init__()
+        self.src_pad_idx = src_pad_idx
+        self.trg_pad_idx = trg_pad_idx
+        self.trg_sos_idx = trg_sos_idx
+        self.device = device
+        self.encoder = Encoder(d_model=d_model,
+                               n_head=n_head,
+                               max_len=max_len,
+                               ffn_hidden=ffn_hidden,
+                               enc_voc_size=enc_voc_size,
+                               drop_prob=drop_prob,
+                               n_layers=n_layers,
+                               device=device)
+        self.decoder = Decoder(d_model=d_model,
+                               n_head=n_head,
+                               max_len=max_len,
+                               ffn_hidden=ffn_hidden,
+                               dec_voc_size=dec_voc_size,
+                               drop_prob=drop_prob,
+                               n_layers=n_layers,
+                               device=device)
+
+    def forward(self, src, trg):
+        """
+        Forward pass of the Transformer module.
+
+        Args:
+            src (torch.Tensor): Source input sequences, shape [batch_size, src_seq_len].
+            trg (torch.Tensor): Target input sequences, shape [batch_size, trg_seq_len].
+
+        Returns:
+            torch.Tensor: Output logits for each token in the target vocabulary, shape [batch_size, trg_seq_len, dec_voc_size].
+        """
+        src_mask = self.make_src_mask(src)  # [batch_size, 1, 1, src_seq_len]
+        trg_mask = self.make_trg_mask(trg)  # [batch_size, 1, trg_seq_len, trg_seq_len]
+        enc_src = self.encoder(src, src_mask)  # [batch_size, src_seq_len, d_model]
+        output = self.decoder(trg, enc_src, trg_mask, src_mask)  # [batch_size, trg_seq_len, dec_voc_size]
+        return output
+
+    def make_src_mask(self, src):
+        """
+        Creates a source mask to hide padding tokens.
+
+        Args:
+            src (torch.Tensor): Source input sequences, shape [batch_size, src_seq_len].
+
+        Returns:
+            torch.Tensor: Source mask tensor, shape [batch_size, 1, 1, src_seq_len].
+        """
+        # The expression src != self.src_pad_idx is creating a boolean mask that indicates where the tokens in the input 
+        # are not equal to self.src_pad_idx. 
+        # This src_pad_idx is likely the special token ID used for padding. 
+        # Padding is used in batch processing to make all sequences in a batch the same length by adding special padding tokens 
+        # to the end of the shorter sequences.
+
+        # The unsqueeze(1).unsqueeze(2) part is calling the unsqueeze method twice to add two extra dimensions to the mask. 
+        #   [batch_size, src_seq_len] => [batch_size, 1, 1, src_seq_len]
+        # The unsqueeze method in PyTorch is used to add an extra dimension to a tensor at the specified position. 
+        # This is often done to match the shape requirements of subsequent operations.
+        src_mask = (src != self.src_pad_idx).unsqueeze(1).unsqueeze(2)
+        return src_mask
+
+    def make_trg_mask(self, trg):
+        """
+        Creates a target mask to hide padding tokens and future tokens.
+
+        Args:
+            trg (torch.Tensor): Target input sequences, shape [batch_size, trg_seq_len].
+
+        Returns:
+            torch.Tensor: Target mask tensor, shape [batch_size, 1, trg_seq_len, trg_seq_len].
+        """
+        # The unsqueeze(1).unsqueeze(3) part is calling the unsqueeze method twice to add two extra dimensions to the mask. 
+        #   [batch_size, trg_seq_len] => [batch_size, 1, trg_seq_len, 1]
+        # The unsqueeze method in PyTorch is used to add an extra dimension to a tensor at the specified position.
+        trg_pad_mask = (trg != self.trg_pad_idx).unsqueeze(1).unsqueeze(3)  # [batch_size, 1, trg_seq_len, 1]
+        trg_len = trg.shape[1]
+
+        # The trg_sub_mask is a lower triangular matrix of ones, created using the torch.tril function. 
+        # This mask is used in the decoder to ensure that the predictions for each token only depend on the earlier tokens in the sequence. 
+        # This is necessary because during training, the entire output sequence is passed into the decoder at once, 
+        # but during inference, the output sequence is generated one token at a time.
+        trg_sub_mask = torch.tril(torch.ones(trg_len, trg_len)).type(torch.ByteTensor).to(self.device) # [trg_seq_len, trg_seq_len]
+
+        # Finally, the trg_mask is the logical AND of the trg_pad_mask and the trg_sub_mask. 
+        # This mask is used in the attention mechanism in the decoder to prevent the model from attending to the 
+        # padding tokens and the future tokens.
+        trg_mask = trg_pad_mask & trg_sub_mask  # [batch_size, 1, trg_seq_len, trg_seq_len]
+        return trg_mask
 ```
-- Explanation of the Transformer class.
+Summary:
+1. Source Mask (`make_src_mask`):
+    - The source mask is created by comparing the source tensor `src` with the padding index `src_pad_idx`.
+    - The resulting mask has the shape `[batch_size, 1, 1, src_seq_len]`, where padding tokens are masked out.
+2. Target Mask (`make_trg_mask`):
+    - The target mask is created by comparing the target tensor `trg` with the padding index `trg_pad_idx`.
+    - An additional lower triangular mask (`trg_sub_mask`) is created to prevent attending to future tokens.
+    - The combined target mask has the shape `[batch_size, 1, trg_seq_len, trg_seq_len]`.
+3. Encoding:
+    - The source tensor `src` is passed through the encoder along with the source mask `src_mask`.
+    - The encoder processes the input sequences through its embedding, positional encoding, and multiple encoder layers.
+    - The encoder output `enc_src` has the shape `[batch_size, src_seq_len, d_model]`.
+4. Decoding:
+    - The target tensor `trg` is passed through the decoder along with the encoder output `enc_src`, target mask `trg_mask`, and source mask `src_mask`.
+    - The decoder processes the input sequences through its embedding, positional encoding, and multiple decoder layers.
+    - The final decoder output is projected to the size of the vocabulary using a linear layer.
+    - The output tensor has the shape `[batch_size, trg_seq_len, dec_voc_size]`.
+
+By processing the source and target tensors through these steps, the `Transformer` class enables sequence-to-sequence modeling, where the model learns to generate target sequences conditioned on the input source sequences. The use of masking ensures that the model attends to the appropriate tokens and prevents information leakage from future tokens in the target sequence.
+
 
 ## Calling Sequence Explanation
 
-### Forward Pass Overview
-- Overview of how the forward pass works in the Transformer model.
+### Constructing the Transformer
+This tree view introduces the calling sequence for the Transformer.__init__() method, outlining the hierarchical structure and detailed steps of how each component and sub-component is set up during the initialization process.
 
-### Detailed Calling Sequence
-- Detailed explanation of the calling sequence of each method during the forward pass.
+```
+Transformer.__init__()
+│
+├── Encoder.__init__(d_model=d_model, n_head=n_head, max_len=max_len,...)
+│   ├── TransformerEmbedding.__init__(d_model=d_model, drop_prob=drop_prob,...)
+│   │   ├── TokenEmbedding.__init__(vocab_size=enc_voc_size, d_model=d_model)
+│   │   └── PositionalEncoding.__init__(d_model=d_model, max_len=max_len, device=device)
+│   │
+│   └── EncoderLayer.__init__(d_model=d_model, ffn_hidden=ffn_hidden,...)
+│       ├── MultiHeadAttention.__init__(d_model=d_model, n_head=n_head)
+│       │   └── ScaleDotProductAttention.__init__()
+│       │
+│       ├── LayerNorm.__init__(d_model=d_model)
+│       ├── PositionwiseFeedForward.__init__(d_model=d_model, hidden=ffn_hidden, drop_prob=drop_prob)
+│       ├── LayerNorm.__init__(d_model=d_model)
+│       └── Dropout.__init__(p=drop_prob)
+│
+└── Decoder.__init__(d_model=d_model, n_head=n_head, max_len=max_len,...)
+    ├── TransformerEmbedding.__init__(d_model=d_model, drop_prob=drop_prob,...)
+    │   ├── TokenEmbedding.__init__(vocab_size=dec_voc_size, d_model=d_model)
+    │   └── PositionalEncoding.__init__(d_model=d_model, max_len=max_len, device=device)
+    │
+    └── DecoderLayer.__init__(d_model=d_model, ffn_hidden=ffn_hidden,...)
+        ├── MultiHeadAttention.__init__(d_model=d_model, n_head=n_head)
+        │   └── ScaleDotProductAttention.__init__()
+        │
+        ├── LayerNorm.__init__(d_model=d_model)
+        ├── MultiHeadAttention.__init__(d_model=d_model, n_head=n_head)
+        │   └── ScaleDotProductAttention.__init__()
+        │
+        ├── LayerNorm.__init__(d_model=d_model)
+        ├── PositionwiseFeedForward.__init__(d_model=d_model, hidden=ffn_hidden, drop_prob=drop_prob)
+        ├── LayerNorm.__init__(d_model=d_model)
+        └── Dropout.__init__(p=drop_prob)
+```
 
-## Model Parameters Explanation
+### Forward Pass
+This tree view introduces the calling sequence for the Transformer.forward() method, outlining the hierarchical structure and detailed steps of how each component and sub-component is processed during the forward pass.
 
-### Explanation of Model Parameters
-- Detailed explanation of each parameter in the Transformer model, such as `d_model`, `n_head`, `ffn_hidden`, etc.
+```
+Transformer.forward(src, trg)
+│
+├── make_src_mask(src)
+│   ├── (src != self.src_pad_idx)
+│   ├── .unsqueeze(1)
+│   └── .unsqueeze(2)
+│
+├── make_trg_mask(trg)
+│   ├── (trg != self.trg_pad_idx)
+│   ├── .unsqueeze(1)
+│   ├── .unsqueeze(3)
+│   ├── trg.shape[1]
+│   ├── torch.tril(torch.ones(trg_len, trg_len)).type(torch.ByteTensor).to(self.device)
+│   └── trg_pad_mask & trg_sub_mask
+│
+├── Encoder.forward(src, src_mask)
+│   ├── TransformerEmbedding.forward(src)
+│   │   ├── TokenEmbedding.forward(src)
+│   │   ├── PositionalEncoding.forward(src)
+│   │   └── Dropout.forward(tok_emb + pos_emb)
+│   │
+│   ├── EncoderLayer.forward(x, src_mask) (n_layers times)
+│   │   ├── MultiHeadAttention.forward(q=x, k=x, v=x, mask=src_mask)
+│   │   │   ├── Linear(w_q).forward(q)
+│   │   │   ├── Linear(w_k).forward(k)
+│   │   │   ├── Linear(w_v).forward(v)
+│   │   │   ├── MultiHeadAttention.split(tensor)
+│   │   │   ├── ScaleDotProductAttention.forward(q, k, v, mask)
+│   │   │   ├── MultiHeadAttention.concat(tensor)
+│   │   │   └── Linear(w_concat).forward(out)
+│   │   │
+│   │   ├── Dropout.forward(x)
+│   │   ├── LayerNorm.forward(x + _x)
+│   │   ├── PositionwiseFeedForward.forward(x)
+│   │   │   ├── Linear(linear1).forward(x)
+│   │   │   ├── ReLU.forward(x)
+│   │   │   ├── Dropout.forward(x)
+│   │   │   └── Linear(linear2).forward(x)
+│   │   │
+│   │   ├── Dropout.forward(x)
+│   │   └── LayerNorm.forward(x + _x)
+│   │
+│   └── return x
+│
+├── Decoder.forward(trg, enc_src, trg_mask, src_mask)
+│   ├── TransformerEmbedding.forward(trg)
+│   │   ├── TokenEmbedding.forward(trg)
+│   │   ├── PositionalEncoding.forward(trg)
+│   │   └── Dropout.forward(tok_emb + pos_emb)
+│   │
+│   ├── DecoderLayer.forward(trg, enc_src, trg_mask, src_mask) (n_layers times)
+│   │   ├── MultiHeadAttention.forward(q=trg, k=trg, v=trg, mask=trg_mask) (self-attention)
+│   │   │   ├── Linear(w_q).forward(q)
+│   │   │   ├── Linear(w_k).forward(k)
+│   │   │   ├── Linear(w_v).forward(v)
+│   │   │   ├── MultiHeadAttention.split(tensor)
+│   │   │   ├── ScaleDotProductAttention.forward(q, k, v, mask)
+│   │   │   ├── MultiHeadAttention.concat(tensor)
+│   │   │   └── Linear(w_concat).forward(out)
+│   │   │
+│   │   ├── Dropout.forward(x)
+│   │   ├── LayerNorm.forward(x + _x)
+│   │   ├── MultiHeadAttention.forward(q=x, k=enc_src, v=enc_src, mask=src_mask) (encoder-decoder attention)
+│   │   │   ├── Linear(w_q).forward(q)
+│   │   │   ├── Linear(w_k).forward(k)
+│   │   │   ├── Linear(w_v).forward(v)
+│   │   │   ├── MultiHeadAttention.split(tensor)
+│   │   │   ├── ScaleDotProductAttention.forward(q, k, v, mask)
+│   │   │   ├── MultiHeadAttention.concat(tensor)
+│   │   │   └── Linear(w_concat).forward(out)
+│   │   │
+│   │   ├── Dropout.forward(x)
+│   │   ├── LayerNorm.forward(x + _x)
+│   │   ├── PositionwiseFeedForward.forward(x)
+│   │   │   ├── Linear(linear1).forward(x)
+│   │   │   ├── ReLU.forward(x)
+│   │   │   ├── Dropout.forward(x)
+│   │   │   └── Linear(linear2).forward(x)
+│   │   │
+│   │   ├── Dropout.forward(x)
+│   │   └── LayerNorm.forward(x + _x)
+│   │
+│   └── Linear.forward(trg)
+│
+└── return output
+```
 
-### Example Configuration
-- Provide an example configuration of the model parameters and explain why these values might be chosen.
+
+## Introduction of Padding Tokens
+**Padding tokens** are special tokens added to sequences to ensure that all sequences in a batch have the same length. This is particularly important in natural language processing (NLP) tasks where sentences or sequences can vary in length. By padding shorter sequences, we can achieve uniform input dimensions, which is necessary for efficient batch processing and parallelization on hardware like GPUs.
+
+### Why We Need to Hide Padding Tokens
+Padding tokens do not carry any meaningful information related to the actual input data. Therefore, it is crucial to hide or mask these tokens during the model's training and inference processes to prevent them from influencing the computations. Here are the primary reasons:
+1. **Avoiding Influence on Attention Mechanisms**:
+   - In transformer models, the attention mechanism calculates attention scores between tokens in a sequence. If padding tokens are not masked, they could affect these scores, leading to incorrect or misleading attention distributions.
+   - By masking padding tokens, we ensure that they do not contribute to the calculation of attention scores, allowing the model to focus on the meaningful parts of the sequence.
+2. **Ensuring Accurate Loss Calculation**:
+   - When calculating the loss (e.g., cross-entropy loss for language modeling tasks), including padding tokens would affect the loss value and gradients.
+   - By masking padding tokens, we ensure that the loss calculation only considers actual data tokens, leading to more accurate training.
+
+### Example
+Let's consider an example with `seq_len = 3` and `d_model = 10`.
+
+Suppose we have a batch of sequences with varying lengths:
+- Sequence 1: [7, 2, 3]
+- Sequence 2: [5, 1]
+- Sequence 3: [4]
+
+We pad these sequences to ensure they all have the same length:
+
+```plaintext
+Original Sequences:
+[ [7, 2, 3],
+  [5, 1, 0],  # 0 is the padding token
+  [4, 0, 0] ] # 0 is the padding token
+```
+
+### Embedding Representation
+After embedding these sequences, suppose our embedding dimension (`d_model`) is 10. The embedded sequences might look like this (with random values for illustration):
+
+```plaintext
+Embedded Sequences:
+[
+  [[0.1, 0.2, ..., 0.9], [0.2, 0.3, ..., 0.1], [0.5, 0.7, ..., 0.6]],
+  [[0.3, 0.4, ..., 0.8], [0.1, 0.5, ..., 0.2], [0.0, 0.0, ..., 0.0]],  # Padding
+  [[0.6, 0.7, ..., 0.4], [0.0, 0.0, ..., 0.0], [0.0, 0.0, ..., 0.0]]   # Padding
+]
+```
+
+### Source Mask
+We create a source mask to hide the padding tokens in the source sequences:
+
+```python
+def make_src_mask(self, src):
+    # src: [batch_size, src_seq_len]
+    src_mask = (src != self.src_pad_idx).unsqueeze(1).unsqueeze(2)
+    # src_mask: [batch_size, 1, 1, src_seq_len]
+    return src_mask
+```
+
+For the given sequences, the source mask would be:
+
+```plaintext
+Source Mask:
+[
+  [[[1, 1, 1]]],  # All tokens are real
+  [[[1, 1, 0]]],  # Last token is padding
+  [[[1, 0, 0]]]   # Last two tokens are padding
+]
+```
+
+### Target Mask
+We create a target mask to hide padding tokens and future tokens in the target sequences:
+
+```python
+def make_trg_mask(self, trg):
+    # trg: [batch_size, trg_seq_len]
+    trg_pad_mask = (trg != self.trg_pad_idx).unsqueeze(1).unsqueeze(3)
+    trg_len = trg.shape[1]
+    trg_sub_mask = torch.tril(torch.ones(trg_len, trg_len)).type(torch.ByteTensor).to(self.device)
+    trg_mask = trg_pad_mask & trg_sub_mask
+    # trg_mask: [batch_size, 1, trg_seq_len, trg_seq_len]
+    return trg_mask
+```
+
+For the given sequences, the target mask would be:
+
+```plaintext
+Target Mask:
+[
+  [[[1, 0, 0],    # Self-attention mask to prevent attending to future tokens
+    [1, 1, 0],
+    [1, 1, 1]]],
+  
+  [[[1, 0, 0],    # Mask last token (padding) and future tokens
+    [1, 1, 0],
+    [0, 0, 0]]],
+  
+  [[[1, 0, 0],    # Mask last two tokens (padding) and future tokens
+    [0, 0, 0],
+    [0, 0, 0]]]
+]
+```
+
+### Summary
+- **Padding Tokens**: Special tokens added to sequences to ensure uniform length in a batch. In this example, `0` is used as the padding token.
+- **Source Mask**: Masks padding tokens in the source sequences during attention calculations to ensure they do not influence the model's computations.
+- **Target Mask**: Masks both padding tokens and future tokens in the target sequences during attention calculations to prevent information leakage and ensure accurate training.
+
+By hiding padding tokens, we ensure that the model's attention mechanisms and loss calculations focus only on meaningful data, leading to more accurate and efficient training and inference.
+
 
 ## Conclusion
-- Summary of the key points discussed in the article.
+The article provides an overview of the transformer's architecture, focusing on its encoder and decoder components. It details the roles of key components such as LayerNorm, which normalizes inputs to stabilize training; PositionwiseFeedForward, which applies linear transformations and dropout; and MultiHeadAttention, which performs self-attention across multiple heads to allow the model to focus on different parts of the input sequence simultaneously. It also explains TokenEmbedding, which converts input indices into dense vectors, and PositionalEncoding, which adds positional information to token embeddings.
+
+The article then delves into the EncoderLayer and DecoderLayer. The EncoderLayer comprises multi-head self-attention and feed-forward layers with residual connections and normalization, while the DecoderLayer includes an additional multi-head attention layer for encoder-decoder attention. The initialization process of the transformer model is described, highlighting how the `Transformer.__init__()` method sets up the encoder and decoder components, padding indices, and prepares the model for training on the specified device.
+
+Finally, the forward pass of the transformer model is explained, detailing how the `Transformer.forward()` method processes source and target sequences through the encoder and decoder, creating masks to hide padding and future tokens. The training process includes data preparation, loss calculation, optimization, and a training loop to update model weights. The article concludes with calling sequence tree views for the initialization and forward pass methods, offering a comprehensive understanding of the transformer's structure, initialization, forward pass, and training process.
 
 ## References
-- List of references and further reading materials.
+The content and code discussed in this article are primarily based on the following sources. For a deeper understanding of the design principles and implementation details of transformers, it's recommended to explore these references:
 
+- [Hugging Face Transformers](https://github.com/huggingface/transformers)
+- [Hyunwoongko Transformer](https://github.com/hyunwoongko/transformer)
+- [Gordicaleksa PyTorch Original Transformer](https://github.com/gordicaleksa/pytorch-original-transformer)
 
+### Additional Resources on Transformers
 
+- **Illustrated Guide to Transformers Neural Network: A step by step explanation**
+  <br/>[![Read the Article](https://img.youtube.com/vi/4Bdc55j80l8/0.jpg)](https://www.youtube.com/watch?v=4Bdc55j80l8)
+
+- **Various Self-attention Mechanisms (Hung-Yi Lee)**
+  <br/>[![Read the Article](https://img.youtube.com/vi/yHoAq1IT_og/0.jpg)](https://www.youtube.com/watch?v=yHoAq1IT_og)
+
+- **Understanding and Coding the Self-Attention Mechanism of Large Language Models From Scratch**
+  <br/><a href="[default.asp](https://sebastianraschka.com/blog/2023/self-attention-from-scratch.html)"><img src="https://sebastianraschka.com/images/blog/2023/self-attention-from-scratch/summary.png" alt="Read the Article" width="480"></a>
 
 
