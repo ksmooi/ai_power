@@ -1,4 +1,4 @@
-### [English Version](vanilla_transformer_explained_enus.md)
+### [ [English Version](vanilla_transformer_explained_enus.md) ]
 
 # Vanilla Transformer 解釋：關鍵概念與源代碼
 
@@ -40,7 +40,7 @@ Transformer 的架構和這些關鍵組件協同工作，高效且有效地處�
 
 ## Transformer 模型實現
 
-### 層級正規化 (LayerNorm)
+### LayerNorm
 LayerNorm (層級正規化) 類別在最後一個維度對輸入張量進行正規化，這通常是序列中的特徵維度。這有助於穩定學習過程並提高收斂速度。
 
 <img src="https://production-media.paperswithcode.com/methods/Screen_Shot_2020-05-19_at_4.24.42_PM.png" alt="層級正規化圖示" width="400">
@@ -103,7 +103,7 @@ class LayerNorm(nn.Module):
 - **[Papers with Code 上的層級正規化](https://paperswithcode.com/method/layer-normalization)**
 - **[PyTorch 中 LayerNorm 的實現](https://pytorch.org/docs/stable/generated/torch.nn.LayerNorm.html#layernorm)**
 
-### 位置前饋網路 (PositionwiseFeedForward)
+### PositionwiseFeedForward
 PositionwiseFeedForward 類別將前饋神經網路獨立地應用於輸入序列的每個位置。這是 Transformer 模型的一個基本組成部分，提供非線性並在自注意機制之後混合特徵。
 
 ```python
@@ -156,7 +156,7 @@ class PositionwiseFeedForward(nn.Module):
 這個前饋網路獨立地應用於序列的每個位置，使模型能夠學習每個序列中的標記的複雜變換和表示。
 
 
-### 縮放點積注意力機制 (ScaleDotProductAttention)
+### ScaleDotProductAttention
 ScaleDotProductAttention 類別執行縮放點積注意力機制，這是 Transformer 模型的一個基本部分。這個機制計算注意力權重並將它們應用於值以生成輸出。
 
 自注意力機制可以用以下公式來數學描述：
@@ -236,7 +236,7 @@ class ScaleDotProductAttention(nn.Module):
 - 輸出：返回輸出張量和注意力分數張量。
 
 
-### 多頭注意力機制 (MultiHeadAttention)
+### MultiHeadAttention
 MultiHeadAttention 類別實現了 Transformer 模型中使用的多頭注意力機制。這種機制允許模型在不同的位置共同關注來自不同表示子空間的信息。
 
 ```python
@@ -403,7 +403,7 @@ class TokenEmbedding(nn.Embedding):
 總結:<br/>
 `TokenEmbedding` 類別使用嵌入矩陣將標記索引轉換為密集向量（嵌入）。嵌入矩陣在訓練期間學習，允許模型捕捉標記的語義信息。這個過程包括查詢嵌入矩陣中的每個標記索引並返回相應的嵌入向量。這對於將離散標記轉換為神經網絡可以處理的連續表示至關重要。
 
-### 位置編碼 (PositionalEncoding)
+### PositionalEncoding
 PositionalEncoding 類別向標記嵌入添加位置資訊。這在 Transformer 模型中很重要，因為與循環神經網絡不同，Transformer 本身並不捕捉輸入標記的順序。位置編碼幫助模型理解序列中每個標記的位置。
 
 位置編碼可視化:

@@ -1,4 +1,4 @@
-### [Chinese Version](vanilla_transformer_explained_zhtw.md)
+### [ [Chinese Version](vanilla_transformer_explained_zhtw.md) ]
 
 # The Vanilla Transformer Explained: Key Concepts and Source Code
 
