@@ -146,7 +146,7 @@ The ScaleDotProductAttention class performs the scaled dot-product attention mec
 
 The self-attention mechanism can be mathematically described by the following formula:
 Scaled Dot-Product Attention:
-![](https://i.sstatic.net/t6qJz.png)
+![](res/mha_formula.jpg)
 
 Where:
 - \( Q \) (Query) is a matrix of query vectors.
@@ -320,9 +320,11 @@ class MultiHeadAttention(nn.Module):
         # d_model is calculated as the product of 'number of attention heads' and d_tensor
         d_model = head * d_tensor
 
-        # The transpose method is called on the tensor to swap the second and third dimensions.
+        # The transpose method is called on the tensor to swap the second and third dimensions:
+        #   [batch_size, head, length, d_tensor] => [batch_size, length, head, d_tensor]
         # The contiguous method is called to ensure that the tensor is stored in a contiguous block of memory.
-        # The view method is used to reshape the tensor to [batch_size, length, d_model] 
+        # The view method is used to reshape the tensor (d_model == head * d_tensor):
+        #   [batch_size, length, head, d_tensor] => [batch_size, length, d_model] 
         tensor = tensor.transpose(1, 2).contiguous().view(batch_size, length, d_model)
         return tensor
 ```
@@ -339,7 +341,16 @@ Summary:
 
 ### TokenEmbedding
 ```python
-# Include source code of TokenEmbedding here
+class TokenEmbedding(nn.Embedding):
+    def __init__(self, vocab_size, d_model):
+        """
+        Initializes the TokenEmbedding module.
+
+        Args:
+            vocab_size (int): Size of the vocabulary.
+            d_model (int): Dimensionality of the embeddings.
+        """
+        super(TokenEmbedding, self).__init__(vocab_size, d_model, padding_idx=1)
 ```
 - Explanation of the TokenEmbedding class.
 
