@@ -30,7 +30,9 @@ Here is a detailed explanation of the model parameters provided in Transformer:
 ### LayerNorm
 The LayerNorm (Layer Normalization) class normalizes the input tensor along the last dimension, which is typically the feature dimension in a sequence. This helps in stabilizing the learning process and improves the convergence speed.
 
-<img src="https://production-media.paperswithcode.com/methods/Screen_Shot_2020-05-19_at_4.24.42_PM.png" alt="Layer Normalization Diagram" width="300">
+
+<img src="https://production-media.paperswithcode.com/methods/Screen_Shot_2020-05-19_at_4.24.42_PM.png" alt="Layer Normalization Diagram" width="400">
+<img src="res/layer_norm.jpg" alt="Layer Normalization Diagram" width="300">
 
 ```python
 class LayerNorm(nn.Module):
@@ -80,13 +82,14 @@ class LayerNorm(nn.Module):
         # The final output tensor has shape [batch_size, seq_len, d_model].
         return out
 ```
-Summary:
+#### Summary:
 - The input tensor `x` of shape `[batch_size, seq_len, d_model]` is normalized along the `d_model` dimension.
 - The normalization process ensures that for each position in the sequence (for each `[batch_size, seq_len]`), the features (of length `d_model`) have a mean of 0 and a variance of 1.
 - The learnable parameters `gamma` and `beta` then scale and shift these normalized values to allow the model to learn the optimal scaling and shifting for each feature dimension.
 
 Resources
 - **[Layer Normalization on Papers with Code](https://paperswithcode.com/method/layer-normalization)**
+- **[Implementation of LayerNorm in PyTorch](https://pytorch.org/docs/stable/generated/torch.nn.LayerNorm.html#layernorm)**
 
 
 ### PositionwiseFeedForward
@@ -131,7 +134,7 @@ class PositionwiseFeedForward(nn.Module):
         return x
 ```
 
-Summary:
+#### Summary:
 - Input: The input tensor x has shape [batch_size, seq_len, d_model].
 - Linear1: The input is linearly transformed to shape [batch_size, seq_len, hidden].
 - ReLU: The ReLU activation is applied, maintaining the shape [batch_size, seq_len, hidden].
@@ -213,7 +216,7 @@ class ScaleDotProductAttention(nn.Module):
         return v, score
 ```
 
-Summary:
+#### Summary:
 - Input: The input tensors q, k, and v have the shape [batch_size, n_head, seq_len, d_tensor].
 - Transpose: The key tensor k is transposed to shape [batch_size, n_head, d_tensor, seq_len].
 - Matrix Multiplication: Calculate the attention scores using the scaled dot-product, resulting in a score tensor of shape [batch_size, n_head, seq_len, - seq_len].
@@ -329,7 +332,7 @@ class MultiHeadAttention(nn.Module):
         return tensor
 ```
 
-Summary:
+#### Summary:
 - Input: Tensors q, k, v with shape [batch_size, seq_len, d_model].
 - Linear Projections: Project to shape [batch_size, seq_len, d_model].
 - Split: Split into n_head heads, shape [batch_size, n_head, seq_len, d_tensor].
@@ -340,6 +343,10 @@ Summary:
 
 
 ### TokenEmbedding
+The TokenEmbedding class is a subclass of nn.Embedding from PyTorch. It is used to convert token indices into dense vectors of a fixed size (d_model). This is typically the first layer in a neural network that processes sequences of tokens, such as words in a sentence.
+
+Reference: [Definition of nn.Embedding](https://pytorch.org/docs/stable/generated/torch.nn.Embedding.html)
+
 ```python
 class TokenEmbedding(nn.Embedding):
     def __init__(self, vocab_size, d_model):
@@ -347,30 +354,222 @@ class TokenEmbedding(nn.Embedding):
         Initializes the TokenEmbedding module.
 
         Args:
-            vocab_size (int): Size of the vocabulary.
+            vocab_size (int): The number of unique tokens in the vocabulary.
             d_model (int): Dimensionality of the embeddings.
         """
         super(TokenEmbedding, self).__init__(vocab_size, d_model, padding_idx=1)
 ```
-- Explanation of the TokenEmbedding class.
+
+Example:
+1. Vocabulary and Embedding Dimension:
+    - Suppose the `vocab_size` is 10,000 (i.e., there are 10,000 unique tokens).
+    - Suppose `d_model` is 512 (i.e., each token is represented by a 512-dimensional vector).
+2. Input Tensor:
+    - Assume the input tensor is `x`, with shape `(batch_size, seq_len)`, where:
+        - `batch_size` is the number of sequences (e.g., sentences) in the batch.
+        - `seq_len` is the length of each sequence.
+    ```python
+    # Example input tensor with batch_size=2 and seq_len=3
+    x = torch.tensor([[2, 4, 1], [3, 5, 1]])
+    ```
+3. Embedding Lookup:
+    - The `TokenEmbedding` layer processes the input tensor `x` and looks up the embedding vectors for each token index.
+    - The output tensor will have the shape `(batch_size, seq_len, d_model)`.
+    ```python
+    # Assuming the embedding layer is initialized
+    embedding_layer = TokenEmbedding(vocab_size=10000, d_model=512)
+
+    # Forward pass
+    embeddings = embedding_layer(x)
+    ```
+    - If `x` is `[[2, 4, 1], [3, 5, 1]]` and `d_model` is 512:
+        - The embedding for token `2` is a 512-dimensional vector.
+        - The embedding for token `4` is a 512-dimensional vector.
+        - The embedding for token `1` (padding) is a 512-dimensional zero vector.
+    - The output `embeddings` will have the shape `(2, 3, 512)`, where:
+        - The first dimension is the batch size (2).
+        - The second dimension is the sequence length (3).
+        - The third dimension is the embedding size (512).
+
+#### Summary:
+The `TokenEmbedding` class transforms token indices into dense vectors (embeddings) using an embedding matrix. The embedding matrix is learned during training, allowing the model to capture semantic information about the tokens. The process involves looking up each token index in the embedding matrix and returning the corresponding embedding vector. This is essential for converting discrete tokens into continuous representations that can be processed by neural networks.
+
 
 ### PositionalEncoding
+The PositionalEncoding class adds positional information to the token embeddings. This is important in transformer models because, unlike recurrent neural networks, transformers do not inherently capture the order of the input tokens. Positional encoding helps the model understand the position of each token in the sequence.
+
+Positional Encoding Visualization:
+<br><img src="res/transformer_pos_enc1.jpg" alt="Positional Encoding 1" width="500">
+<br><img src="res/transformer_pos_enc2.jpg" alt="Positional Encoding 2" width="800">
+
 ```python
-# Include source code of PositionalEncoding here
+class PositionalEncoding(nn.Module):
+    def __init__(self, d_model, max_len, device):
+        """
+        Initializes the PositionalEncoding module.
+
+        Args:
+            d_model (int): Dimensionality of the model's hidden states.
+            max_len (int): Maximum length of the input sequences.
+            device (torch.device): Device to run the model on (CPU or GPU).
+        """
+        super(PositionalEncoding, self).__init__()
+        self.encoding = torch.zeros(max_len, d_model, device=device)
+        self.encoding.requires_grad = False
+
+        # The pos variable is a tensor that contains the positions, which are just the integers from 0 to max_len - 1. 
+        # The unsqueeze method is called to add an extra dimension to this tensor, turning it from a 1D tensor into a 2D tensor.
+        pos = torch.arange(0, max_len, device=device)
+        pos = pos.float().unsqueeze(dim=1)
+
+        # The _2i variable is a tensor that contains the even integers from 0 to d_model - 1. 
+        # This is used to create different positional encodings for the even and odd positions.
+        _2i = torch.arange(0, d_model, step=2, device=device).float()
+
+        # [:, 0::2] line is applying a sine function to the positions and storing the result in the even columns of self.encoding.
+        # [:, 1::2] line is doing the same with a cosine function for the odd columns. 
+        # The positions are divided by (10000 ** (_2i / d_model)) to ensure that the positional encoding varies smoothly and slowly with the position.
+        # This division operation results in different frequencies of the sine and cosine functions for different dimensions, 
+        # which allows the model to learn to attend to relative positions.
+        self.encoding[:, 0::2] = torch.sin(pos / (10000 ** (_2i / d_model)))
+        self.encoding[:, 1::2] = torch.cos(pos / (10000 ** (_2i / d_model)))
+
+    def forward(self, x):
+        """
+        Forward pass of the PositionalEncoding module.
+
+        Args:
+            x (torch.Tensor): Input tensor of shape [batch_size, seq_len].
+
+        Returns:
+            torch.Tensor: Positional encoding tensor of shape [seq_len, d_model].
+        """
+        batch_size, seq_len = x.size()
+
+        # The [:seq_len, :] part is slicing the tensor to select only the first seq_len rows.
+        # This operation ensures that the encoding is the same length as the sequences.
+        # The unsqueeze(0) method is called to add an extra dimension to the tensor at the beginning. 
+        # The expand(batch_size, -1, -1) method is called to repeat the tensor along the specified dimensions.
+        return self.encoding[:seq_len, :].unsqueeze(0).expand(batch_size, -1, -1)
 ```
-- Explanation of the PositionalEncoding class.
+
+References on Positional Encoding in Transformer Models:
+- [A Gentle Introduction to Positional Encoding in Transformer Models (Part 1)](https://machinelearningmastery.com/a-gentle-introduction-to-positional-encoding-in-transformer-models-part-1/)
+- [Understanding Positional Encoding in Transformers](https://towardsdatascience.com/understanding-positional-encoding-in-transformers-dc6bafc021ab)
+
 
 ### TransformerEmbedding
+The TransformerEmbedding class combines token embeddings and positional encodings to produce the input embeddings for the transformer model. This class ensures that the model can incorporate both the semantic information of the tokens and their positional information within the sequence.
+
 ```python
-# Include source code of TransformerEmbedding here
+class TransformerEmbedding(nn.Module):
+    def __init__(self, vocab_size, d_model, max_len, drop_prob, device):
+        """
+        Initializes the TransformerEmbedding module.
+
+        Args:
+            vocab_size (int): Size of the vocabulary.
+            d_model (int): Dimensionality of the token embeddings.
+            max_len (int): Maximum length of the input sequences.
+            drop_prob (float): Dropout probability.
+            device (torch.device): Device to run the model on (CPU or GPU).
+        """
+        super(TransformerEmbedding, self).__init__()
+        self.tok_emb = TokenEmbedding(vocab_size, d_model)
+        self.pos_emb = PositionalEncoding(d_model, max_len, device)
+        self.drop_out = nn.Dropout(p=drop_prob)
+
+    def forward(self, x):
+        """
+        Forward pass of the TransformerEmbedding module.
+
+        Args:
+            x (torch.Tensor): Input tensor of shape [batch_size, seq_len].
+
+        Returns:
+            torch.Tensor: Embedded tensor of shape [batch_size, seq_len, d_model].
+        """
+        # convert the token IDs into token embeddings
+        # generate positional embeddings
+        tok_emb = self.tok_emb(x)       
+        pos_emb = self.pos_emb(x)       
+
+        # The tok_emb + pos_emb operation is adding the token embeddings and the positional embeddings together. 
+        # This is done to combine the information about the tokens and their positions into a single representation. 
+        # This combined representation is then returned as the output of this code block.
+        return self.drop_out(tok_emb + pos_emb)
 ```
-- Explanation of the TransformerEmbedding class.
+#### Summary:
+1. Token Embeddings:
+    - The input tensor `x` of shape `(batch_size, seq_len)` contains token indices.
+    - These indices are converted into dense vectors by the `TokenEmbedding` layer, resulting in a tensor of shape `(batch_size, seq_len, d_model)`.
+2. Positional Encodings:
+    - The positional encoding matrix is precomputed during initialization and has the shape `(max_len, d_model)`.
+    - During the forward pass, the relevant slice of this matrix is extracted to match the sequence length (`seq_len`), resulting in a tensor of shape `(seq_len, d_model)`.
+    - This slice is then expanded to match the batch size, resulting in a tensor of shape `(batch_size, seq_len, d_model)`.
+3. Combining and Dropout:
+    - The token embeddings and positional encodings are added together element-wise.
+    - The combined tensor is then passed through a dropout layer to prevent overfitting.
+    - The final output tensor has the shape `(batch_size, seq_len, d_model)`.
+
 
 ### EncoderLayer
+The EncoderLayer class implements a single layer of the transformer encoder. Each encoder layer consists of a multi-head self-attention mechanism followed by a position-wise feed-forward network. Layer normalization and dropout are applied at various points to ensure stability and prevent overfitting.
+
 ```python
-# Include source code of EncoderLayer here
+class EncoderLayer(nn.Module):
+    def __init__(self, d_model, ffn_hidden, n_head, drop_prob):
+        """
+        Initializes the EncoderLayer module.
+
+        Args:
+            d_model (int): Dimensionality of the model's hidden states.
+            ffn_hidden (int): Number of hidden units in the feed-forward network.
+            n_head (int): Number of attention heads.
+            drop_prob (float): Dropout probability.
+        """
+        super(EncoderLayer, self).__init__()
+        self.attention = MultiHeadAttention(d_model=d_model, n_head=n_head)
+        self.norm1 = LayerNorm(d_model=d_model)
+        self.dropout1 = nn.Dropout(p=drop_prob)
+        self.ffn = PositionwiseFeedForward(d_model=d_model, hidden=ffn_hidden, drop_prob=drop_prob)
+        self.norm2 = LayerNorm(d_model=d_model)
+        self.dropout2 = nn.Dropout(p=drop_prob)
+
+    def forward(self, x, src_mask):
+        """
+        Forward pass of the EncoderLayer module.
+
+        Args:
+            x (torch.Tensor): Input tensor of shape [batch_size, seq_len, d_model].
+            src_mask (torch.Tensor): Source mask tensor of shape [batch_size, 1, 1, src_seq_len].
+
+        Returns:
+            torch.Tensor: Output tensor of shape [batch_size, seq_len, d_model].
+        """
+        # Save the input tensor for the residual connection
+        _x = x
+
+        # Apply multi-head attention
+        # Apply dropout after attention
+        # Apply residual connection and layer normalization
+        x = self.attention(q=x, k=x, v=x, mask=src_mask)  # [batch_size, seq_len, d_model]
+        x = self.dropout1(x)                              # [batch_size, seq_len, d_model]
+        x = self.norm1(x + _x)                            # [batch_size, seq_len, d_model]
+
+        # Save the intermediate output for the next residual connection
+        _x = x
+        
+        # Apply position-wise feed-forward network
+        # Apply dropout after feed-forward network
+        # Apply residual connection and layer normalization
+        x = self.ffn(x)         # [batch_size, seq_len, d_model]
+        x = self.dropout2(x)    # [batch_size, seq_len, d_model]
+        x = self.norm2(x + _x)  # [batch_size, seq_len, d_model]
+        return x
 ```
-- Explanation of the EncoderLayer class.
+#### Summary:
+By processing the input tensor through these steps, the EncoderLayer effectively captures both local and global dependencies within the sequence, stabilizes training with normalization, and prevents overfitting with dropout. This process is repeated for each layer in the encoder stack, allowing the model to build increasingly complex representations of the input data.
 
 ### Encoder
 ```python
