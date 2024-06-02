@@ -1,34 +1,5 @@
 # The Vanilla Transformer Explained: Key Concepts and Source Code
 
-## Table of Contents
-
-1. [Introduction](#introduction)
-2. [Overview of the Transformer Model](#overview-of-the-transformer-model)
-    - [Architecture](#architecture)
-    - [Key Components](#key-components)
-    - [Model Parameters](#model-parameters)
-3. [Class Introductions with Source Code](#class-introductions-with-source-code)
-    - [LayerNorm](#layernorm)
-    - [PositionwiseFeedForward](#positionwisefeedforward)
-    - [ScaleDotProductAttention](#scaledotproductattention)
-    - [MultiHeadAttention](#multiheadattention)
-    - [TokenEmbedding](#tokenembedding)
-    - [PositionalEncoding](#positionalencoding)
-    - [TransformerEmbedding](#transformerembedding)
-    - [EncoderLayer](#encoderlayer)
-    - [Encoder](#encoder)
-    - [DecoderLayer](#decoderlayer)
-    - [Decoder](#decoder)
-    - [Transformer](#transformer)
-4. [Calling Sequence Explanation](#calling-sequence-explanation)
-    - [Forward Pass Overview](#forward-pass-overview)
-    - [Detailed Calling Sequence](#detailed-calling-sequence)
-5. [Model Parameters Explanation](#model-parameters-explanation)
-    - [Explanation of Model Parameters](#explanation-of-model-parameters)
-    - [Example Configuration](#example-configuration)
-6. [Conclusion](#conclusion)
-7. [References](#references)
-
 ## Introduction
 - Brief introduction to the importance of Transformer models in NLP.
 
@@ -57,6 +28,10 @@ Here is a detailed explanation of the model parameters provided in Transformer:
 ## Class Introductions with Source Code
 
 ### LayerNorm
+The LayerNorm (Layer Normalization) class normalizes the input tensor along the last dimension, which is typically the feature dimension in a sequence. This helps in stabilizing the learning process and improves the convergence speed.
+
+<img src="https://production-media.paperswithcode.com/methods/Screen_Shot_2020-05-19_at_4.24.42_PM.png" alt="Layer Normalization Diagram" width="300">
+
 ```python
 class LayerNorm(nn.Module):
     def __init__(self, d_model, eps=1e-12):
@@ -105,12 +80,6 @@ class LayerNorm(nn.Module):
         # The final output tensor has shape [batch_size, seq_len, d_model].
         return out
 ```
-
-#### LayerNorm Class Explanation
-The LayerNorm (Layer Normalization) class normalizes the input tensor along the last dimension, which is typically the feature dimension in a sequence. This helps in stabilizing the learning process and improves the convergence speed.
-
-<img src="https://production-media.paperswithcode.com/methods/Screen_Shot_2020-05-19_at_4.24.42_PM.png" alt="Layer Normalization Diagram" width="300">
-
 Summary:
 - The input tensor `x` of shape `[batch_size, seq_len, d_model]` is normalized along the `d_model` dimension.
 - The normalization process ensures that for each position in the sequence (for each `[batch_size, seq_len]`), the features (of length `d_model`) have a mean of 0 and a variance of 1.
@@ -121,6 +90,8 @@ Resources
 
 
 ### PositionwiseFeedForward
+The PositionwiseFeedForward class applies a feed-forward neural network to each position of the input sequence independently. This is an essential component of the Transformer model, providing non-linearity and mixing the features after the self-attention mechanism.
+
 ```python
 class PositionwiseFeedForward(nn.Module):
     def __init__(self, d_model, hidden, drop_prob=0.1):
@@ -160,9 +131,6 @@ class PositionwiseFeedForward(nn.Module):
         return x
 ```
 
-#### PositionwiseFeedForward Class Explanation
-The PositionwiseFeedForward class applies a feed-forward neural network to each position of the input sequence independently. This is an essential component of the Transformer model, providing non-linearity and mixing the features after the self-attention mechanism.
-
 Summary:
 - Input: The input tensor x has shape [batch_size, seq_len, d_model].
 - Linear1: The input is linearly transformed to shape [batch_size, seq_len, hidden].
@@ -174,6 +142,18 @@ Summary:
 This feed-forward network is applied independently to each position of the sequence, enabling the model to learn complex transformations and representations for each token in the sequence.
 
 ### ScaleDotProductAttention
+The ScaleDotProductAttention class performs the scaled dot-product attention mechanism, a fundamental part of the Transformer model. This mechanism calculates the attention weights and applies them to the values to produce the output.
+
+The self-attention mechanism can be mathematically described by the following formula:
+Scaled Dot-Product Attention:
+![](https://i.sstatic.net/t6qJz.png)
+
+Where:
+- \( Q \) (Query) is a matrix of query vectors.
+- \( K \) (Key) is a matrix of key vectors.
+- \( V \) (Value) is a matrix of value vectors.
+- \( d_k \) is the dimensionality of the key vectors (typically equal to the dimensionality of the queries and values).
+
 ```python
 class ScaleDotProductAttention(nn.Module):
     def __init__(self):
@@ -233,19 +213,6 @@ class ScaleDotProductAttention(nn.Module):
         return v, score
 ```
 
-#### ScaleDotProductAttention Class Explanation
-The ScaleDotProductAttention class performs the scaled dot-product attention mechanism, a fundamental part of the Transformer model. This mechanism calculates the attention weights and applies them to the values to produce the output.
-
-The self-attention mechanism can be mathematically described by the following formula:
-Scaled Dot-Product Attention:
-![](https://i.sstatic.net/t6qJz.png)
-
-Where:
-- \( Q \) (Query) is a matrix of query vectors.
-- \( K \) (Key) is a matrix of key vectors.
-- \( V \) (Value) is a matrix of value vectors.
-- \( d_k \) is the dimensionality of the key vectors (typically equal to the dimensionality of the queries and values).
-
 Summary:
 - Input: The input tensors q, k, and v have the shape [batch_size, n_head, seq_len, d_tensor].
 - Transpose: The key tensor k is transposed to shape [batch_size, n_head, d_tensor, seq_len].
@@ -257,6 +224,8 @@ Summary:
 
 
 ### MultiHeadAttention
+The MultiHeadAttention class implements the multi-head attention mechanism used in the Transformer model. This mechanism allows the model to jointly attend to information from different representation subspaces at different positions.
+
 ```python
 class MultiHeadAttention(nn.Module):
     def __init__(self, d_model, n_head):
@@ -357,9 +326,6 @@ class MultiHeadAttention(nn.Module):
         tensor = tensor.transpose(1, 2).contiguous().view(batch_size, length, d_model)
         return tensor
 ```
-
-#### MultiHeadAttention Class Explanation
-The MultiHeadAttention class implements the multi-head attention mechanism used in the Transformer model. This mechanism allows the model to jointly attend to information from different representation subspaces at different positions.
 
 Summary:
 - Input: Tensors q, k, v with shape [batch_size, seq_len, d_model].
