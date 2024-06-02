@@ -1,3 +1,5 @@
+### [Chinese Version](vanilla_transformer_explained_zhtw.md)
+
 # The Vanilla Transformer Explained: Key Concepts and Source Code
 
 ## Introduction
@@ -155,12 +157,13 @@ Summary:
 
 This feed-forward network is applied independently to each position of the sequence, enabling the model to learn complex transformations and representations for each token in the sequence.
 
+
 ### ScaleDotProductAttention
 The ScaleDotProductAttention class performs the scaled dot-product attention mechanism, a fundamental part of the Transformer model. This mechanism calculates the attention weights and applies them to the values to produce the output.
 
 The self-attention mechanism can be mathematically described by the following formula:
 Scaled Dot-Product Attention:
-![](res/mha_formula.jpg)
+<br/><img src="res/mha_formula.jpg" alt="Scaled Dot-Product Attention" width="600">
 
 Where:
 - \( Q \) (Query) is a matrix of query vectors.
