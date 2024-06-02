@@ -1,4 +1,3 @@
-```markdown
 # The Vanilla Transformer Explained: Key Concepts and Source Code
 
 ## Table of Contents
@@ -163,6 +162,8 @@ class LayerNorm(nn.Module):
 
 ## References
 - List of references and further reading materials.
-```
 
-This structure provides a comprehensive guide to the Transformer model, including explanations of each class with source code, the calling sequence, and model parameters. This approach ensures that readers can understand the inner workings of the Transformer model in a detailed and organized manner.
+
+
+
+
