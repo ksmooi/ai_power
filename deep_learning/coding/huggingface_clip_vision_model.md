@@ -127,7 +127,7 @@ Sometimes, you might want to customize the configuration of your CLIP model. Her
 8. **Print Features**: The extracted image features are printed out.
 
 ```python
-from transformers import CLIPVisionModel, CLIPImageProcessor, CLIPTextConfig, CLIPVisionConfig, CLIPModel
+from transformers import CLIPVisionModel, CLIPImageProcessor, CLIPTextConfig, CLIPVisionConfig, CLIPConfig, CLIPModel
 from PIL import Image
 import requests
 import torch
@@ -150,8 +150,11 @@ text_config = CLIPTextConfig(
     intermediate_size=2048      # Dimensionality of the "intermediate" (i.e., feed-forward) layer
 )
 
-# Load the CLIP model with custom configurations
-model = CLIPModel.from_vision_text_configs(vision_config, text_config)
+# Create the combined CLIP configuration
+config = CLIPConfig.from_text_vision_configs(text_config, vision_config)
+
+# Load the CLIP model with the combined configuration
+model = CLIPModel(config)
 
 # Load the pre-trained image processor
 processor = CLIPImageProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -163,8 +166,7 @@ inputs = processor(images=image, return_tensors="pt")
 
 # Extract image features
 with torch.no_grad():           # Disable gradient calculation for efficiency
-    outputs = model.get_image_features(**inputs)  # Get image features from the model
-    image_features = outputs
+    image_features = model.get_image_features(**inputs)  # Get image features from the model
 
 # Print the image features
 print(image_features)
