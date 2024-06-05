@@ -154,8 +154,7 @@ In this article, we will explore the key classes and functions involved in the i
 ### class CLIPVisionTower
 The `CLIPVisionTower` class in `clip_encoder.py` is a PyTorch module that wraps a pretrained vision model from the CLIP (Contrastive Language–Image Pretraining) framework. It's used to extract features from images.
 
-#### Breakdown of its main components:
-
+**Breakdown of its main components:**
 - **`__init__`**: 
   - This is the constructor. It initializes the class with the name of the vision model to use, some configuration arguments, and a flag indicating whether to delay loading the model. 
   - If the model should not be delayed or needs to be unfrozen, it's loaded immediately. Otherwise, only the configuration is loaded.
@@ -385,8 +384,7 @@ class CLIPVisionTower(nn.Module):
 ### class CLIPVisionTowerS2
 The `CLIPVisionTowerS2` class extends the `CLIPVisionTower` to handle multiscale image inputs. It adjusts the vision tower model for different scales, enhancing its ability to process images of various sizes effectively.
 
-#### Breakdown of its main components:
-
+**Breakdown of its main components:**
 - **`__init__`**:
   - This is the constructor. It initializes the class with the name or path of the vision tower model, additional arguments for model configuration, and a flag indicating whether to delay loading the model.
   - It sets up the scales for multiscale processing, determines the split size and maximum image size for scaling, and tries to import the `s2wrapper` package for multiscale processing.
@@ -408,7 +406,7 @@ The `CLIPVisionTowerS2` class extends the `CLIPVisionTower` to handle multiscale
     - Returns the hidden size of the vision tower, adjusted for multiscale processing.
     - This is calculated as the product of the hidden size from the configuration and the number of scales.
 
-#### Here is a table highlighting the major differences between `CLIPVisionTower` and `CLIPVisionTowerS2`:
+Here is a table highlighting the major differences between `CLIPVisionTower` and `CLIPVisionTowerS2`:
 
 | **Feature**                    | **CLIPVisionTower**                                                    | **CLIPVisionTowerS2**                                                           |
 |--------------------------------|------------------------------------------------------------------------|---------------------------------------------------------------------------------|
@@ -651,8 +649,7 @@ The LlavaConfig class extends the LlamaConfig class to specifically configure th
 
 By extending LlamaConfig, LlavaConfig ensures that all necessary configurations for the Llama model are included, while also allowing for additional configurations specific to the Llava model.
 
-#### Main components of `LlamaConfig` class:
-
+Main components of `LlamaConfig` class:
 - **Attributes**:
   - **`vocab_size`**: Specifies the size of the vocabulary used by the model.
   - **`hidden_size`**: Determines the dimensionality of the hidden layers in the transformer.
@@ -684,8 +681,7 @@ class LlavaConfig(LlamaConfig):
 ### class LlavaMetaModel
 The `LlavaMetaModel` class is a foundational base class designed for models that integrate both vision and language components. It initializes and manages the vision tower model and the multi-modal projector, facilitating the combination of visual and textual features.
 
-#### Breakdown of its main components:
-
+**Breakdown of its main components:**
 - **`__init__`**:
   - This is the constructor. It initializes the class with a configuration object (`config`).
   - If the configuration includes a vision tower, it builds the vision tower model and the vision projector model.
@@ -849,7 +845,7 @@ class LlavaLlamaModel(LlavaMetaModel, LlamaModel):
 ### class LlavaMetaForCausalLM
 `LlavaMetaForCausalLM` is an abstract base class designed for causal language models that also incorporate vision capabilities. It provides methods for processing and combining textual and visual data, making it suitable for multi-modal tasks.
 
-#### Breakdown of its main components:
+**Breakdown of its main components:**
 - **`get_model`**:
   - Abstract method that must be implemented by subclasses to return the model instance.
 - **`get_vision_tower`**:
@@ -1636,7 +1632,7 @@ LlavaLlamaForCausalLM
             ├── nn.Sequential(*modules)
             └── IdentityMap()
 ```
-#### Understanding this sequence is crucial for several reasons:
+**Understanding this sequence is crucial for several reasons:**
 1. **Comprehension of Architecture**: It provides insight into how the multimodal capabilities of the model are structured and integrated, which is essential for understanding the overall architecture.
 2. **Customization and Extension**: Knowledge of the initialization sequence allows researchers and developers to customize or extend the model for specific applications or research purposes.
 3. **Debugging and Optimization**: Familiarity with the construction process aids in identifying potential issues during model training or inference and optimizing the model's performance.
@@ -1671,7 +1667,7 @@ LlavaLlamaForCausalLM
     └── super().generate(position_ids, attention_mask, inputs_embeds, **kwargs)
 ```
 
-#### Understanding this sequence is important for several reasons:
+**Understanding this sequence is important for several reasons:**
 1. **Multimodal Integration**: It demonstrates how visual information is encoded and incorporated into the text generation process, providing insight into the multimodal capabilities of the model.
 2. **Component Interaction**: It helps in understanding the interplay between various components of the model, such as the vision towers and the language model.
 3. **Optimization and Debugging**: Knowledge of this sequence aids in identifying potential bottlenecks, optimizing performance, and debugging issues that may arise during the generation process.
