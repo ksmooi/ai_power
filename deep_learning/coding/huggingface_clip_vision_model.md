@@ -208,10 +208,10 @@ inputs = processor(images=images, return_tensors="pt")
 # Extract image features
 with torch.no_grad():
     outputs = model(**inputs)
-    image_features = outputs.pooler_output
+    pooled_output = outputs.pooler_output # pooled (EOS token) states
 
-# Print the image features
-print(image_features)
+# Print the (EOS token) states
+print(pooled_output)
 ```
 
 ### 5. Using a Custom Processor
