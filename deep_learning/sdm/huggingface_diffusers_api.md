@@ -228,14 +228,16 @@ import torch
 # Load the ControlNet model for depth conditioning
 # Use torch_dtype=torch.float16 for reduced memory usage and variant="fp16" for 16-bit precision
 ctrl_model_path = "lllyasviel/control_v11f1p_sd15_depth"
-controlnet = ControlNetModel.from_pretrained(ctrl_model_path, torch_dtype=torch.float16, variant="fp16", use_safetensors=True)
+controlnet = ControlNetModel.from_pretrained(
+                ctrl_model_path, torch_dtype=torch.float16, variant="fp16", use_safetensors=True
+             )
 
 # Load the image-to-image pipeline using the Stable Diffusion model path and the ControlNet model
 # Use torch_dtype=torch.float16 for reduced memory usage and variant="fp16" for 16-bit precision
 sd_model_path = "runwayml/stable-diffusion-v1-5"
 pipeline = AutoPipelineForImage2Image.from_pretrained(
-    sd_model_path, controlnet=controlnet, torch_dtype=torch.float16, variant="fp16", use_safetensors=True
-)
+            sd_model_path, controlnet=controlnet, torch_dtype=torch.float16, variant="fp16", use_safetensors=True
+           )
 
 # Enable model CPU offload to manage memory usage efficiently
 pipeline.enable_model_cpu_offload()
@@ -283,8 +285,8 @@ pipeline.enable_model_cpu_offload()
 pipeline.enable_xformers_memory_efficient_attention()
 
 # Load the base and mask images for inpainting
-init_image = load_image("https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/inpaint.png")
-mask_image = load_image("https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/inpaint_mask.png")
+init_image = load_image("https://path/to/diffusers/inpaint.png")
+mask_image = load_image("https://path/to/diffusers/inpaint_mask.png")
 
 # Create a prompt for inpainting and set a negative prompt to avoid undesired results
 generator = torch.Generator("cuda").manual_seed(92)
