@@ -227,12 +227,14 @@ import torch
 
 # Load the ControlNet model for depth conditioning
 # Use torch_dtype=torch.float16 for reduced memory usage and variant="fp16" for 16-bit precision
-controlnet = ControlNetModel.from_pretrained("lllyasviel/control_v11f1p_sd15_depth", torch_dtype=torch.float16, variant="fp16", use_safetensors=True)
+ctrl_model_path = "lllyasviel/control_v11f1p_sd15_depth"
+controlnet = ControlNetModel.from_pretrained(ctrl_model_path, torch_dtype=torch.float16, variant="fp16", use_safetensors=True)
 
 # Load the image-to-image pipeline using the Stable Diffusion model path and the ControlNet model
 # Use torch_dtype=torch.float16 for reduced memory usage and variant="fp16" for 16-bit precision
+sd_model_path = "runwayml/stable-diffusion-v1-5"
 pipeline = AutoPipelineForImage2Image.from_pretrained(
-    "runwayml/stable-diffusion-v1-5", controlnet=controlnet, torch_dtype=torch.float16, variant="fp16", use_safetensors=True
+    sd_model_path, controlnet=controlnet, torch_dtype=torch.float16, variant="fp16", use_safetensors=True
 )
 
 # Enable model CPU offload to manage memory usage efficiently
