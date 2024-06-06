@@ -128,8 +128,8 @@ model_path = "kandinsky-community/kandinsky-2-2-decoder"
 # Load the text-to-image pipeline using the specified model path
 # Use torch_dtype=torch.float16 for reduced memory usage and variant="fp16" for 16-bit precision
 pipeline = AutoPipelineForText2Image.from_pretrained(
-                model_path, torch_dtype=torch.float16, variant="fp16").to("cuda"
-           )
+    model_path, torch_dtype=torch.float16, variant="fp16").to("cuda"
+)
 
 # Generate an image based on the given text prompt
 prompt = "stained glass of darth vader, backlight, centered composition, masterpiece, photorealistic, 8k"
@@ -157,7 +157,8 @@ ctrl_model_path = "lllyasviel/control_v11p_sd15_openpose"
 # Load the ControlNet model using the specified model path
 # Use torch_dtype=torch.float16 for reduced memory usage and variant="fp16" for 16-bit precision
 controlnet = ControlNetModel.from_pretrained(
-                ctrl_model_path, torch_dtype=torch.float16, variant="fp16").to("cuda")
+    ctrl_model_path, torch_dtype=torch.float16, variant="fp16"
+).to("cuda")
 
 # Load an image to use as the pose estimation conditioning input
 pose_image = load_image("https://huggingface.co/lllyasviel/control_v11p_sd15_openpose/resolve/main/images/control.png")
@@ -168,7 +169,8 @@ sd_model_path = "runwayml/stable-diffusion-v1-5"
 # Load the text-to-image pipeline using the specified Stable Diffusion model path and the ControlNet model
 # Use torch_dtype=torch.float16 for reduced memory usage and variant="fp16" for 16-bit precision
 pipeline = AutoPipelineForText2Image.from_pretrained(
-                sd_model_path, controlnet=controlnet, torch_dtype=torch.float16, variant="fp16").to("cuda")
+    sd_model_path, controlnet=controlnet, torch_dtype=torch.float16, variant="fp16"
+).to("cuda")
 
 # Create a generator for reproducibility and set a manual seed
 generator = torch.Generator("cuda").manual_seed(31)
@@ -242,15 +244,15 @@ import torch
 # Use torch_dtype=torch.float16 for reduced memory usage and variant="fp16" for 16-bit precision
 ctrl_model_path = "lllyasviel/control_v11f1p_sd15_depth"
 controlnet = ControlNetModel.from_pretrained(
-                ctrl_model_path, torch_dtype=torch.float16, variant="fp16", use_safetensors=True
-             )
+    ctrl_model_path, torch_dtype=torch.float16, variant="fp16", use_safetensors=True
+)
 
 # Load the image-to-image pipeline using the Stable Diffusion model path and the ControlNet model
 # Use torch_dtype=torch.float16 for reduced memory usage and variant="fp16" for 16-bit precision
 sd_model_path = "runwayml/stable-diffusion-v1-5"
 pipeline = AutoPipelineForImage2Image.from_pretrained(
-            sd_model_path, controlnet=controlnet, torch_dtype=torch.float16, variant="fp16", use_safetensors=True
-           )
+    sd_model_path, controlnet=controlnet, torch_dtype=torch.float16, variant="fp16", use_safetensors=True
+)
 
 # Enable model CPU offload to manage memory usage efficiently
 pipeline.enable_model_cpu_offload()
@@ -329,7 +331,9 @@ from diffusers.utils import load_image, make_image_grid
 
 # Load the ControlNet model for inpainting
 # Use torch_dtype=torch.float16 for reduced memory usage and variant="fp16" for 16-bit precision
-controlnet = ControlNetModel.from_pretrained("lllyasviel/control_v11p_sd15_inpaint", torch_dtype=torch.float16, variant="fp16")
+controlnet = ControlNetModel.from_pretrained(
+    "lllyasviel/control_v11p_sd15_inpaint", torch_dtype=torch.float16, variant="fp16"
+)
 
 # Pass the ControlNet model to the Stable Diffusion ControlNet Inpainting Pipeline
 pipeline = StableDiffusionControlNetInpaintPipeline.from_pretrained(
