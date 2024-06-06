@@ -110,7 +110,7 @@ Here are several examples to explain how to use the HuggingFace Diffusers API:
 | **Depth-to-Image Generation**     | Generating new images conditioned on an initial image and preserving structural details with a depth map.    |
 | **Super Resolution**              | Enhancing the resolution of input images by a factor of four using advanced diffusion models.              |
 
-### A) Text-to-Image Generation
+### 2.1 Text-to-Image Generation
 When discussing diffusion models, text-to-image generation is often one of the first applications that comes to mind. This process involves creating an image from a text description, also known as a prompt (for example, “Astronaut in a jungle, cold color palette, muted colors, detailed, 8k”).
 
 At a high level, a diffusion model takes a prompt and some random initial noise, then iteratively removes the noise to form an image. The denoising process is guided by the prompt, and once it concludes after a set number of time steps, the image representation is decoded into a final image.
@@ -142,7 +142,7 @@ image.save("generated_image.png")
 <img src="res/sd_text_to_image_sample.jpg" alt="input and output image" width="400">
 
 
-### B) Text-to-Image with ControlNet
+### 2.2 Text-to-Image with ControlNet
 ControlNet models are auxiliary models or adapters finetuned on top of text-to-image models like Stable Diffusion v1.5. By using ControlNet models in conjunction with text-to-image models, you gain more explicit control over the image generation process. ControlNet allows you to add an additional conditioning input image to the model. For example, providing an image of a human pose (represented by keypoints connected into a skeleton) as a conditioning input will guide the model to generate an image that adheres to the given pose. For more details on other conditioning inputs and how to use them, refer to the comprehensive ControlNet guide.
 
 **Example Code: Using ControlNet for Human Pose Estimation**
@@ -186,7 +186,7 @@ image.save("generated_image.png")
 <img src="res/sd_text_to_image_controlnet_sample.jpg" alt="input and output image" width="1000">
 
 
-### C) Image-to-Image Generation
+### 2.3 Image-to-Image Generation
 Image-to-image generation is similar to text-to-image, but it also incorporates an initial image as a starting point for the diffusion process. This initial image is encoded into latent space, where noise is added. The latent diffusion model then takes both the prompt and the noisy latent image, predicts the added noise, and removes it from the initial latent image to produce a new latent image. Finally, a decoder transforms the new latent image back into a fully realized image.
 
 **Example Code: Generating an Image from an Initial Image**
@@ -230,7 +230,7 @@ make_image_grid([init_image, image], rows=1, cols=2)
 <img src="res/sd_image_to_image_sample.jpg" alt="input and output image" width="800">
 
 
-### D) Image-to-Image with ControlNet
+### 2.4 Image-to-Image with ControlNet
 ControlNets offer a more flexible and precise method for controlling image generation by using an additional conditioning image. This conditioning image can be a canny edge detection image, depth map, image segmentation, or even simple scribbles. Regardless of the type of conditioning image you use, ControlNet ensures that the generated image preserves the information from the conditioning input, providing greater control over the final output.
 
 **Example Code: Using ControlNet with Depth Maps**
@@ -274,7 +274,7 @@ make_image_grid([init_image, depth_image, image_control_net], rows=1, cols=3)
 <img src="res/sd_image_to_image_controlnet_sample.jpg" alt="input and output image" width="1000">
 
 
-### E) Inpainting Generation
+### 2.5 Inpainting Generation
 Inpainting involves replacing or editing specific areas of an image, making it a valuable tool for tasks like image restoration, removing defects and artifacts, or even completely replacing parts of an image. The process relies on a mask to determine which regions of the image to fill in. Areas to be inpainted are represented by white pixels, while areas to be preserved are represented by black pixels. The white pixels are then filled in based on the provided text prompt.
 
 **Example Code: Inpainting with HuggingFace Diffusers**
@@ -319,7 +319,7 @@ make_image_grid([init_image, mask_image, image], rows=1, cols=3)
 <img src="res/sd_inpainting_sample.jpg" alt="input and output image" width="1000">
 
 
-### F) Inpainting with ControlNet
+### 2.6 Inpainting with ControlNet
 ControlNet models, when used with other diffusion models like Stable Diffusion, provide an even more flexible and precise method for controlling image generation. In the context of inpainting, ControlNet accepts an additional conditioning image input that guides the diffusion model to preserve specific features in the image. This allows for more accurate and controlled inpainting, ensuring that the desired areas are modified while maintaining the integrity of the original features.
 
 **Example Code: Using ControlNet for Inpainting**
@@ -380,7 +380,7 @@ make_image_grid(images, rows=2, cols=2)
 <img src="res/sd_inpainting_controlnet_sample.jpg" alt="input and output image" width="1000">
 
 
-### G) Depth-to-Image Generation
+### 2G. Depth-to-Image Generation
 The StableDiffusionDepth2ImgPipeline allows you to condition the generation of new images by providing both a text prompt and an initial image. Additionally, you can pass a depth_map to preserve the structural details of the image. If no depth_map is provided, the pipeline will automatically predict the depth using an integrated depth-estimation model. This feature ensures that the generated images maintain their original depth and spatial consistency.
 
 **Example Code: Depth-to-Image Pipeline**
@@ -417,7 +417,7 @@ make_image_grid([init_image, image], rows=1, cols=2)
 <img src="res/sd_depth_to_image_sample.jpg" alt="input and output image" width="800">
 
 
-### H) Super Resolution
+### 2H. Super Resolution
 Super-resolution is a powerful technique within diffusion models designed to enhance the resolution of low-quality images. This process involves generating high-resolution images from their low-resolution counterparts by applying advanced algorithms that predict and fill in missing details. The Stable Diffusion upscaler diffusion model, developed by researchers and engineers at CompVis, Stability AI, and LAION, exemplifies this capability by effectively increasing the resolution of images by a factor of four.
 
 Super-resolution models leverage the power of diffusion processes, which iteratively refine and upscale images through a series of transformations. These models are trained on large datasets of high- and low-resolution image pairs, allowing them to learn the intricate patterns and details necessary to accurately enhance image quality.
