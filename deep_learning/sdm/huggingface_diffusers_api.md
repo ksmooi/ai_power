@@ -114,7 +114,9 @@ model_path = "kandinsky-community/kandinsky-2-2-decoder"
 
 # Load the text-to-image pipeline using the specified model path
 # Use torch_dtype=torch.float16 for reduced memory usage and variant="fp16" for 16-bit precision
-pipeline = AutoPipelineForText2Image.from_pretrained(model_path, torch_dtype=torch.float16, variant="fp16").to("cuda")
+pipeline = AutoPipelineForText2Image.from_pretrained(
+                model_path, torch_dtype=torch.float16, variant="fp16").to("cuda"
+           )
 
 # Generate an image based on the given text prompt
 prompt = "stained glass of darth vader, backlight, centered composition, masterpiece, photorealistic, 8k"
@@ -141,7 +143,8 @@ ctrl_model_path = "lllyasviel/control_v11p_sd15_openpose"
 
 # Load the ControlNet model using the specified model path
 # Use torch_dtype=torch.float16 for reduced memory usage and variant="fp16" for 16-bit precision
-controlnet = ControlNetModel.from_pretrained(ctrl_model_path, torch_dtype=torch.float16, variant="fp16").to("cuda")
+controlnet = ControlNetModel.from_pretrained(
+                ctrl_model_path, torch_dtype=torch.float16, variant="fp16").to("cuda")
 
 # Load an image to use as the pose estimation conditioning input
 pose_image = load_image("https://huggingface.co/lllyasviel/control_v11p_sd15_openpose/resolve/main/images/control.png")
@@ -151,7 +154,8 @@ sd_model_path = "runwayml/stable-diffusion-v1-5"
 
 # Load the text-to-image pipeline using the specified Stable Diffusion model path and the ControlNet model
 # Use torch_dtype=torch.float16 for reduced memory usage and variant="fp16" for 16-bit precision
-pipeline = AutoPipelineForText2Image.from_pretrained(sd_model_path, controlnet=controlnet, torch_dtype=torch.float16, variant="fp16").to("cuda")
+pipeline = AutoPipelineForText2Image.from_pretrained(
+                sd_model_path, controlnet=controlnet, torch_dtype=torch.float16, variant="fp16").to("cuda")
 
 # Create a generator for reproducibility and set a manual seed
 generator = torch.Generator("cuda").manual_seed(31)
@@ -286,7 +290,8 @@ prompt = "a black cat with glowing eyes, cute, adorable, disney, pixar, highly d
 negative_prompt = "bad anatomy, deformed, ugly, disfigured"
 
 # Generate the inpainted image using the pipeline with the provided base image, mask image, and prompts
-image = pipeline(prompt=prompt, negative_prompt=negative_prompt, image=init_image, mask_image=mask_image, generator=generator).images[0]
+image = pipeline(prompt=prompt, negative_prompt=negative_prompt, image=init_image, mask_image=mask_image, 
+                 generator=generator).images[0]
 
 # Display the base, mask, and generated images side by side in a grid
 make_image_grid([init_image, mask_image, image], rows=1, cols=3)
@@ -347,7 +352,8 @@ prompt = "concept art digital painting of an elven castle, inspired by lord of t
 image = pipeline(prompt=prompt, image=init_image, mask_image=mask_image, control_image=control_image).images[0]
 
 # Display the base, mask, control, and generated images side by side in a grid
-make_image_grid([init_image, mask_image, PIL.Image.fromarray(np.uint8(control_image[0][0])).convert('RGB'), image], rows=2, cols=2)
+images = [init_image, mask_image, PIL.Image.fromarray(np.uint8(control_image[0][0])).convert('RGB'), image]
+make_image_grid(images, rows=2, cols=2)
 ```
 <img src="res/sd_inpainting_controlnet_sample.jpg" alt="input and output image" width="1000">
 
