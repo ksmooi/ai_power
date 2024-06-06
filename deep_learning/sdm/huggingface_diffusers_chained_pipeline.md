@@ -297,8 +297,8 @@ pipeline.enable_xformers_memory_efficient_attention()
 # Enhance the image details using the refiner model
 enhance_image = pipeline(prompt=prompt, image=image_inpainting, mask_image=mask_image, output_type="latent").images[0]
 
-# It is important to specify output_type="latent" to keep all the outputs in latent space and avoid unnecessary decode-encode steps.
-# This only works if the chained pipelines are using the same VAE.
+# It is important to specify output_type="latent" to keep all the outputs in latent space and avoid unnecessary 
+# decode-encode steps. This only works if the chained pipelines are using the same VAE.
 
 # Note: 
 # It is important to specify `output_type="latent"` in the pipeline to keep all the outputs in latent space 
