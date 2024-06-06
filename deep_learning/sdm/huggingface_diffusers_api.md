@@ -380,7 +380,7 @@ make_image_grid(images, rows=2, cols=2)
 <img src="res/sd_inpainting_controlnet_sample.jpg" alt="input and output image" width="1000">
 
 
-### 2G. Depth-to-Image Generation
+### 2.7 Depth-to-Image Generation
 The StableDiffusionDepth2ImgPipeline allows you to condition the generation of new images by providing both a text prompt and an initial image. Additionally, you can pass a depth_map to preserve the structural details of the image. If no depth_map is provided, the pipeline will automatically predict the depth using an integrated depth-estimation model. This feature ensures that the generated images maintain their original depth and spatial consistency.
 
 **Example Code: Depth-to-Image Pipeline**
@@ -417,7 +417,7 @@ make_image_grid([init_image, image], rows=1, cols=2)
 <img src="res/sd_depth_to_image_sample.jpg" alt="input and output image" width="800">
 
 
-### 2H. Super Resolution
+### 2.8 Super Resolution
 Super-resolution is a powerful technique within diffusion models designed to enhance the resolution of low-quality images. This process involves generating high-resolution images from their low-resolution counterparts by applying advanced algorithms that predict and fill in missing details. The Stable Diffusion upscaler diffusion model, developed by researchers and engineers at CompVis, Stability AI, and LAION, exemplifies this capability by effectively increasing the resolution of images by a factor of four.
 
 Super-resolution models leverage the power of diffusion processes, which iteratively refine and upscale images through a series of transformations. These models are trained on large datasets of high- and low-resolution image pairs, allowing them to learn the intricate patterns and details necessary to accurately enhance image quality.
