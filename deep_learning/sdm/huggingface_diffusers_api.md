@@ -108,6 +108,7 @@ Here are several examples to explain how to use the HuggingFace Diffusers API:
 | **Inpainting Generation**         | Replacing or editing specific areas of an image using a mask and a text prompt.                              |
 | **Inpainting with ControlNet**    | Providing more accurate and controlled inpainting by using additional conditioning images.                   |
 | **Depth-to-Image Generation**     | Generating new images conditioned on an initial image and preserving structural details with a depth map.    |
+| **Super Resolution**              | Enhancing the resolution of input images by a factor of four using advanced diffusion models.              |
 
 ### A) Text-to-Image Generation
 When discussing diffusion models, text-to-image generation is often one of the first applications that comes to mind. This process involves creating an image from a text description, also known as a prompt (for example, “Astronaut in a jungle, cold color palette, muted colors, detailed, 8k”).
@@ -415,6 +416,42 @@ make_image_grid([init_image, image], rows=1, cols=2)
 ```
 <img src="res/sd_depth_to_image_sample.jpg" alt="input and output image" width="800">
 
+
+### H) Super Resolution
+Super-resolution is a powerful technique within diffusion models designed to enhance the resolution of low-quality images. This process involves generating high-resolution images from their low-resolution counterparts by applying advanced algorithms that predict and fill in missing details. The Stable Diffusion upscaler diffusion model, developed by researchers and engineers at CompVis, Stability AI, and LAION, exemplifies this capability by effectively increasing the resolution of images by a factor of four.
+
+Super-resolution models leverage the power of diffusion processes, which iteratively refine and upscale images through a series of transformations. These models are trained on large datasets of high- and low-resolution image pairs, allowing them to learn the intricate patterns and details necessary to accurately enhance image quality.
+
+In practical applications, super-resolution can be used to improve the clarity and detail of images in various fields such as medical imaging, satellite imagery, photography, and more. By converting low-resolution inputs into high-resolution outputs, super-resolution models play a crucial role in advancing image processing and enhancing visual experiences.
+
+```python
+import requests
+from PIL import Image
+from io import BytesIO
+from diffusers import StableDiffusionUpscalePipeline
+import torch
+
+# Load the model and scheduler for the upscaler
+model_id = "stabilityai/stable-diffusion-x4-upscaler"
+pipeline = StableDiffusionUpscalePipeline.from_pretrained(
+    model_id, revision="fp16", torch_dtype=torch.float16
+)
+# Move the pipeline to the GPU for faster processing
+pipeline = pipeline.to("cuda")
+
+# Download a low-resolution image from a URL
+url = "https://path/to/sd2-upscale/low_res_cat.png"
+response = requests.get(url)
+low_res_img = Image.open(BytesIO(response.content)).convert("RGB")
+# Resize the image to 128x128 pixels
+low_res_img = low_res_img.resize((128, 128))
+prompt = "a white cat"
+
+# Use the pipeline to upscale the low-resolution image based on the prompt
+upscaled_image = pipeline(prompt=prompt, image=low_res_img).images[0]
+# Save the upscaled image to a file
+upscaled_image.save("upsampled_cat.png")
+```
 
 
 ## 3. Conclusion
