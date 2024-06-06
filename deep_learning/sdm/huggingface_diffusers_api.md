@@ -212,7 +212,7 @@ pipeline.enable_model_cpu_offload()
 pipeline.enable_xformers_memory_efficient_attention()
 
 # Load an initial image to pass to the pipeline
-url = "https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/img2img-init.png"
+url = "https://path/to/diffusers/img2img-init.png"
 init_image = load_image(url)
 
 # Define the prompt for image generation
@@ -344,8 +344,8 @@ pipeline.enable_model_cpu_offload()
 pipeline.enable_xformers_memory_efficient_attention()
 
 # Load the base and mask images for inpainting
-init_image = load_image("https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/inpaint.png")
-mask_image = load_image("https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/inpaint_mask.png")
+init_image = load_image("https://path/to/diffusers/inpaint.png")
+mask_image = load_image("https://path/to/diffusers/inpaint_mask.png")
 
 # Prepare the control image by setting masked pixels to -1.0 and converting to tensor
 def make_inpaint_condition(init_image, mask_image):
