@@ -28,14 +28,15 @@ LLaVA-NeXT is an advanced multimodal model designed to enhance the capabilities 
 <br/><img src="res/llava_next_benchmark.jpg" alt="Benchmark of LLaVA NeXT" width="1000">
 
 ### Applications
-LLaVA-NeXT is well-suited for a variety of real-world applications, including:
-- **Image Captioning:** Automatically generating descriptive captions for images.
-- **Visual Question Answering:** Answering questions based on the content of images.
-- **Image Classification:** Identifying and classifying objects within images.
-- **Custom Configurations:** Adapting the model configuration for specific tasks and requirements.
-- **Fast Text Generation:** Utilizing advanced attention mechanisms like Flash-Attention 2 to speed up text generation.
-
-By integrating higher resolution inputs, improved visual instruction tuning, and efficient deployment methods, LLaVA-NeXT sets a new standard for multimodal models. Its ability to handle complex visual and textual data makes it a valuable asset in the field of AI and machine learning.
+LLaVA, combining large language and vision capabilities, offers a variety of applications due to its understanding of both text and images. Here are some examples:
+* **Image Captioning:** LLaVA can generate detailed descriptions of images, making it useful for  
+  * Digital libraries:  enriching information about images 
+  * Social media platforms:  automatically generating captions for photos 
+  * Assistive technologies:  helping visually impaired users understand visual content  
+* **Visual Question Answering (VQA):**  LLaVA can answer questions about the content of an image,  useful for:
+  * Educational tools: creating interactive learning experiences  
+  * Customer support systems:  answering visual queries about products  
+  * Interactive AI applications:  engaging users in conversations that involve images
 
 
 ## Introduction to HuggingFace's LLaVA-NeXT API
