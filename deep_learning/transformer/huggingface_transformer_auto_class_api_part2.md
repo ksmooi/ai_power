@@ -47,13 +47,16 @@ These Auto Classes cover a wide range of tasks in natural language processing, c
 
 ## Example
 
-
 ### AutoModelForCausalLM
 This example demonstrates how to load and use a model for causal language modeling, including performing inference with the model.
 
 ```python
 from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer
 import torch
+
+# Download configuration from huggingface.co and cache.
+config = AutoConfig.from_pretrained("google-bert/bert-base-cased")
+model = AutoModelForCausalLM.from_config(config)
 
 # Download model and configuration from huggingface.co and cache.
 model = AutoModelForCausalLM.from_pretrained("google-bert/bert-base-cased")
@@ -95,6 +98,10 @@ This example demonstrates how to load and use a model for sequence-to-sequence t
 from transformers import AutoConfig, AutoModelForSeq2SeqLM, AutoTokenizer
 import torch
 
+# Download configuration from huggingface.co and cache.
+config = AutoConfig.from_pretrained("google-t5/t5-base")
+model = AutoModelForSeq2SeqLM.from_config(config)
+
 # Download model and configuration from huggingface.co and cache.
 model = AutoModelForSeq2SeqLM.from_pretrained("google-t5/t5-base")
 
@@ -132,6 +139,10 @@ This example demonstrates how to load and use a model for sequence classificatio
 ```python
 from transformers import AutoConfig, AutoModelForSequenceClassification, AutoTokenizer
 import torch
+
+# Download configuration from huggingface.co and cache.
+config = AutoConfig.from_pretrained("google-bert/bert-base-cased")
+model = AutoModelForSequenceClassification.from_config(config)
 
 # Download model and configuration from huggingface.co and cache.
 model = AutoModelForSequenceClassification.from_pretrained("google-bert/bert-base-cased")
@@ -173,6 +184,10 @@ This example demonstrates how to load and use a model for question answering, in
 ```python
 from transformers import AutoConfig, AutoModelForQuestionAnswering, AutoTokenizer
 import torch
+
+# Download configuration from huggingface.co and cache.
+config = AutoConfig.from_pretrained("google-bert/bert-base-cased")
+model = AutoModelForQuestionAnswering.from_config(config)
 
 # Download model and configuration from huggingface.co and cache.
 model = AutoModelForQuestionAnswering.from_pretrained("google-bert/bert-base-cased")
@@ -219,6 +234,10 @@ from transformers import AutoConfig, AutoModelForImageClassification, AutoImageP
 import torch
 from PIL import Image
 
+# Download configuration from huggingface.co and cache.
+config = AutoConfig.from_pretrained("google-bert/bert-base-cased")
+model = AutoModelForImageClassification.from_config(config)
+
 # Download model and configuration from huggingface.co and cache.
 model = AutoModelForImageClassification.from_pretrained("google-bert/bert-base-cased")
 
@@ -259,6 +278,10 @@ This example demonstrates how to load and use a model for object detection, incl
 from transformers import AutoConfig, AutoModelForObjectDetection, AutoImageProcessor
 import torch
 from PIL import Image
+
+# Download configuration from huggingface.co and cache.
+config = AutoConfig.from_pretrained("google-bert/bert-base-cased")
+model = AutoModelForObjectDetection.from_config(config)
 
 # Download model and configuration from huggingface.co and cache.
 model = AutoModelForObjectDetection.from_pretrained("google-bert/bert-base-cased")
@@ -303,6 +326,10 @@ This example demonstrates how to load and use a model for audio classification, 
 from transformers import AutoFeatureExtractor, AutoModelForAudioClassification
 import torch
 
+# Download configuration from huggingface.co and cache.
+#config = AutoConfig.from_pretrained("google-bert/bert-base-cased")
+#model = AutoModelForAudioClassification.from_config(config)
+
 # Load the feature extractor from huggingface.co
 feature_extractor = AutoFeatureExtractor.from_pretrained("stevhliu/my_awesome_minds_model")
 
@@ -334,6 +361,10 @@ This example demonstrates how to load and use a model for Connectionist Temporal
 from transformers import AutoProcessor, AutoModelForCTC
 import torch
 
+# Download configuration from huggingface.co and cache.
+#config = AutoConfig.from_pretrained("google-bert/bert-base-cased")
+#model = AutoModelForCTC.from_config(config)
+
 # Load the processor from huggingface.co
 processor = AutoProcessor.from_pretrained("stevhliu/my_awesome_asr_mind_model")
 
@@ -363,6 +394,10 @@ This example demonstrates how to load and use a model for table question answeri
 
 ```python
 from transformers import AutoConfig, AutoModelForTableQuestionAnswering, AutoTokenizer
+
+# Download configuration from huggingface.co and cache.
+config = AutoConfig.from_pretrained("google/tapas-base-finetuned-wtq")
+model = AutoModelForTableQuestionAnswering.from_config(config)
 
 # Load the model from huggingface.co
 model = AutoModelForTableQuestionAnswering.from_pretrained("google/tapas-base-finetuned-wtq")
@@ -412,6 +447,10 @@ This example demonstrates how to load and use a model for document question answ
 from transformers import AutoConfig, AutoModelForDocumentQuestionAnswering, AutoProcessor
 import torch
 
+# Download configuration from huggingface.co and cache.
+config = AutoConfig.from_pretrained("impira/layoutlm-document-qa", revision="52e01b3")
+model = AutoModelForDocumentQuestionAnswering.from_config(config)
+
 # Load the model from huggingface.co
 model = AutoModelForDocumentQuestionAnswering.from_pretrained("impira/layoutlm-document-qa", revision="52e01b3")
 
@@ -456,6 +495,10 @@ This example demonstrates how to load and use a model for visual question answer
 from transformers import AutoConfig, AutoModelForVisualQuestionAnswering, AutoProcessor
 import torch
 
+# Download configuration from huggingface.co and cache.
+config = AutoConfig.from_pretrained("dandelin/vilt-b32-finetuned-vqa")
+model = AutoModelForVisualQuestionAnswering.from_config(config)
+
 # Load the model from huggingface.co
 model = AutoModelForVisualQuestionAnswering.from_pretrained("dandelin/vilt-b32-finetuned-vqa")
 
@@ -492,8 +535,7 @@ print(predicted_answer)
 ```
 
 
-
-### References
+## References
 For further reading and to deepen your understanding of HuggingFace Auto Classes, refer to the following resources:
 
 - **[HuggingFace Documentation on Auto Classes](https://huggingface.co/docs/transformers/model_doc/auto) :** Provides comprehensive details and examples on utilizing Auto Classes for various models and tasks.

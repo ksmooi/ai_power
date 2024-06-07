@@ -318,7 +318,7 @@ print(prediction_logits)
 ```
 
 
-### References
+## References
 For further reading and to deepen your understanding of HuggingFace Auto Classes, refer to the following resources:
 
 - **[HuggingFace Documentation on Auto Classes](https://huggingface.co/docs/transformers/model_doc/auto) :** Provides comprehensive details and examples on utilizing Auto Classes for various models and tasks.
