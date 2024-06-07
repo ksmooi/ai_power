@@ -56,7 +56,10 @@ import requests
 import torch
 
 # Load the pre-trained CLIP vision model and image processor
-model = CLIPVisionModel.from_pretrained("openai/clip-vit-base-patch32")
+model_path = "openai/clip-vit-large-patch14"
+model_path = "openai/clip-vit-base-patch32"
+model_path = "openai/clip-vit-base-patch16"
+model = CLIPVisionModel.from_pretrained(model_path)
 processor = CLIPImageProcessor.from_pretrained("openai/clip-vit-base-patch32")
 
 # Load an image from the web
@@ -90,9 +93,12 @@ from transformers import CLIPTokenizer, CLIPTextModel, CLIPTextConfig
 import torch
 
 # Load the pre-trained CLIP tokenizer and text model
-tokenizer = CLIPTokenizer.from_pretrained("openai/clip-vit-base-patch32")
-text_config = CLIPTextConfig.from_pretrained("openai/clip-vit-base-patch32")
-text_model = CLIPTextModel.from_pretrained("openai/clip-vit-base-patch32", config=text_config)
+model_path = "openai/clip-vit-large-patch14"
+model_path = "openai/clip-vit-base-patch32"
+model_path = "openai/clip-vit-base-patch16"
+tokenizer = CLIPTokenizer.from_pretrained(model_path)
+text_config = CLIPTextConfig.from_pretrained(model_path)
+text_model = CLIPTextModel.from_pretrained(model_path, config=text_config)
 
 # Define a text input
 text = "A beautiful day at the beach with clear blue skies."
@@ -157,7 +163,10 @@ config = CLIPConfig.from_text_vision_configs(text_config, vision_config)
 model = CLIPModel(config)
 
 # Load the pre-trained image processor
-processor = CLIPImageProcessor.from_pretrained("openai/clip-vit-base-patch32")
+model_path = "openai/clip-vit-large-patch14"
+model_path = "openai/clip-vit-base-patch32"
+model_path = "openai/clip-vit-base-patch16"
+processor = CLIPImageProcessor.from_pretrained(model_path)
 
 # Load and preprocess an image
 url = "https://example.com/path/to/your/image.jpg"
@@ -190,8 +199,11 @@ import requests
 import torch
 
 # Load the pre-trained CLIP vision model and image processor
-model = CLIPVisionModel.from_pretrained("openai/clip-vit-base-patch32")
-processor = CLIPImageProcessor.from_pretrained("openai/clip-vit-base-patch32")
+model_path = "openai/clip-vit-large-patch14"
+model_path = "openai/clip-vit-base-patch32"
+model_path = "openai/clip-vit-base-patch16"
+model = CLIPVisionModel.from_pretrained(model_path)
+processor = CLIPImageProcessor.from_pretrained(model_path)
 
 # List of image URLs
 image_urls = [
@@ -268,7 +280,10 @@ import requests
 import torch
 
 # Load the pre-trained CLIP vision model
-model = CLIPVisionModel.from_pretrained("openai/clip-vit-base-patch32")
+model_path = "openai/clip-vit-large-patch14"
+model_path = "openai/clip-vit-base-patch32"
+model_path = "openai/clip-vit-base-patch16"
+model = CLIPVisionModel.from_pretrained(model_path)
 processor = CustomImageProcessor()
 
 # Load and preprocess an image
