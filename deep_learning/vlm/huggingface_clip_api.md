@@ -5,6 +5,8 @@ The CLIP (Contrastive Language–Image Pre-training) model by OpenAI has revolut
 ## CLIP Overview
 The CLIP model, proposed in "Learning Transferable Visual Models From Natural Language Supervision" by Alec Radford and colleagues, is a neural network trained on a variety of (image, text) pairs. CLIP (Contrastive Language-Image Pre-Training) can predict the most relevant text snippet given an image using natural language instructions, without direct task-specific optimization, similar to the zero-shot capabilities of GPT-2 and GPT-3.
 
+<img src="res/clip_model_pretrain.jpg" alt="CLIP Model Pre-train" width="1000">
+
 ### Abstract from the Paper
 State-of-the-art computer vision systems are typically trained to predict a fixed set of predetermined object categories, limiting their generality and usability. Learning from raw text about images provides a broader source of supervision. CLIP demonstrates that predicting which caption matches which image is an efficient and scalable way to learn state-of-the-art image representations from scratch using a dataset of 400 million (image, text) pairs collected from the internet. After pre-training, CLIP can reference learned visual concepts or describe new ones, enabling zero-shot transfer to downstream tasks. CLIP's performance was benchmarked on over 30 different computer vision datasets, covering tasks such as OCR, action recognition in videos, geo-localization, and various types of fine-grained object classification. It often matches or exceeds the performance of fully supervised models without additional dataset-specific training. For example, CLIP matches the accuracy of the original ResNet-50 on ImageNet zero-shot, without using any of the 1.28 million training examples. The code and pre-trained model weights are publicly available.
 
@@ -309,6 +311,7 @@ By understanding and utilizing these components, you can leverage the full power
 ## Reference
 For more information on using CLIP-related functions, please refer to the following resources:
 
+- [CLIP: Connecting text and images](https://openai.com/index/clip/)
 - [HuggingFace Transformers: CLIP Documentation](https://huggingface.co/docs/transformers/en/model_doc/clip)
 - [CLIP Text Config Documentation](https://huggingface.co/docs/transformers/en/model_doc/clip#transformers.CLIPTextConfig)
 - [CLIP Vision Config Documentation](https://huggingface.co/docs/transformers/en/model_doc/clip#transformers.CLIPVisionConfig)
