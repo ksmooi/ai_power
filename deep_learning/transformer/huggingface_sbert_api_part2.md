@@ -79,14 +79,14 @@ model = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2", classifier_dropout=
 tokenizer_args = {"use_fast": True}
 automodel_args = {"output_attentions": True}
 model = CrossEncoder(
-    model_name="cross-encoder/ms-marco-MiniLM-L-6-v2",
-    num_labels=3,
-    max_length=128,
-    device="cuda",
-    tokenizer_args=tokenizer_args,
-    automodel_args=automodel_args,
-    default_activation_function=nn.Softmax(dim=1),
-    classifier_dropout=0.1
+    model_name="cross-encoder/ms-marco-MiniLM-L-6-v2", # Specify the model name or path
+    num_labels=3,                                      # Set the number of labels for the classifier (e.g., 3 labels for a multi-class classification task)
+    max_length=128,                                    # Set the maximum length for input sequences; longer sequences will be truncated
+    device="cuda",                                     # Specify the device for computation (use GPU if available)
+    tokenizer_args=tokenizer_args,                     # Pass custom arguments to the tokenizer (e.g., use the fast tokenizer)
+    automodel_args=automodel_args,                     # Pass custom arguments to the AutoModel (e.g., output attentions)
+    default_activation_function=nn.Softmax(dim=1),     # Set a custom activation function (use softmax for multi-class classification)
+    classifier_dropout=0.1                             # Specify the dropout ratio for the classification head
 )
 
 # Define sentence pairs
@@ -158,14 +158,14 @@ scores = model.predict(sentence_pairs, convert_to_tensor=True)
 # Comprehensive example with multiple parameters
 # ----------------------------------------------------------
 scores = model.predict(
-    sentence_pairs,
-    batch_size=16,
-    show_progress_bar=True,
-    num_workers=4,
-    activation_fct=nn.Softmax(dim=1),
-    apply_softmax=True,
-    convert_to_numpy=True,
-    convert_to_tensor=False
+    sentence_pairs,                     # List of sentence pairs to be evaluated
+    batch_size=16,                      # Batch size for encoding (process 16 sentence pairs at a time)
+    show_progress_bar=True,             # Show a progress bar during the prediction process
+    num_workers=4,                      # Number of workers for tokenization (use 4 worker threads)
+    activation_fct=nn.Softmax(dim=1),   # Apply softmax activation function to the logits output (for multi-class classification)
+    apply_softmax=True,                 # Apply softmax to the logits output if there are more than 2 dimensions
+    convert_to_numpy=True,              # Convert the output to a numpy array
+    convert_to_tensor=False             # Do not convert the output to a PyTorch tensor
 )
 
 print(scores)
@@ -242,17 +242,17 @@ ranking = model.rank(query, documents, convert_to_tensor=True)
 # Comprehensive example with multiple parameters
 # ----------------------------------------------------------
 ranking = model.rank(
-    query,
-    documents,
-    top_k=2,
-    return_documents=True,
-    batch_size=16,
-    show_progress_bar=True,
-    num_workers=4,
-    activation_fct=nn.Softmax(dim=1),
-    apply_softmax=True,
-    convert_to_numpy=True,
-    convert_to_tensor=False
+    query,                              # The query string to rank the documents against
+    documents,                          # List of documents to be ranked
+    top_k=2,                            # Return the top 2 ranked documents
+    return_documents=True,              # Return both the document texts and their scores
+    batch_size=16,                      # Batch size for processing the documents (process 16 documents at a time)
+    show_progress_bar=True,             # Show a progress bar during the ranking process
+    num_workers=4,                      # Number of workers for tokenization (use 4 worker threads)
+    activation_fct=nn.Softmax(dim=1),   # Apply softmax activation function to the logits output (for multi-class classification)
+    apply_softmax=True,                 # Apply softmax to the logits output if there are more than 2 dimensions
+    convert_to_numpy=True,              # Convert the output scores to a numpy array
+    convert_to_tensor=False             # Do not convert the output scores to a PyTorch tensor
 )
 
 print(ranking)
@@ -318,13 +318,13 @@ hits = util.semantic_search(query_embedding, document_embeddings, score_function
 
 # Perform semantic search with multiple parameters
 # ----------------------------------------------------------
-hits = util.semantic_search(
-    query_embedding,
-    document_embeddings,
-    query_chunk_size=50,
-    corpus_chunk_size=100000,
-    top_k=3,
-    score_function=dot_score
+hits = semantic_search(
+    query_embedding,             # The embedding of the query to search for
+    document_embeddings,         # The embeddings of the documents to search within
+    query_chunk_size=50,         # Split the query into chunks of size 50 for efficient processing
+    corpus_chunk_size=100000,    # Split the corpus into chunks of size 100,000 for efficient processing
+    top_k=3,                     # Return the top 3 most similar documents for the query
+    score_function=dot_score     # Use the dot product as the similarity scoring function
 )
 
 print(hits)

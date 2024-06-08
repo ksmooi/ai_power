@@ -183,16 +183,16 @@ embeddings = model.encode(sentences, normalize_embeddings=True)
 # Comprehensive example with multiple parameters
 # ----------------------------------------------------------
 embeddings = model.encode(
-    sentences,
-    prompt="query: ",
-    batch_size=16,
-    show_progress_bar=True,
-    output_value="sentence_embedding",
-    precision="float32",
-    convert_to_numpy=True,
-    convert_to_tensor=False,
-    device="cuda",
-    normalize_embeddings=True
+    sentences,                          # List of sentences to encode
+    prompt="query: ",                   # Add a prompt "query: " to each sentence before encoding
+    batch_size=16,                      # Process the sentences in batches of 16 for efficiency
+    show_progress_bar=True,             # Show a progress bar during the encoding process
+    output_value="sentence_embedding",  # Return the sentence embeddings
+    precision="float32",                # Use 32-bit floating point precision for the embeddings
+    convert_to_numpy=True,              # Convert the output embeddings to a NumPy array
+    convert_to_tensor=False,            # Do not convert the output embeddings to a PyTorch tensor
+    device="cuda",                      # Use the GPU (CUDA) for encoding to speed up the process
+    normalize_embeddings=True           # Normalize the embeddings to have a length of 1
 )
 
 print(embeddings.shape)  # Output: (3, 384)
@@ -256,13 +256,13 @@ print(normalized_embeddings.shape)  # Output: (3, 384)
 # Encode sentences with multiple parameters
 # ----------------------------------------------------------
 complex_embeddings = model.encode_multi_process(
-    sentences,
-    pool,
-    prompt="query: ",
-    batch_size=16,
-    chunk_size=100,
-    precision="float32",
-    normalize_embeddings=True
+    sentences,                # List of sentences to encode
+    pool,                     # Pool of workers started with start_multi_process_pool
+    prompt="query: ",         # Add a prompt "query: " to each sentence before encoding
+    batch_size=16,            # Process the sentences in batches of 16 for efficiency
+    chunk_size=100,           # Chunk size for distributing sentences to individual processes
+    precision="float32",      # Use 32-bit floating point precision for the embeddings
+    normalize_embeddings=True # Normalize the embeddings to have a length of 1
 )
 print(complex_embeddings.shape)  # Output: (3, 384)
 
@@ -338,15 +338,15 @@ paraphrases = util.paraphrase_mining(model, sentences, score_function=dot_score)
 # Perform paraphrase mining with multiple parameters
 # ----------------------------------------------------------
 paraphrases = util.paraphrase_mining(
-    model,
-    sentences,
-    show_progress_bar=True,
-    batch_size=16,
-    query_chunk_size=2000,
-    corpus_chunk_size=50000,
-    max_pairs=10,
-    top_k=2,
-    score_function=dot_score
+    model,                      # The model to use for encoding and similarity computation
+    sentences,                  # List of sentences to find paraphrases in
+    show_progress_bar=True,     # Display a progress bar during processing
+    batch_size=16,              # Process the sentences in batches of 16 for efficiency
+    query_chunk_size=2000,      # Size of chunks for the query side during similarity computation
+    corpus_chunk_size=50000,    # Size of chunks for the corpus side during similarity computation
+    max_pairs=10,               # Maximum number of paraphrase pairs to return
+    top_k=2,                    # Number of top similar sentences to consider for each sentence
+    score_function=dot_score    # Function to compute similarity scores between sentence embeddings
 )
 
 print(paraphrases)
