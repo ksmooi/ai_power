@@ -5,6 +5,11 @@
 ### What are Transformers Pipelines?
 The pipelines are a great and easy way to use models for inference. These pipelines are objects that abstract most of the complex code from the library, offering a simple API dedicated to several tasks, including Named Entity Recognition, Masked Language Modeling, Sentiment Analysis, Feature Extraction, and Question Answering. 
 
+### Key Features and Capabilities
+There are two categories of pipeline abstractions to be aware of:
+- The `pipeline()` which is the most powerful object encapsulating all other pipelines.
+- Task-specific pipelines are available for audio, computer vision, natural language processing, and multimodal tasks.
+
 ### Understanding the Transformers Pipeline Workflow
 <img src="res/transformer_pipeline_nlp.jpg" alt="NLP Pipeline" width="800">
 
@@ -20,11 +25,6 @@ The above image illustrates the main feature of the NLP pipeline in the Hugging 
     - **Example**: For the given logits, the final prediction is `POSITIVE` with a probability of `99.89%` and `NEGATIVE` with a probability of `0.11%`.
 
 This end-to-end workflow demonstrates how raw text input is transformed into meaningful predictions using the Hugging Face Transformers pipeline. By abstracting the complexity of the underlying models, the pipeline provides a simple and efficient way to leverage state-of-the-art machine learning models for various NLP tasks.
-
-### Key Features and Capabilities
-There are two categories of pipeline abstractions to be aware of:
-- The `pipeline()` which is the most powerful object encapsulating all other pipelines.
-- Task-specific pipelines are available for audio, computer vision, natural language processing, and multimodal tasks.
 
 
 ## Introduction to Transformers Pipelines API
