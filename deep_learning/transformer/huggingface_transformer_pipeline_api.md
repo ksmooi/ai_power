@@ -3,7 +3,14 @@
 ## Overview of Transformers Pipelines
 
 ### What are Transformers Pipelines?
-The pipelines are a great and easy way to use models for inference. These pipelines are objects that abstract most of the complex code from the library, offering a simple API dedicated to several tasks, including Named Entity Recognition, Masked Language Modeling, Sentiment Analysis, Feature Extraction, and Question Answering. See the task summary for examples of use.
+The pipelines are a great and easy way to use models for inference. These pipelines are objects that abstract most of the complex code from the library, offering a simple API dedicated to several tasks, including Named Entity Recognition, Masked Language Modeling, Sentiment Analysis, Feature Extraction, and Question Answering. 
+
+<img src="res/transformer_pipeline_nlp.jpg" alt="NLP Pipeline" width="800">
+
+This end-to-end workflow demonstrates how raw text input is transformed into meaningful predictions using the Hugging Face Transformers pipeline. The process is divided into three main stages:
+1. **Tokenizer**: Converts raw text into input IDs that the model can process. For example, the text "This course is amazing" is tokenized into the sequence [101, 2023, 2607, 2003, 6429, 999, 102].
+2. **Model**: Processes the input IDs and generates raw predictions called logits. In this case, the model outputs logits of [-4.3630, 4.6859].
+3. **Post Processing**: Converts logits into human-readable predictions with probabilities. For the given logits, the final prediction is POSITIVE with a probability of 99.89% and NEGATIVE with a probability of 0.11%.
 
 ### Key Features and Capabilities
 There are two categories of pipeline abstractions to be aware of:
@@ -707,4 +714,5 @@ There are two categories of pipeline abstractions to be aware of:
 - [HuggingFace Transformers Pipelines](https://huggingface.co/docs/transformers/main_classes/pipelines)
 - [An Introduction to HuggingFace Transformers Pipelines through animations and data-flows](https://www.youtube.com/watch?v=dduGEXv31jI)
 - [All NLP tasks using Transformers Pipeline](https://www.analyticsvidhya.com/blog/2021/12/all-nlp-tasks-using-transformers-package/)
+- [Mastering NLP with Hugging Face Transformers: Unveiling the Power of Pipelines](https://medium.com/@roshikanayanadhara/mastering-nlp-with-hugging-face-transformers-unveiling-the-power-of-pipelines-fb332aa8fb36)
 
