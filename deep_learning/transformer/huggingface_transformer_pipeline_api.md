@@ -111,9 +111,9 @@ To set up your environment and use a pipeline for a specific task, you can follo
     ```
 
 
-## Example by Use Case
+## Task-Specific Examples
 
-### Example: Using Various Pipelines with Custom Parameters
+### Using Various Pipelines with Custom Parameters
 
 This example demonstrates how to initialize and use various types of pipelines provided by the `transformers` library, each with custom parameters. It covers:
 - Initializing a text classification pipeline with a specific model and tokenizer, using the CPU.
@@ -215,7 +215,7 @@ result = qa(question=question, context=context)
 print(result)
 ```
 
-### Example: Conversational Pipeline Usage
+### Conversational Pipeline Usage
 
 This example demonstrates how to use the `transformers` library's conversational pipeline to manage and generate responses in a conversation. It covers:
 - Initializing the conversational pipeline.
@@ -261,7 +261,7 @@ for message in conversation.iter_texts():
     print(f"{message['role']}: {message['content']}")
 ```
 
-### Example: Handling Multiple Conversations with Conversational Pipeline
+### Handling Multiple Conversations with Conversational Pipeline
 
 This example demonstrates how to use the `transformers` library's conversational pipeline to manage and generate responses for multiple conversations simultaneously. It covers:
 
@@ -293,7 +293,7 @@ for i, conv in enumerate([conversation1, conversation2], 1):
     print()
 ```
 
-### Example: Using Object Detection Pipeline with Various Image Inputs
+### Using Object Detection Pipeline with Various Image Inputs
 
 This example demonstrates how to use the `transformers` library's object detection pipeline to process images from different sources. It covers:
 - Initializing the object detection pipeline with a specific model.
@@ -363,7 +363,7 @@ result = detector(images)
 print(result)
 ```
 
-### Example: Using Question Answering Pipeline with Various Configurations
+### Using Question Answering Pipeline with Various Configurations
 
 This example demonstrates how to use the `transformers` library's question answering pipeline with various configurations and parameters. It covers:
 - Initializing the question answering pipeline.
@@ -444,7 +444,7 @@ else:
     print(result)
 ```
 
-### Example: Using Text Generation Pipeline with Various Configurations
+### Using Text Generation Pipeline with Various Configurations
 
 This example demonstrates how to use the `transformers` library's text generation pipeline with various configurations and parameters. It covers:
 - Initializing the text generation pipeline.
@@ -524,7 +524,7 @@ result = text_generator(prompt, prefix=prefix)
 print(result)
 ```
 
-### Example: Using Document Question Answering Pipeline with Various Configurations
+### Using Document Question Answering Pipeline with Various Configurations
 
 This example demonstrates how to use the `transformers` library's document question answering pipeline with various configurations and parameters. It covers:
 - Initializing the document question answering pipeline.
@@ -601,7 +601,7 @@ result = doc_qa_pipeline(image=image_path, question=question, lang=lang, tessera
 print(result)
 ```
 
-### Example: Using Visual Question Answering Pipeline with Various Configurations
+### Using Visual Question Answering Pipeline with Various Configurations
 
 This example demonstrates how to use the `transformers` library's visual question answering (VQA) pipeline with various configurations and parameters. It covers:
 

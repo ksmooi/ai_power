@@ -23,7 +23,7 @@ Behind the scenes, `AutoModelForSequenceClassification` and `AutoTokenizer` coll
 
 These Auto Classes cover a wide range of tasks in natural language processing, computer vision, and audio processing, making it easier to leverage HuggingFace's extensive model hub.
 
-## Example
+## Examples in Action
 
 ### AutoConfig
 This example demonstrates how to load and use configurations for models from HuggingFace's model hub.

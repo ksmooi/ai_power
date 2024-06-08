@@ -45,7 +45,7 @@ The table below provides a comprehensive overview of the Auto Classes available 
 
 These Auto Classes cover a wide range of tasks in natural language processing, computer vision, and audio processing, making it easier to leverage HuggingFace's extensive model hub.
 
-## Example
+## Examples in Action
 
 ### AutoModelForCausalLM
 This example demonstrates how to load and use a model for causal language modeling, including performing inference with the model.
