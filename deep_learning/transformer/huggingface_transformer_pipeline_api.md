@@ -5,12 +5,21 @@
 ### What are Transformers Pipelines?
 The pipelines are a great and easy way to use models for inference. These pipelines are objects that abstract most of the complex code from the library, offering a simple API dedicated to several tasks, including Named Entity Recognition, Masked Language Modeling, Sentiment Analysis, Feature Extraction, and Question Answering. 
 
+### Understanding the Transformers Pipeline Workflow
 <img src="res/transformer_pipeline_nlp.jpg" alt="NLP Pipeline" width="800">
 
-This end-to-end workflow demonstrates how raw text input is transformed into meaningful predictions using the Hugging Face Transformers pipeline. The process is divided into three main stages:
-1. **Tokenizer**: Converts raw text into input IDs that the model can process. For example, the text "This course is amazing" is tokenized into the sequence [101, 2023, 2607, 2003, 6429, 999, 102].
-2. **Model**: Processes the input IDs and generates raw predictions called logits. In this case, the model outputs logits of [-4.3630, 4.6859].
-3. **Post Processing**: Converts logits into human-readable predictions with probabilities. For the given logits, the final prediction is POSITIVE with a probability of 99.89% and NEGATIVE with a probability of 0.11%.
+The above image illustrates the main feature of the NLP pipeline in the Hugging Face Transformers module, specifically for a text classification task. The process is divided into three main stages:
+1. **Tokenizer**:
+    - **Function**: Converts raw text into input IDs that the model can process.
+    - **Example**: The text "This course is amazing" is tokenized into the sequence `[101, 2023, 2607, 2003, 6429, 999, 102]`.
+2. **Model**:
+    - **Function**: Processes the input IDs and generates raw predictions called logits.
+    - **Example**: The model processes the input IDs and outputs logits of `[-4.3630, 4.6859]`.
+3. **Post Processing**:
+    - **Function**: Converts logits into human-readable predictions with probabilities.
+    - **Example**: For the given logits, the final prediction is `POSITIVE` with a probability of `99.89%` and `NEGATIVE` with a probability of `0.11%`.
+
+This end-to-end workflow demonstrates how raw text input is transformed into meaningful predictions using the Hugging Face Transformers pipeline. By abstracting the complexity of the underlying models, the pipeline provides a simple and efficient way to leverage state-of-the-art machine learning models for various NLP tasks.
 
 ### Key Features and Capabilities
 There are two categories of pipeline abstractions to be aware of:
