@@ -23,7 +23,7 @@ These classes form the backbone of the HuggingFace Datasets library, providing t
 ## class DatasetInfo
 The `DatasetInfo` class encapsulates the metadata and descriptive information about a dataset. This includes essential details like the dataset's name, version, features, and various attributes necessary for understanding and utilizing the dataset effectively.
 
-### Overview of DatasetInfo
+**Overview of DatasetInfo**
 The `DatasetInfo` class provides a comprehensive structure for documenting a dataset, including its description, citation, license, and features. It supports loading and saving this metadata, merging information from multiple sources, and aligning task templates with dataset features.
 
 | Method                  | Description                                                                                                                    |
@@ -159,7 +159,9 @@ print(info.homepage)     # Output: "http://example.com"
 ## class Dataset
 class Dataset representing a dataset backed by an Arrow table, providing various methods for data manipulation, transformation, and export. It extends `DatasetInfoMixin`, `IndexableMixin`, and `TensorflowDatasetMixin`.
 
-### Overview of Dataset
+**Overview of Dataset**
+The Dataset class in the HuggingFace Datasets library provides methods for efficiently handling, transforming, and exporting datasets. Below is an overview of the available methods and their descriptions:
+
 | **Method** | **Description** |
 |------------|-----------------|
 | `filter` | Applies a filter function to the dataset, keeping only the examples that meet the criteria defined by the function. |
@@ -194,7 +196,7 @@ class Dataset representing a dataset backed by an Arrow table, providing various
 | `_generate_tables_from_cache_file` | Generates tables from a cache file. |
 
 
-### Examples of `Dataset`
+**Examples of Dataset**
 
 **1. Sorting the Dataset**
 Sort the dataset based on a specific column in descending order.
@@ -449,7 +451,7 @@ print(dict_data.keys())  # Print the dictionary keys to verify conversion
 ## class DatasetDict
 A dictionary (dict of str: datasets.Dataset) with dataset transforms methods (map, filter, etc.)
 
-### Overview of DatasetDict
+**Overview of DatasetDict**
 This table provides an overview of the methods available in the DatasetDict class, which enable various dataset transformations and manipulations.
 
 | **Method**              | **Description**                                                                                          |
@@ -483,7 +485,7 @@ This table provides an overview of the methods available in the DatasetDict clas
 | `rename_columns`        | Renames several columns in the dataset, updating the associated features.                                |
 
 
-### Examples of DatasetDict
+**Examples of DatasetDict**
 
 **1. Sorting the DatasetDict**
 Sorting a dataset by a specific column in ascending order.
@@ -711,7 +713,7 @@ print(dataset_dict)
 ## class IterableDataset
 The `IterableDataset` class represents a dataset backed by an iterable, allowing for efficient, streaming access to data. This is particularly useful for handling large datasets that cannot be loaded into memory at once.
 
-### Overview of IterableDataset
+**Overview of IterableDataset**
 The table below provides an overview of the methods available in the `IterableDataset` class, including their descriptions and main functionalities.
 
 | **Method**        | **Description**                                                                                                           |
@@ -750,7 +752,7 @@ The table below provides an overview of the methods available in the `IterableDa
 | `_resolve_features` | Resolves and infers features of the dataset if they are not explicitly provided.                                         |
 
 
-### Examples of IterableDataset
+**Examples of IterableDataset**
 
 **1. Creating an IterableDataset from a Generator**
 This example demonstrates how to create an `IterableDataset` from a generator function.
@@ -937,7 +939,7 @@ for example in updated_dataset:
 ## class IterableDatasetDict
 The `IterableDatasetDict` class is a dictionary that contains multiple `IterableDataset` objects. This class provides methods to manipulate all datasets within the dictionary in a uniform way, such as renaming columns, filtering, shuffling, and applying transformations.
 
-### Overview of IterableDatasetDict
+**Overview of IterableDatasetDict**
 The following table describes the methods available in the `IterableDatasetDict` class:
 
 | **Method**        | **Description**                                                                                                                                                      |
@@ -953,7 +955,7 @@ The following table describes the methods available in the `IterableDatasetDict`
 | `cast_column`     | Casts a specified column to a new feature type for decoding in all datasets.                                                                                         |
 | `cast`            | Casts all datasets to a new set of features.                                                                                                                         |
 
-### Examples of IterableDatasetDict
+**Examples of IterableDatasetDict**
 
 **1. Setting a format for all datasets in the dictionary**
 The main purpose of this example is to set the format of all datasets in the dictionary to "torch" so they can be used with PyTorch DataLoader.
@@ -1138,7 +1140,7 @@ for example in casted_ds_dict["train"].take(3):
 ## class Features
 The `Features` class is a special dictionary that defines the internal structure of a dataset. It specifies the types of the columns in a dataset and supports various data types, including nested fields, lists, and multidimensional arrays.
 
-### Overview of Features
+**Overview of Features**
 The table below provides an overview of the methods available in the `Features` class:
 
 | **Method** | **Description** |
@@ -1157,7 +1159,7 @@ The table below provides an overview of the methods available in the `Features` 
 | `flatten` | Flatten the features, replacing dictionary columns with their subfields. |
 
 
-### Examples of Features
+**Examples of Features**
 
 **1. Creating Features from a Dictionary**
 This example demonstrates how to create a `Features` object from a dictionary.
