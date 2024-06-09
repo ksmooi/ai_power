@@ -13,6 +13,7 @@ Datasets can be stored in multiple locations, and HuggingFace Datasets can help 
 HuggingFace Datasets offers several methods to load datasets:
 
 **1. The Hugging Face Hub**
+
 The Hugging Face Hub is a community-driven platform that hosts a wide array of datasets. You can easily discover and load datasets from the Hub without requiring a dataset loading script. Simply use the `load_dataset` function:
 
 ```python
@@ -44,6 +45,7 @@ dataset = load_dataset("rotten_tomatoes", split="train")
 ```
 
 **2. Local Loading Script**
+
 If you have a local dataset loading script, you can load the dataset by passing the script’s path to `load_dataset`:
 
 ```python
@@ -52,6 +54,7 @@ dataset = load_dataset("path/to/local/loading_script/loading_script.py", split="
 ```
 
 **3. Local and Remote Files**
+
 You can load datasets stored as CSV, JSON, SQL, or WebDataset files, either locally or from remote URLs:
 
 ```python
@@ -73,6 +76,7 @@ dataset = load_dataset("webdataset", data_files={"train": path}, split="train", 
 ```
 
 **4. In-Memory Data**
+
 You can create datasets directly from in-memory data structures:
 
 ```python
@@ -133,7 +137,8 @@ By leveraging these methods, HuggingFace Datasets makes it easy to load and mani
 ### load_dataset()
 Here are some examples using various parameters of the `load_dataset` function, with comments to explain each step:
 
-**Loading a Dataset from the Hugging Face Hub**
+**1. Loading a Dataset from the Hugging Face Hub**
+
 This example shows how to load a dataset from the Hugging Face Hub using a specific dataset name and split. It also demonstrates specifying a revision to use a particular version of the dataset.
 
 ```python
@@ -146,7 +151,8 @@ dataset = load_dataset('rotten_tomatoes', split='train', revision='main')
 print(dataset.head())
 ```
 
-**Loading a Dataset with Specific Data Files**
+**2. Loading a Dataset with Specific Data Files**
+
 This example demonstrates how to load a dataset by specifying the paths to the data files. This is useful when the dataset is stored in multiple files that need to be mapped to different splits.
 
 ```python
@@ -162,7 +168,8 @@ dataset = load_dataset('csv', data_files=data_files)
 print(dataset['train'].head())
 ```
 
-**Loading a Dataset from Local Directory**
+**3. Loading a Dataset from Local Directory**
+
 This example shows how to load a dataset from a local directory containing a CSV file.
 
 ```python
@@ -175,7 +182,8 @@ dataset = load_dataset('csv', data_files='path/to/local/data.csv')
 print(dataset.head())
 ```
 
-**Loading a Streaming Dataset**
+**4. Loading a Streaming Dataset**
+
 This example demonstrates how to load a dataset in streaming mode. Streaming mode is useful for large datasets that cannot fit into memory.
 
 ```python
@@ -189,7 +197,8 @@ for example in dataset.take(5):
     print(example)
 ```
 
-**Loading a Dataset with Multiprocessing**
+**5. Loading a Dataset with Multiprocessing**
+
 This example shows how to load a dataset using multiple processes to speed up the downloading and preparation of the dataset.
 
 ```python
@@ -202,7 +211,8 @@ dataset = load_dataset('imagenet-1k', split='train', num_proc=8)
 print(dataset.head())
 ```
 
-**Loading a Dataset with Custom Features**
+**6. Loading a Dataset with Custom Features**
+
 This example demonstrates how to load a dataset and specify custom features using the `Features` class. This is useful when you want to enforce a specific schema for the dataset.
 
 ```python
@@ -221,7 +231,8 @@ dataset = load_dataset('csv', data_files='path/to/data.csv', features=custom_fea
 print(dataset.features)
 ```
 
-**Loading a Dataset with Storage Options**
+**7. Loading a Dataset with Storage Options**
+
 This example shows how to load a dataset with specific storage options. This is useful when working with remote filesystems or other special storage configurations.
 
 ```python
@@ -244,7 +255,8 @@ print(dataset.head())
 ### load_from_disk()
 Here are some examples using various parameters of the `load_from_disk` function, with comments to explain each step:
 
-**Loading a Dataset from a Local Directory**
+**1. Loading a Dataset from a Local Directory**
+
 This example shows how to load a dataset that was previously saved to a local directory.
 
 ```python
@@ -257,7 +269,8 @@ dataset = load_from_disk('path/to/dataset/directory')
 print(dataset.head())
 ```
 
-**Loading a Dataset Dictionary from a Local Directory**
+**2. Loading a Dataset Dictionary from a Local Directory**
+
 In this directory structure, each split (train, validation, test) has its own subdirectory containing the necessary files: dataset.arrow, dataset_info.json, and state.json.
 ```
 /path/to/dataset_dict/directory/
@@ -318,7 +331,8 @@ Split: test
 4  Not worth the hype.  0
 ```
 
-**Loading a Dataset from a Remote URI**
+**3. Loading a Dataset from a Remote URI**
+
 This example demonstrates how to load a dataset from a remote URI, such as an S3 bucket, using specific storage options.
 
 ```python
@@ -338,7 +352,8 @@ dataset = load_from_disk('s3://my-bucket/dataset/train', storage_options=storage
 print(dataset.head())
 ```
 
-**Loading a Dataset and Keeping it in Memory**
+**4. Loading a Dataset and Keeping it in Memory**
+
 This example shows how to load a dataset and keep it in memory for faster access. This is useful for smaller datasets that fit into memory.
 
 ```python
@@ -354,7 +369,8 @@ print(dataset.head())
 ### get_dataset_infos()
 Here are some examples using various parameters of the `get_dataset_infos` function, with comments to explain each step:
 
-**Getting Dataset Info from the Hugging Face Hub**
+**1. Getting Dataset Info from the Hugging Face Hub**
+
 This example shows how to get the metadata information of a dataset hosted on the Hugging Face Hub.
 
 ```python
@@ -367,7 +383,8 @@ dataset_infos = get_dataset_infos('rotten_tomatoes')
 print(dataset_infos)
 ```
 
-**Getting Dataset Info with a Specific Version**
+**2. Getting Dataset Info with a Specific Version**
+
 This example demonstrates how to get the metadata information for a specific version of the dataset by specifying the revision parameter.
 
 ```python
@@ -380,7 +397,8 @@ dataset_infos = get_dataset_infos('glue', revision='main')
 print(dataset_infos)
 ```
 
-**Getting Dataset Info with Specific Data Files**
+**3. Getting Dataset Info with Specific Data Files**
+
 This example shows how to get the metadata information of a dataset by specifying particular data files.
 
 ```python
@@ -400,7 +418,8 @@ dataset_infos = get_dataset_infos('csv', data_files=data_files)
 print(dataset_infos)
 ```
 
-**Getting Dataset Info with Download Configuration**
+**4. Getting Dataset Info with Download Configuration**
+
 This example demonstrates how to get the metadata information for a dataset with specific download configuration parameters.
 
 ```python
@@ -419,7 +438,8 @@ dataset_infos = get_dataset_infos('squad', download_config=download_config)
 print(dataset_infos)
 ```
 
-**Getting Dataset Info with Custom Configurations**
+**5. Getting Dataset Info with Custom Configurations**
+
 This example shows how to get metadata information for a dataset with additional custom configurations.
 
 ```python
@@ -441,7 +461,8 @@ print(dataset_infos)
 ### get_dataset_config_names()
 Here are some examples using various parameters of the `get_dataset_config_names` function, with comments to explain each step:
 
-**Getting Config Names for a Dataset from the Hugging Face Hub**
+**1. Getting Config Names for a Dataset from the Hugging Face Hub**
+
 This example shows how to get the list of available configuration names for a dataset hosted on the Hugging Face Hub.
 
 ```python
@@ -454,7 +475,8 @@ config_names = get_dataset_config_names('glue')
 print(config_names)
 ```
 
-**Getting Config Names for a Specific Version of a Dataset**
+**2. Getting Config Names for a Specific Version of a Dataset**
+
 This example demonstrates how to get the list of available configuration names for a specific version of a dataset by specifying the revision parameter.
 
 ```python
@@ -467,7 +489,8 @@ config_names = get_dataset_config_names('glue', revision='main')
 print(config_names)
 ```
 
-**Getting Config Names with Specific Data Files**
+**3. Getting Config Names with Specific Data Files**
+
 This example shows how to get the list of available configuration names for a dataset by specifying particular data files.
 
 ```python
@@ -487,7 +510,8 @@ config_names = get_dataset_config_names('csv', data_files=data_files)
 print(config_names)
 ```
 
-**Getting Config Names with Download Configuration**
+**4. Getting Config Names with Download Configuration**
+
 This example demonstrates how to get the list of available configuration names for a dataset with specific download configuration parameters.
 
 ```python
@@ -506,7 +530,8 @@ config_names = get_dataset_config_names('squad', download_config=download_config
 print(config_names)
 ```
 
-**Getting Config Names with Custom Configurations**
+**5. Getting Config Names with Custom Configurations**
+
 This example shows how to get the list of available configuration names for a dataset with additional custom configurations.
 
 ```python
@@ -528,7 +553,8 @@ print(config_names)
 ### get_dataset_config_info()
 Here are some examples using various parameters of the `get_dataset_config_info` function, with comments to explain each step:
 
-**Getting Dataset Info for a Specific Configuration**
+**1. Getting Dataset Info for a Specific Configuration**
+
 This example shows how to get the metadata information for a specific configuration of a dataset hosted on the Hugging Face Hub.
 
 ```python
@@ -541,7 +567,8 @@ config_info = get_dataset_config_info('squad', config_name='plain_text')
 print(config_info)
 ```
 
-**Getting Dataset Info with Specific Data Files**
+**2. Getting Dataset Info with Specific Data Files**
+
 This example demonstrates how to get the metadata information for a dataset by specifying particular data files.
 
 ```python
@@ -561,7 +588,8 @@ config_info = get_dataset_config_info('csv', config_name='my_dataset_config', da
 print(config_info)
 ```
 
-**Getting Dataset Info with Download Configuration**
+**3. Getting Dataset Info with Download Configuration**
+
 This example shows how to get the metadata information for a dataset with specific download configuration parameters.
 
 ```python
@@ -580,7 +608,8 @@ config_info = get_dataset_config_info('squad', download_config=download_config)
 print(config_info)
 ```
 
-**Getting Dataset Info with a Specific Version**
+**4. Getting Dataset Info with a Specific Version**
+
 This example demonstrates how to get the metadata information for a specific version of a dataset by specifying the revision parameter.
 
 ```python
@@ -593,7 +622,8 @@ config_info = get_dataset_config_info('glue', config_name='cola', revision='main
 print(config_info)
 ```
 
-**Getting Dataset Info with Custom Configurations**
+**5. Getting Dataset Info with Custom Configurations**
+
 This example shows how to get the metadata information for a dataset with additional custom configurations.
 
 ```python
@@ -615,7 +645,8 @@ print(config_info)
 ### get_dataset_split_names()
 Here are some examples using various parameters of the `get_dataset_split_names` function, with comments to explain each step:
 
-**Getting Split Names for a Dataset from the Hugging Face Hub**
+**1. Getting Split Names for a Dataset from the Hugging Face Hub**
+
 This example shows how to get the list of available splits for a dataset hosted on the Hugging Face Hub.
 
 ```python
@@ -628,7 +659,8 @@ split_names = get_dataset_split_names('rotten_tomatoes')
 print(split_names)
 ```
 
-**Getting Split Names for a Specific Configuration of a Dataset**
+**2. Getting Split Names for a Specific Configuration of a Dataset**
+
 This example demonstrates how to get the list of available splits for a specific configuration of a dataset.
 
 ```python
@@ -641,7 +673,8 @@ split_names = get_dataset_split_names('squad', config_name='plain_text')
 print(split_names)
 ```
 
-**Getting Split Names with Specific Data Files**
+**3. Getting Split Names with Specific Data Files**
+
 This example shows how to get the list of available splits for a dataset by specifying particular data files.
 
 ```python
@@ -661,7 +694,8 @@ split_names = get_dataset_split_names('csv', config_name='my_dataset_config', da
 print(split_names)
 ```
 
-**Getting Split Names with Download Configuration**
+**4. Getting Split Names with Download Configuration**
+
 This example shows how to get the list of available splits for a dataset with specific download configuration parameters.
 
 ```python
@@ -680,7 +714,8 @@ split_names = get_dataset_split_names('squad', download_config=download_config)
 print(split_names)
 ```
 
-**Getting Split Names for a Specific Version of a Dataset**
+**5. Getting Split Names for a Specific Version of a Dataset**
+
 This example demonstrates how to get the list of available splits for a specific version of a dataset by specifying the revision parameter.
 
 ```python
@@ -693,7 +728,8 @@ split_names = get_dataset_split_names('glue', config_name='cola', revision='main
 print(split_names)
 ```
 
-**Getting Split Names with Custom Configurations**
+**6. Getting Split Names with Custom Configurations**
+
 This example shows how to get the list of available splits for a dataset with additional custom configurations.
 
 ```python
