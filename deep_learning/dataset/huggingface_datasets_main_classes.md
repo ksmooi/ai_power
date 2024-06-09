@@ -24,6 +24,7 @@ These classes form the backbone of the HuggingFace Datasets library, providing t
 The `DatasetInfo` class encapsulates the metadata and descriptive information about a dataset. This includes essential details like the dataset's name, version, features, and various attributes necessary for understanding and utilizing the dataset effectively.
 
 **Overview of DatasetInfo**
+
 The `DatasetInfo` class provides a comprehensive structure for documenting a dataset, including its description, citation, license, and features. It supports loading and saving this metadata, merging information from multiple sources, and aligning task templates with dataset features.
 
 | Method                  | Description                                                                                                                    |
@@ -42,6 +43,7 @@ The `DatasetInfo` class provides a comprehensive structure for documenting a dat
 
 
 **1. Updating DatasetInfo**
+
 Demonstrates how to update an existing `DatasetInfo` instance with new metadata.
 
 ```python
@@ -62,6 +64,7 @@ print(info1.homepage)     # Output: "http://example.com"
 ```
 
 **2. Copying DatasetInfo**
+
 Shows how to create a deep copy of a `DatasetInfo` instance.
 
 ```python
@@ -81,6 +84,7 @@ print(info_copy.description)  # Output: "Modified description"
 ```
 
 **3. Writing DatasetInfo to Directory**
+
 Illustrates how to save `DatasetInfo` metadata to a directory in JSON format.
 
 ```python
@@ -101,6 +105,7 @@ info.write_to_directory(directory, pretty_print=True)
 ```
 
 **4. Merging Multiple DatasetInfo Instances**
+
 Demonstrates how to merge information from multiple `DatasetInfo` instances.
 
 ```python
@@ -119,6 +124,7 @@ print(merged_info.homepage)     # Output: "http://example.com"
 ```
 
 **5. Loading DatasetInfo from Directory**
+
 Shows how to create a `DatasetInfo` instance from a JSON file in a directory.
 
 ```python
@@ -136,6 +142,7 @@ print(loaded_info.citation)     # Output: "Dataset citation"
 ```
 
 **6. Creating DatasetInfo from Dictionary**
+
 Illustrates how to create a `DatasetInfo` instance from a dictionary.
 
 ```python
@@ -160,6 +167,7 @@ print(info.homepage)     # Output: "http://example.com"
 class Dataset representing a dataset backed by an Arrow table, providing various methods for data manipulation, transformation, and export. It extends `DatasetInfoMixin`, `IndexableMixin`, and `TensorflowDatasetMixin`.
 
 **Overview of Dataset**
+
 The Dataset class in the HuggingFace Datasets library provides methods for efficiently handling, transforming, and exporting datasets. Below is an overview of the available methods and their descriptions:
 
 | **Method** | **Description** |
@@ -199,6 +207,7 @@ The Dataset class in the HuggingFace Datasets library provides methods for effic
 **Examples of Dataset**
 
 **1. Sorting the Dataset**
+
 Sort the dataset based on a specific column in descending order.
 ```python
 from datasets import load_dataset
@@ -212,6 +221,7 @@ print(sorted_ds[:10])  # Print the first 10 examples to verify sorting
 ```
 
 **2. Shuffling the Dataset**
+
 Shuffle the dataset to randomize the order of the rows.
 ```python
 from datasets import load_dataset
@@ -225,6 +235,7 @@ print(shuffled_ds[:10])  # Print the first 10 examples to verify shuffling
 ```
 
 **3. Selecting Specific Rows**
+
 Select specific rows based on indices.
 ```python
 from datasets import load_dataset
@@ -238,6 +249,7 @@ print(selected_ds)  # Print the selected rows
 ```
 
 **4. Splitting the Dataset**
+
 Split the dataset into train and test sets.
 ```python
 from datasets import load_dataset
@@ -251,6 +263,7 @@ print(split_ds)  # Print the resulting splits
 ```
 
 **5. Sharding the Dataset**
+
 Create a shard of the dataset.
 ```python
 from datasets import load_dataset
@@ -264,6 +277,7 @@ print(sharded_ds)  # Print the shard
 ```
 
 **6. Renaming a Column**
+
 Rename a column in the dataset.
 ```python
 from datasets import load_dataset
@@ -277,6 +291,7 @@ print(renamed_ds.column_names)  # Print the column names to verify renaming
 ```
 
 **7. Removing a Column**
+
 Remove a column from the dataset.
 ```python
 from datasets import load_dataset
@@ -290,6 +305,7 @@ print(removed_column_ds.column_names)  # Print the column names to verify remova
 ```
 
 **8. Casting a Column to a Different Type**
+
 Cast a column to a different data type.
 ```python
 from datasets import load_dataset, Features, Value
@@ -306,6 +322,7 @@ print(casted_ds.features)  # Print the feature types to verify casting
 ```
 
 **9. Flattening Nested Columns**
+
 Flatten nested columns in the dataset.
 ```python
 from datasets import load_dataset
@@ -319,6 +336,7 @@ print(flattened_ds.column_names)  # Print the column names to verify flattening
 ```
 
 **10. Mapping a Function Over the Dataset**
+
 Apply a transformation to each element in the dataset.
 ```python
 from datasets import load_dataset
@@ -337,6 +355,7 @@ print(mapped_ds[:3])  # Print the first 3 examples to verify the transformation
 ```
 
 **11. Setting the Format of the Dataset**
+
 Change the format of the dataset to 'numpy'.
 ```python
 from datasets import load_dataset
@@ -350,6 +369,7 @@ print(numpy_ds.format)  # Print the format to verify
 ```
 
 **12. With Format Context Manager**
+
 Use a context manager to temporarily change the format of the dataset.
 ```python
 from datasets import load_dataset
@@ -367,6 +387,7 @@ print(ds.format)
 ```
 
 **13. Saving the Dataset to Disk**
+
 Save the dataset to disk and then load it back.
 ```python
 from datasets import load_dataset, Dataset
@@ -383,6 +404,7 @@ print(loaded_ds)  # Print the loaded dataset
 ```
 
 **14. Exporting the Dataset to CSV**
+
 Export the dataset to a CSV file.
 ```python
 from datasets import load_dataset
@@ -395,6 +417,7 @@ ds.to_csv("dataset.csv")
 ```
 
 **15. Exporting the Dataset to JSON**
+
 Export the dataset to a JSON file.
 ```python
 from datasets import load_dataset
@@ -407,6 +430,7 @@ ds.to_json("dataset.json")
 ```
 
 **16. Exporting the Dataset to SQL**
+
 Export the dataset to a SQL database.
 ```python
 from datasets import load_dataset
@@ -423,6 +447,7 @@ ds.to_sql(name="rotten_tomatoes", con=con)
 ```
 
 **17. Converting the Dataset to a Pandas DataFrame**
+
 Convert the dataset to a Pandas DataFrame.
 ```python
 from datasets import load_dataset
@@ -436,6 +461,7 @@ print(df.head())  # Print the first few rows of the DataFrame
 ```
 
 **18. Converting the Dataset to a Dictionary**
+
 Convert the dataset to a dictionary.
 ```python
 from datasets import load_dataset
@@ -452,6 +478,7 @@ print(dict_data.keys())  # Print the dictionary keys to verify conversion
 A dictionary (dict of str: datasets.Dataset) with dataset transforms methods (map, filter, etc.)
 
 **Overview of DatasetDict**
+
 This table provides an overview of the methods available in the DatasetDict class, which enable various dataset transformations and manipulations.
 
 | **Method**              | **Description**                                                                                          |
@@ -488,6 +515,7 @@ This table provides an overview of the methods available in the DatasetDict clas
 **Examples of DatasetDict**
 
 **1. Sorting the DatasetDict**
+
 Sorting a dataset by a specific column in ascending order.
 ```python
 from datasets import Dataset, DatasetDict
@@ -504,6 +532,7 @@ print(sorted_dataset_dict['train']['label'])  # Output: [0, 1, 2]
 ```
 
 **2. Shuffling the DatasetDict**
+
 Shuffling the dataset with a specified seed for reproducibility.
 ```python
 from datasets import Dataset, DatasetDict
@@ -520,6 +549,7 @@ print(shuffled_dataset_dict['train']['label'])
 ```
 
 **3. Casting DatasetDict Columns**
+
 Changing the feature types of the dataset columns.
 ```python
 from datasets import Dataset, DatasetDict, Features, ClassLabel, Value
@@ -539,6 +569,7 @@ print(casted_dataset_dict['train'].features)
 ```
 
 **4. Flattening Indices in DatasetDict**
+
 Flattening the indices mapping to create a new dataset.
 ```python
 from datasets import Dataset, DatasetDict
@@ -555,6 +586,7 @@ print(flattened_dataset_dict)
 ```
 
 **5. Filtering the DatasetDict**
+
 Applying a filter function to keep only certain rows.
 ```python
 from datasets import Dataset, DatasetDict
@@ -571,6 +603,7 @@ print(filtered_dataset_dict['train'])
 ```
 
 **6. Mapping a Function Over DatasetDict**
+
 Applying a function to all elements in the dataset.
 ```python
 from datasets import Dataset, DatasetDict
@@ -592,6 +625,7 @@ print(mapped_dataset_dict['train']['text'])
 ```
 
 **7. Removing Columns from DatasetDict**
+
 Removing specified columns from the dataset.
 ```python
 from datasets import Dataset, DatasetDict
@@ -608,6 +642,7 @@ print(modified_dataset_dict['train'])
 ```
 
 **8. Selecting Columns from DatasetDict**
+
 Selecting specific columns from the dataset.
 ```python
 from datasets import Dataset, DatasetDict
@@ -624,6 +659,7 @@ print(selected_dataset_dict['train'])
 ```
 
 **9. Setting Format for DatasetDict**
+
 Setting the format for the dataset's output.
 ```python
 from datasets import Dataset, DatasetDict
@@ -640,6 +676,7 @@ print(dataset_dict['train'][:])
 ```
 
 **10. Using With Format for DatasetDict**
+
 Temporarily setting the format for the dataset's output within a context.
 ```python
 from datasets import Dataset, DatasetDict
@@ -655,6 +692,7 @@ with dataset_dict.with_format('pandas'):
 ```
 
 **11. Using With Transform for DatasetDict**
+
 Setting a transform to apply to batches when `__getitem__` is called.
 ```python
 from datasets import Dataset, DatasetDict
@@ -675,6 +713,7 @@ print(transformed_dataset_dict['train'][0])
 ```
 
 **12. Saving DatasetDict to Disk**
+
 Saving the dataset to a specified directory on disk.
 ```python
 from datasets import Dataset, DatasetDict
@@ -689,6 +728,7 @@ dataset_dict.save_to_disk('path/to/dataset_directory')
 ```
 
 **13. Loading DatasetDict from CSV**
+
 Creating a `DatasetDict` from CSV file(s).
 ```python
 from datasets import DatasetDict
@@ -700,6 +740,7 @@ print(dataset_dict)
 ```
 
 **14. Loading DatasetDict from JSON**
+
 Creating a `DatasetDict` from JSON Lines file(s).
 ```python
 from datasets import DatasetDict
@@ -714,6 +755,7 @@ print(dataset_dict)
 The `IterableDataset` class represents a dataset backed by an iterable, allowing for efficient, streaming access to data. This is particularly useful for handling large datasets that cannot be loaded into memory at once.
 
 **Overview of IterableDataset**
+
 The table below provides an overview of the methods available in the `IterableDataset` class, including their descriptions and main functionalities.
 
 | **Method**        | **Description**                                                                                                           |
@@ -755,6 +797,7 @@ The table below provides an overview of the methods available in the `IterableDa
 **Examples of IterableDataset**
 
 **1. Creating an IterableDataset from a Generator**
+
 This example demonstrates how to create an `IterableDataset` from a generator function.
 
 ```python
@@ -778,6 +821,7 @@ for example in dataset:
 ```
 
 **2. Creating an IterableDataset from a File**
+
 This example demonstrates how to create an `IterableDataset` from an Arrow file.
 
 ```python
@@ -792,6 +836,7 @@ for example in dataset:
 ```
 
 **3. Selecting Specific Columns**
+
 This example demonstrates how to select specific columns from the dataset.
 
 ```python
@@ -809,6 +854,7 @@ for example in selected_dataset:
 ```
 
 **4. Renaming Columns**
+
 This example demonstrates how to rename columns in the dataset.
 
 ```python
@@ -830,6 +876,7 @@ for example in renamed_dataset:
 ```
 
 **5. Removing Columns**
+
 This example demonstrates how to remove specific columns from the dataset.
 
 ```python
@@ -847,6 +894,7 @@ for example in reduced_dataset:
 ```
 
 **6. Iterating in Batches**
+
 This example demonstrates how to iterate through the dataset in batches.
 
 ```python
@@ -861,6 +909,7 @@ for batch in dataset.iter(batch_size=2):
 ```
 
 **7. Shuffling the Dataset**
+
 This example demonstrates how to shuffle the dataset with a specified buffer size and seed.
 
 ```python
@@ -878,6 +927,7 @@ for example in shuffled_dataset:
 ```
 
 **8. Filtering Examples**
+
 This example demonstrates how to filter examples in the dataset based on a condition.
 
 ```python
@@ -895,6 +945,7 @@ for example in filtered_dataset:
 ```
 
 **9. Mapping a Function**
+
 This example demonstrates how to apply a function to all examples in the dataset.
 
 ```python
@@ -917,6 +968,7 @@ for example in mapped_dataset:
 ```
 
 **10. Adding a Column**
+
 This example demonstrates how to add a new column to the dataset.
 
 ```python
@@ -940,6 +992,7 @@ for example in updated_dataset:
 The `IterableDatasetDict` class is a dictionary that contains multiple `IterableDataset` objects. This class provides methods to manipulate all datasets within the dictionary in a uniform way, such as renaming columns, filtering, shuffling, and applying transformations.
 
 **Overview of IterableDatasetDict**
+
 The following table describes the methods available in the `IterableDatasetDict` class:
 
 | **Method**        | **Description**                                                                                                                                                      |
@@ -958,6 +1011,7 @@ The following table describes the methods available in the `IterableDatasetDict`
 **Examples of IterableDatasetDict**
 
 **1. Setting a format for all datasets in the dictionary**
+
 The main purpose of this example is to set the format of all datasets in the dictionary to "torch" so they can be used with PyTorch DataLoader.
 
 ```python
@@ -978,6 +1032,7 @@ for split, dataset in torch_formatted_ds_dict.items():
 ```
 
 **2. Applying a function to all examples in the datasets**
+
 The main purpose of this example is to apply a function that adds a prefix to the "text" column for all datasets in the dictionary.
 
 ```python
@@ -1008,6 +1063,7 @@ for example in mapped_ds_dict["train"].take(3):
 ```
 
 **3. Filtering examples in the datasets**
+
 The main purpose of this example is to filter the examples in the datasets, keeping only those with a "label" of 0.
 
 ```python
@@ -1028,6 +1084,7 @@ for example in filtered_ds_dict["train"].take(3):
 ```
 
 **4. Shuffling the examples in the datasets**
+
 The main purpose of this example is to shuffle the examples in the datasets.
 
 ```python
@@ -1048,6 +1105,7 @@ for example in shuffled_ds_dict["train"].take(3):
 ```
 
 **5. Selecting specific columns in the datasets**
+
 The main purpose of this example is to select only the "text" column in the datasets.
 
 ```python
@@ -1068,6 +1126,7 @@ for example in selected_columns_ds_dict["train"].take(3):
 ```
 
 **6. Renaming columns in the datasets**
+
 The main purpose of this example is to rename the "text" column to "review_text" and the "label" column to "review_label" in the datasets.
 
 ```python
@@ -1088,6 +1147,7 @@ for example in renamed_columns_ds_dict["train"].take(3):
 ```
 
 **7. Removing columns in the datasets**
+
 The main purpose of this example is to remove the "label" column from the datasets.
 
 ```python
@@ -1108,6 +1168,7 @@ for example in removed_columns_ds_dict["train"].take(3):
 ```
 
 **8. Casting columns in the datasets**
+
 The main purpose of this example is to cast the "label" column to a new feature type in the datasets.
 
 ```python
@@ -1141,6 +1202,7 @@ for example in casted_ds_dict["train"].take(3):
 The `Features` class is a special dictionary that defines the internal structure of a dataset. It specifies the types of the columns in a dataset and supports various data types, including nested fields, lists, and multidimensional arrays.
 
 **Overview of Features**
+
 The table below provides an overview of the methods available in the `Features` class:
 
 | **Method** | **Description** |
@@ -1158,10 +1220,10 @@ The table below provides an overview of the methods available in the `Features` 
 | `reorder_fields_as` | Reorder `Features` fields to match the field order of another `Features` object. |
 | `flatten` | Flatten the features, replacing dictionary columns with their subfields. |
 
-
 **Examples of Features**
 
 **1. Creating Features from a Dictionary**
+
 This example demonstrates how to create a `Features` object from a dictionary.
 ```python
 from datasets import Features, Value, ClassLabel
@@ -1186,6 +1248,7 @@ print(features)
 ```
 
 **2. Converting Features to a Dictionary**
+
 This example demonstrates how to convert a `Features` object back to a dictionary.
 ```python
 from datasets import Features, Value, ClassLabel
@@ -1207,6 +1270,7 @@ print(features_as_dict)
 ```
 
 **3. Encoding a Single Example**
+
 This example demonstrates how to encode a single example using the `encode_example` method.
 ```python
 from datasets import Features, Value, ClassLabel
@@ -1229,6 +1293,7 @@ print(encoded_example)
 ```
 
 **4. Encoding an Entire Column**
+
 This example demonstrates how to encode an entire column using the `encode_column` method.
 ```python
 from datasets import Features, Value, ClassLabel
@@ -1251,6 +1316,7 @@ print(encoded_column)
 ```
 
 **5. Encoding a Batch of Data**
+
 This example demonstrates how to encode a batch of data using the `encode_batch` method.
 ```python
 from datasets import Features, Value, ClassLabel
@@ -1282,6 +1348,7 @@ print(encoded_batch)
 ```
 
 **6. Decoding a Single Example**
+
 This example demonstrates how to decode a single example using the `decode_example` method.
 ```python
 from datasets import Features, Value, ClassLabel
@@ -1304,6 +1371,7 @@ print(decoded_example)
 ```
 
 **7. Decoding an Entire Column**
+
 This example demonstrates how to decode an entire column using the `decode_column` method.
 ```python
 from datasets import Features, Value, ClassLabel
@@ -1326,6 +1394,7 @@ print(decoded_column)
 ```
 
 **8. Decoding a Batch of Data**
+
 This example demonstrates how to decode a batch of data using the `decode_batch` method.
 ```python
 from datasets import Features, Value, ClassLabel
@@ -1351,6 +1420,7 @@ print(decoded_batch)
 ```
 
 **9. Reordering Fields to Match Another Features Object**
+
 This example demonstrates how to reorder the fields of a `Features` object to match another `Features` object.
 ```python
 from datasets import Features, Value, ClassLabel
@@ -1377,6 +1447,7 @@ print(reordered_features)
 ```
 
 **10. Flattening Features**
+
 This example demonstrates how to flatten nested features using the `flatten` method.
 ```python
 from datasets import Features, Value, Sequence
