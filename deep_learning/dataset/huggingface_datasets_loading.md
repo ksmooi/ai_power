@@ -18,11 +18,29 @@ The Hugging Face Hub is a community-driven platform that hosts a wide array of d
 ```python
 from datasets import load_dataset
 
-# Load a dataset from the Hugging Face Hub
-dataset = load_dataset("lhoestq/demo1")
+# Load the rotten_tomatoes dataset
+dataset = load_dataset("rotten_tomatoes")
+# DatasetDict({
+#     train: Dataset({
+#         features: ['text', 'label'],
+#         num_rows: 8530
+#     })
+#     validation: Dataset({
+#         features: ['text', 'label'],
+#         num_rows: 1066
+#     })
+#     test: Dataset({
+#         features: ['text', 'label'],
+#         num_rows: 1066
+#     })
+# })
 
-# Specify a dataset version using the revision parameter
-dataset = load_dataset("lhoestq/custom_squad", revision="main")
+# Load a specific split with the split parameter
+dataset = load_dataset("rotten_tomatoes", split="train")
+# Dataset({
+#     features: ['text', 'label'],
+#     num_rows: 8530
+# })
 ```
 
 **2. Local Loading Script**
