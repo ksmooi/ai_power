@@ -72,13 +72,13 @@ from peft import LoraConfig
 
 # Basic LoraConfig setup
 config = LoraConfig(
-    r=16,  # Set the rank of the Lora attention dimension
+    r=16,                       # Set the rank of the Lora attention dimension
     target_modules=['q', 'v'],  # Apply Lora to specific modules
-    lora_alpha=32,  # Set the alpha parameter for scaling
-    lora_dropout=0.1,  # Apply dropout with 10% probability
-    fan_in_fan_out=True,  # Indicate that the layer stores weight like (fan_in, fan_out)
-    bias='all',  # Update all biases during training
-    use_rslora=True  # Use Rank-Stabilized LoRA
+    lora_alpha=32,              # Set the alpha parameter for scaling
+    lora_dropout=0.1,           # Apply dropout with 10% probability
+    fan_in_fan_out=True,        # Indicate that the layer stores weight like (fan_in, fan_out)
+    bias='all',                 # Update all biases during training
+    use_rslora=True             # Use Rank-Stabilized LoRA
 )
 ```
 
@@ -90,15 +90,15 @@ from peft import LoraConfig
 
 # Advanced LoraConfig setup
 config = LoraConfig(
-    r=32,  # Set a higher rank for better performance
+    r=32,                                       # Set a higher rank for better performance
     target_modules='.*decoder.*(SelfAttention|EncDecAttention).*',  # Use regex to match target modules
-    lora_alpha=64,  # Increase alpha for better scaling
-    lora_dropout=0.2,  # Apply higher dropout
-    fan_in_fan_out=False,  # Indicate the layer stores weight like (fan_out, fan_in)
-    bias='lora_only',  # Update only Lora biases
-    use_rslora=False,  # Use the original Lora scaling
-    modules_to_save=['classifier', 'score'],  # Save additional modules
-    init_lora_weights='gaussian'  # Initialize Lora weights using Gaussian initialization
+    lora_alpha=64,                              # Increase alpha for better scaling
+    lora_dropout=0.2,                           # Apply higher dropout
+    fan_in_fan_out=False,                       # Indicate the layer stores weight like (fan_out, fan_in)
+    bias='lora_only',                           # Update only Lora biases
+    use_rslora=False,                           # Use the original Lora scaling
+    modules_to_save=['classifier', 'score'],    # Save additional modules
+    init_lora_weights='gaussian'                # Initialize Lora weights using Gaussian initialization
 )
 ```
 
@@ -111,15 +111,15 @@ from peft import LoraConfig
 # Configuration targeting specific layers and patterns
 config = LoraConfig(
     r=8,  # Set a lower rank
-    target_modules='all-linear',  # Apply to all linear/Conv1D layers except the output layer
-    lora_alpha=16,  # Lower alpha for scaling
-    lora_dropout=0.05,  # Apply lower dropout
-    bias='none',  # Do not update any biases
-    use_rslora=True,  # Use Rank-Stabilized LoRA
-    layers_to_transform=[0, 1, 2],  # Transform specific layers
-    layers_pattern='pattern_name',  # Use custom layer pattern name
-    rank_pattern={'model.layer.0.attention': 4},  # Set specific rank for a layer
-    alpha_pattern={'model.layer.0.attention': 10}  # Set specific alpha for a layer
+    target_modules='all-linear',                    # Apply to all linear/Conv1D layers except the output layer
+    lora_alpha=16,                                  # Lower alpha for scaling
+    lora_dropout=0.05,                              # Apply lower dropout
+    bias='none',                                    # Do not update any biases
+    use_rslora=True,                                # Use Rank-Stabilized LoRA
+    layers_to_transform=[0, 1, 2],                  # Transform specific layers
+    layers_pattern='pattern_name',                  # Use custom layer pattern name
+    rank_pattern={'model.layer.0.attention': 4},    # Set specific rank for a layer
+    alpha_pattern={'model.layer.0.attention': 10}   # Set specific alpha for a layer
 )
 ```
 
@@ -131,17 +131,17 @@ from peft import LoraConfig
 
 # Configuration with LoftQ and DoRA
 config = LoraConfig(
-    r=16,  # Set the rank
-    target_modules='all-linear',  # Apply to all linear/Conv1D layers except the output layer
-    lora_alpha=32,  # Set alpha for scaling
-    lora_dropout=0.1,  # Apply dropout
-    fan_in_fan_out=True,  # Indicate the layer stores weight like (fan_in, fan_out)
-    bias='all',  # Update all biases
-    use_rslora=False,  # Use the original Lora scaling
-    init_lora_weights='loftq',  # Use LoftQ initialization
-    loftq_config={'quantization_level': 8},  # Configuration for LoftQ
-    use_dora=True,  # Enable DoRA for weight decomposition
-    layer_replication=[(0, 4), (2, 5)]  # Replicate layers for model expansion
+    r=16,                                   # Set the rank
+    target_modules='all-linear',            # Apply to all linear/Conv1D layers except the output layer
+    lora_alpha=32,                          # Set alpha for scaling
+    lora_dropout=0.1,                       # Apply dropout
+    fan_in_fan_out=True,                    # Indicate the layer stores weight like (fan_in, fan_out)
+    bias='all',                             # Update all biases
+    use_rslora=False,                       # Use the original Lora scaling
+    init_lora_weights='loftq',              # Use LoftQ initialization
+    loftq_config={'quantization_level': 8}, # Configuration for LoftQ
+    use_dora=True,                          # Enable DoRA for weight decomposition
+    layer_replication=[(0, 4), (2, 5)]      # Replicate layers for model expansion
 )
 ```
 
@@ -382,7 +382,7 @@ This example shows how to evaluate a model using the `evaluate` method.
 # Evaluate the model
 evaluation_results = trainer.evaluate(
     eval_dataset=eval_dataset,  # the evaluation dataset
-    metric_key_prefix="eval"  	# prefix for evaluation metrics
+    metric_key_prefix="eval"    # prefix for evaluation metrics
 )
 
 print(evaluation_results)
@@ -395,7 +395,7 @@ This example demonstrates how to run predictions on a test dataset using the `pr
 # Predict using the model
 predictions = trainer.predict(
     test_dataset=test_dataset,  # the test dataset
-    metric_key_prefix="test"  	# prefix for test metrics
+    metric_key_prefix="test"    # prefix for test metrics
 )
 
 print(predictions)
@@ -476,8 +476,8 @@ This example shows how to push the model to the Hugging Face Hub using the `push
 ```python
 # Push the model to the Hugging Face Hub
 trainer.push_to_hub(
-    commit_message="End of training",  	# commit message for the push
-    blocking=True,  					# whether to wait for the push to complete
+    commit_message="End of training",   # commit message for the push
+    blocking=True,                      # whether to wait for the push to complete
 )
 ```
 
@@ -487,15 +487,15 @@ This example illustrates how to create a model card using the `create_model_card
 ```python
 # Create a model card
 trainer.create_model_card(
-    language="en",  					# language of the model
-    license="apache-2.0",  				# license for the model
-    tags=["example", "transformers"],  	# tags for the model card
-    model_name="example-model",  		# name of the model
-    finetuned_from="bert-base-uncased",	# base model used for fine-tuning
-    tasks=["text-classification"],  	# tasks the model is used for
-    dataset_tags=["imdb"],  			# dataset tags
-    dataset="imdb",  					# dataset used
-    dataset_args="train",  				# dataset arguments
+    language="en",                      # language of the model
+    license="apache-2.0",               # license for the model
+    tags=["example", "transformers"],   # tags for the model card
+    model_name="example-model",         # name of the model
+    finetuned_from="bert-base-uncased", # base model used for fine-tuning
+    tasks=["text-classification"],      # tasks the model is used for
+    dataset_tags=["imdb"],              # dataset tags
+    dataset="imdb",                     # dataset used
+    dataset_args="train",               # dataset arguments
 )
 ```
 
@@ -511,9 +511,9 @@ def my_hp_space(trial):
 
 # Perform hyperparameter search
 best_run = trainer.hyperparameter_search(
-    hp_space=my_hp_space,  	# hyperparameter space
-    direction="minimize",  	# optimization direction
-    n_trials=10  			# number of trials
+    hp_space=my_hp_space,   # hyperparameter space
+    direction="minimize",   # optimization direction
+    n_trials=10             # number of trials
 )
 
 print(best_run)
@@ -525,10 +525,10 @@ This example illustrates how to use the evaluation loop directly with custom con
 ```python
 # Custom evaluation loop
 eval_results = trainer.evaluation_loop(
-    dataloader=eval_dataloader,		# evaluation data loader
-    description="Evaluation",  		# description for the evaluation loop
-    prediction_loss_only=False, 	# whether to return only the loss
-    metric_key_prefix="eval"  		# prefix for evaluation metrics
+    dataloader=eval_dataloader,     # evaluation data loader
+    description="Evaluation",       # description for the evaluation loop
+    prediction_loss_only=False,     # whether to return only the loss
+    metric_key_prefix="eval"        # prefix for evaluation metrics
 )
 
 print(eval_results)
@@ -549,20 +549,20 @@ from peft import LoraConfig
 # Prepare the dataset
 data = {
     "train": [
-        {"text": "I love this product!", "label": 1},  						# Positive sentiment
+        {"text": "I love this product!", "label": 1},                       # Positive sentiment
         {"text": "This is the worst thing I've ever bought.", "label": 0},  # Negative sentiment
     ],
     "validation": [
-        {"text": "Absolutely fantastic!", "label": 1},  				# Positive sentiment
-        {"text": "Terrible quality, very disappointed.", "label": 0},  	# Negative sentiment
+        {"text": "Absolutely fantastic!", "label": 1},                  # Positive sentiment
+        {"text": "Terrible quality, very disappointed.", "label": 0},   # Negative sentiment
     ],
 }
 
 # Convert data to a DatasetDict, which contains the training and validation datasets
 dataset = DatasetDict(
     {
-        "train": Dataset.from_dict(data["train"]),  			# Training dataset
-        "validation": Dataset.from_dict(data["validation"]),  	# Validation dataset
+        "train": Dataset.from_dict(data["train"]),              # Training dataset
+        "validation": Dataset.from_dict(data["validation"]),    # Validation dataset
     }
 )
 
@@ -585,10 +585,10 @@ model = AutoModelForCausalLM.from_pretrained(peft_model_id, load_in_4bit=True, d
 
 # Define the configuration for the LoRA adapter
 lora_config = LoraConfig(
-    lora_alpha=16,  						# LoRA alpha parameter
-    lora_dropout=0.1,  						# Dropout rate for LoRA
-    r=64,  									# Rank of the low-rank matrices in LoRA
-    target_modules=["q_proj", "k_proj"],  	# Target modules for LoRA
+    lora_alpha=16,                          # LoRA alpha parameter
+    lora_dropout=0.1,                       # Dropout rate for LoRA
+    r=64,                                   # Rank of the low-rank matrices in LoRA
+    target_modules=["q_proj", "k_proj"],    # Target modules for LoRA
 )
 
 # Add the LoRA adapter to the model
@@ -599,22 +599,22 @@ model.set_adapter("lora_adapter")
 
 # Define the training arguments
 training_args = TrainingArguments(
-    output_dir="./results",  		# Directory to save the model and checkpoints
-    evaluation_strategy="epoch",  	# Evaluate the model at the end of each epoch
-    learning_rate=2e-5,  			# Learning rate for training
-    per_device_train_batch_size=4,	# Batch size for training
-    per_device_eval_batch_size=4,  	# Batch size for evaluation
-    num_train_epochs=3,  			# Number of training epochs
-    weight_decay=0.01,  			# Weight decay for optimization
+    output_dir="./results",         # Directory to save the model and checkpoints
+    evaluation_strategy="epoch",    # Evaluate the model at the end of each epoch
+    learning_rate=2e-5,             # Learning rate for training
+    per_device_train_batch_size=4,  # Batch size for training
+    per_device_eval_batch_size=4,   # Batch size for evaluation
+    num_train_epochs=3,             # Number of training epochs
+    weight_decay=0.01,              # Weight decay for optimization
 )
 
 # Initialize the Trainer with the model, training arguments, and datasets
 trainer = Trainer(
-    model=model,  									# The model to be trained. In this case, it's the Whisper model with the LoRA adapter loaded in 4-bit precision.
-    args=training_args,  							# Training arguments that specify the configurations for training such as learning rate, batch size, etc.
-    train_dataset=tokenized_datasets["train"],  	# The dataset to be used for training the model.
-    eval_dataset=tokenized_datasets["validation"],	# The dataset to be used for evaluating the model during training.
-    tokenizer=tokenizer,  							# The tokenizer to be used for encoding the text data.
+    model=model,                                    # The model to be trained. In this case, it's the Whisper model with the LoRA adapter loaded in 4-bit precision.
+    args=training_args,                             # Training arguments that specify the configurations for training such as learning rate, batch size, etc.
+    train_dataset=tokenized_datasets["train"],      # The dataset to be used for training the model.
+    eval_dataset=tokenized_datasets["validation"],  # The dataset to be used for evaluating the model during training.
+    tokenizer=tokenizer,                            # The tokenizer to be used for encoding the text data.
                                                     # This ensures that the text data is tokenized in the same way as the pre-trained model was.
 )
 
@@ -714,13 +714,13 @@ print(dataset["train"][0])
 
 # Define the LoRA configuration
 lora_config = LoraConfig(
-    lora_alpha=16,  				# LoRA alpha parameter
-    lora_dropout=0.1,  				# Dropout rate for LoRA
-    r=64,  							# Rank of the low-rank matrices in LoRA
+    lora_alpha=16,                  # LoRA alpha parameter
+    lora_dropout=0.1,               # Dropout rate for LoRA
+    r=64,                           # Rank of the low-rank matrices in LoRA
     target_modules=[
-		"decoder.layers.*.self_attn.q_proj", 
-		"decoder.layers.*.self_attn.k_proj"
-	],  							# Target modules for LoRA
+        "decoder.layers.*.self_attn.q_proj", 
+        "decoder.layers.*.self_attn.k_proj"
+    ],                              # Target modules for LoRA
 )
 
 # Add the LoRA adapter to the model
@@ -731,27 +731,27 @@ model.set_adapter("lora_adapter")
 
 # Define training arguments
 training_args = TrainingArguments(
-    output_dir="./results",  		# Directory to save the model and checkpoints
-    evaluation_strategy="epoch",  	# Evaluate the model at the end of each epoch
-    learning_rate=1e-5,  			# Learning rate for training
-    per_device_train_batch_size=8,	# Batch size for training
-    per_device_eval_batch_size=8,	# Batch size for evaluation
-    num_train_epochs=3,  			# Number of training epochs
-    weight_decay=0.01,  			# Weight decay for optimization
-    logging_dir='./logs',  			# Directory for storing logs
-    logging_steps=10,  				# Log every 10 steps
-    save_total_limit=3,  			# Limit the total amount of checkpoints
-    save_steps=500,  				# Save checkpoint every 500 steps
-    eval_steps=500,  				# Evaluate every 500 steps
+    output_dir="./results",         # Directory to save the model and checkpoints
+    evaluation_strategy="epoch",    # Evaluate the model at the end of each epoch
+    learning_rate=1e-5,             # Learning rate for training
+    per_device_train_batch_size=8,  # Batch size for training
+    per_device_eval_batch_size=8,   # Batch size for evaluation
+    num_train_epochs=3,             # Number of training epochs
+    weight_decay=0.01,              # Weight decay for optimization
+    logging_dir='./logs',           # Directory for storing logs
+    logging_steps=10,               # Log every 10 steps
+    save_total_limit=3,             # Limit the total amount of checkpoints
+    save_steps=500,                 # Save checkpoint every 500 steps
+    eval_steps=500,                 # Evaluate every 500 steps
 )
 
 # Initialize the Trainer
 trainer = Trainer(
-    model=model,  						# The model to be trained. In this case, it's the Whisper model with the LoRA adapter loaded in 4-bit precision.
-    args=training_args,  				# Training arguments that specify the configurations for training such as learning rate, batch size, etc.
-    train_dataset=dataset["train"],  	# The dataset to be used for training the model. 
-    eval_dataset=dataset["validation"],	# The dataset to be used for evaluating the model during training.
-    tokenizer=tokenizer,  				# The tokenizer to be used for encoding the text data. 
+    model=model,                        # The model to be trained. In this case, it's the Whisper model with the LoRA adapter loaded in 4-bit precision.
+    args=training_args,                 # Training arguments that specify the configurations for training such as learning rate, batch size, etc.
+    train_dataset=dataset["train"],     # The dataset to be used for training the model. 
+    eval_dataset=dataset["validation"], # The dataset to be used for evaluating the model during training.
+    tokenizer=tokenizer,                # The tokenizer to be used for encoding the text data. 
                                         # This ensures that the text data is tokenized in the same way as the pre-trained model was.
 )
 
@@ -828,13 +828,13 @@ model = CLIPModel.from_pretrained(peft_model_id, load_in_4bit=True, device_map="
 
 # Define the LoRA configuration
 lora_config = LoraConfig(
-    lora_alpha=16,  				# LoRA alpha parameter
-    lora_dropout=0.1,  				# Dropout rate for LoRA
-    r=64,  							# Rank of the low-rank matrices in LoRA
+    lora_alpha=16,                  # LoRA alpha parameter
+    lora_dropout=0.1,               # Dropout rate for LoRA
+    r=64,                           # Rank of the low-rank matrices in LoRA
     target_modules=[
-		"vision_model.encoder.layers.*.self_attn.q_proj", 
-		"vision_model.encoder.layers.*.self_attn.k_proj"
-	],  							# Target modules for LoRA
+        "vision_model.encoder.layers.*.self_attn.q_proj", 
+        "vision_model.encoder.layers.*.self_attn.k_proj"
+    ],                              # Target modules for LoRA
 )
 
 # Add the LoRA adapter to the model
@@ -845,26 +845,26 @@ model.set_adapter("lora_adapter")
 
 # Define training arguments
 training_args = TrainingArguments(
-    output_dir="./results",  		# Directory to save the model and checkpoints
-    evaluation_strategy="epoch",  	# Evaluate the model at the end of each epoch
-    learning_rate=5e-5,  			# Learning rate for training
-    per_device_train_batch_size=4,	# Batch size for training
-    per_device_eval_batch_size=4,	# Batch size for evaluation
-    num_train_epochs=3,  			# Number of training epochs
-    weight_decay=0.01,  			# Weight decay for optimization
-    logging_dir='./logs',  			# Directory for storing logs
-    logging_steps=10,  				# Log every 10 steps
-    save_total_limit=3,  			# Limit the total amount of checkpoints
-    save_steps=500,  				# Save checkpoint every 500 steps
-    eval_steps=500,  				# Evaluate every 500 steps
+    output_dir="./results",         # Directory to save the model and checkpoints
+    evaluation_strategy="epoch",    # Evaluate the model at the end of each epoch
+    learning_rate=5e-5,             # Learning rate for training
+    per_device_train_batch_size=4,  # Batch size for training
+    per_device_eval_batch_size=4,   # Batch size for evaluation
+    num_train_epochs=3,             # Number of training epochs
+    weight_decay=0.01,              # Weight decay for optimization
+    logging_dir='./logs',           # Directory for storing logs
+    logging_steps=10,               # Log every 10 steps
+    save_total_limit=3,             # Limit the total amount of checkpoints
+    save_steps=500,                 # Save checkpoint every 500 steps
+    eval_steps=500,                 # Evaluate every 500 steps
 )
 
 # Initialize the Trainer
 trainer = Trainer(
-    model=model,  						# The model to be trained. In this case, it's the Whisper model with the LoRA adapter loaded in 4-bit precision.
-    args=training_args,  				# Training arguments that specify the configurations for training such as learning rate, batch size, etc.
-    train_dataset=dataset["train"],  	# The dataset to be used for training the model.
-    eval_dataset=dataset["validation"],	# The dataset to be used for evaluating the model during training.
+    model=model,                        # The model to be trained. In this case, it's the Whisper model with the LoRA adapter loaded in 4-bit precision.
+    args=training_args,                 # Training arguments that specify the configurations for training such as learning rate, batch size, etc.
+    train_dataset=dataset["train"],     # The dataset to be used for training the model.
+    eval_dataset=dataset["validation"], # The dataset to be used for evaluating the model during training.
 )
 
 # Train the model
