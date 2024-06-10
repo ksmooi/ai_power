@@ -186,14 +186,14 @@ This example demonstrates how to initialize the `EvaluationModule` and use the `
 ```python
 from evaluate import EvaluationModule, Value
 
+# Initialize the EvaluationModule with custom parameters
 eval_module = EvaluationModule(
-    config_name="accuracy_eval",    # A unique name to identify this configuration
-    keep_in_memory=True,            # Whether to keep all predictions and references in memory
-    cache_dir="./cache_dir",        # Directory where temporary data will be stored
-    num_process=1,                  # Number of processes for distributed evaluation
-    process_id=0,                   # ID of the current process in a distributed setup
-    seed=42                         # Random seed for reproducibility
-)
+    config_name="accuracy_eval",  # A unique name to identify this configuration
+    keep_in_memory=True,  # Whether to keep all predictions and references in memory
+    cache_dir="./cache_dir",  # Directory where temporary data will be stored
+    num_process=1,  # Number of processes for distributed evaluation
+    process_id=0,  # ID of the current process in a distributed setup
+    seed=42  # Random seed for reproducibility
 )
 
 # Define predictions and references
@@ -213,11 +213,11 @@ This example shows how to use the `add_batch` method to add a batch of predictio
 ```python
 # Initialize the EvaluationModule with custom parameters
 eval_module = EvaluationModule(
-    config_name="batch_eval",   # A unique name to identify this configuration
-    keep_in_memory=False,       # Whether to keep all predictions and references in memory
-    cache_dir="./cache_dir",    # Directory where temporary data will be stored
-    num_process=1,              # Number of processes for distributed evaluation
-    process_id=0                # ID of the current process in a distributed setup
+    config_name="batch_eval",  # A unique name to identify this configuration
+    keep_in_memory=False,  # Whether to keep all predictions and references in memory
+    cache_dir="./cache_dir",  # Directory where temporary data will be stored
+    num_process=1,  # Number of processes for distributed evaluation
+    process_id=0  # ID of the current process in a distributed setup
 )
 
 # Define batches of predictions and references
@@ -239,15 +239,14 @@ print(results)  # Example output: {'accuracy': 0.75}
 
 This example illustrates how to use the `add` method to iteratively add individual predictions and references, followed by computing the evaluation.
 ```python
-```python
+# Initialize the EvaluationModule with custom parameters
 eval_module = EvaluationModule(
-    config_name="iterative_eval",   # A unique name to identify this configuration
-    keep_in_memory=False,           # Whether to keep all predictions and references in memory
-    cache_dir="./cache_dir",        # Directory where temporary data will be stored
-    num_process=1,                  # Number of processes for distributed evaluation
-    process_id=0                    # ID of the current process in a distributed setup
+    config_name="iterative_eval",  # A unique name to identify this configuration
+    keep_in_memory=False,  # Whether to keep all predictions and references in memory
+    cache_dir="./cache_dir",  # Directory where temporary data will be stored
+    num_process=1,  # Number of processes for distributed evaluation
+    process_id=0  # ID of the current process in a distributed setup
 )
-```
 
 # Define individual predictions and references
 individual_predictions = [1, 0, 1, 1]
@@ -392,9 +391,6 @@ This example demonstrates how to list all available evaluation modules on the Hu
 from evaluate import list_evaluation_modules
 
 # List all available evaluation modules
-# `module_type` is set to None to include all types of modules
-# `include_community` is True to include community-contributed modules
-# `with_details` is False to only get the IDs of the modules
 all_modules = list_evaluation_modules(
     module_type=None,           # Include all types of modules
     include_community=True,     # Include community modules
@@ -412,9 +408,6 @@ This example shows how to list only the metric modules available on the Hugging 
 from evaluate import list_evaluation_modules
 
 # List only metric modules
-# `module_type` is set to 'metric' to filter for metric modules
-# `include_community` is True to include community-contributed modules
-# `with_details` is False to only get the IDs of the modules
 metric_modules = list_evaluation_modules(
     module_type='metric',  # Filter for metric modules
     include_community=True,  # Include community modules
@@ -432,9 +425,6 @@ This example demonstrates how to list metric modules and get detailed informatio
 from evaluate import list_evaluation_modules
 
 # List metric modules with detailed information
-# `module_type` is set to 'metric' to filter for metric modules
-# `include_community` is True to include community-contributed modules
-# `with_details` is True to get detailed information about each module
 detailed_metric_modules = list_evaluation_modules(
     module_type='metric',       # Filter for metric modules
     include_community=True,     # Include community modules
