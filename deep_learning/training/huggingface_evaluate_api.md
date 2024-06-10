@@ -399,6 +399,9 @@ all_modules = list_evaluation_modules(
 
 # Print the list of all module IDs
 print(all_modules)
+
+# Output:
+# ['accuracy', 'f1', 'precision', 'recall', 'mcnemar', 'exact_match', ...]
 ```
 
 **2. Listing Only Metric Modules**
@@ -416,6 +419,9 @@ metric_modules = list_evaluation_modules(
 
 # Print the list of metric module IDs
 print(metric_modules)
+
+# Output:
+# ['accuracy', 'f1', 'precision', 'recall', ...]
 ```
 
 **3. Listing Metric Modules with Details**
@@ -434,6 +440,12 @@ detailed_metric_modules = list_evaluation_modules(
 # Print the detailed list of metric modules
 for module in detailed_metric_modules:
     print(module)
+
+# Output:
+# {'name': 'accuracy', 'type': 'metric', 'community': False, 'likes': 5}
+# {'name': 'f1', 'type': 'metric', 'community': False, 'likes': 4}
+# {'name': 'precision', 'type': 'metric', 'community': False, 'likes': 3}
+# ...
 ```
 
 ## load() function
@@ -472,8 +484,38 @@ accuracy_metric = load(
     cache_dir="./cache_dir"     # Directory to store temporary data
 )
 
-# Print the loaded metric
-print(accuracy_metric)
+
+# Print the description of the accuracy metric
+print(accuracy_metric.description)
+# Output:
+# Accuracy is the proportion of correct predictions among the total number of cases processed. It can be computed with:
+# Accuracy = (TP + TN) / (TP + TN + FP + FN)
+# Where:
+# TP: True positive
+# TN: True negative
+# FP: False positive
+# FN: False negative
+
+# Print the citation of the accuracy metric
+print(accuracy_metric.citation)
+# Output:
+#   title={Scikit-learn: Machine Learning in {P}ython},
+#   author={Pedregosa, F. and Varoquaux, G. and Gramfort, A. and Michel, V.
+#          and Thirion, B. and Grisel, O. and Blondel, M. and Prettenhofer, P.
+#          and Weiss, R. and Dubourg, V. and Vanderplas, J. and Passos, A. and
+#          Cournapeau, D. and Brucher, M. and Perrot, M. and Duchesnay, E.},
+#   journal={Journal of Machine Learning Research},
+#   volume={12},
+#   pages={2825--2830},
+#   year={2011}
+
+# Print the features of the accuracy metric
+print(accuracy_metric.features)
+# Output:
+# {
+#     'predictions': Value(dtype='int32', id=None),
+#     'references': Value(dtype='int32', id=None)
+# }
 ```
 
 **2. Loading a Community Metric with Detailed Configurations**
@@ -497,6 +539,9 @@ bleu_metric = load(
 
 # Print the loaded metric
 print(bleu_metric)
+
+# Output:
+# <evaluate.module.EvaluationModule object at 0x...>
 ```
 
 **3. Loading a Measurement with Custom Download Configuration**
@@ -519,8 +564,22 @@ element_count_measurement = load(
     download_config=custom_download_config  # Custom download configuration
 )
 
-# Print the loaded measurement
-print(element_count_measurement)
+# Print the description of the element_count measurement
+print(element_count_measurement.description)
+# Output: (example)
+# This measurement counts the number of elements in a dataset.
+
+# Print the citation of the element_count measurement
+print(element_count_measurement.citation)
+# Output: (example)
+# No citation available.
+
+# Print the features of the element_count measurement
+print(element_count_measurement.features)
+# Output: (example)
+# {
+#     'count': Value(dtype='int64', id=None)
+# }
 ```
 
 **4. Loading a Comparison with a Specific Revision**
@@ -537,8 +596,26 @@ mcnemar_comparison = load(
     revision="v1.0.0"           # Specific version to load
 )
 
-# Print the loaded comparison
-print(mcnemar_comparison)
+# Print the description of the McNemar comparison
+print(mcnemar_comparison.description)
+# Output: (example)
+# The McNemar test is a statistical test used on paired nominal data.
+
+# Print the citation of the McNemar comparison
+print(mcnemar_comparison.citation)
+# Output: (example)
+#   title={Note on the sampling error of the difference between correlated proportions or percentages},
+#   author={McNemar, Quinn},
+#   journal={Psychometrika},
+#   year={1947}
+
+# Print the features of the McNemar comparison
+print(mcnemar_comparison.features)
+# Output: (example)
+# {
+#     'predictions': Sequence(feature=Value(dtype='int32', id=None), length=-1, id=None),
+#     'references': Sequence(feature=Value(dtype='int32', id=None), length=-1, id=None)
+# }
 ```
 
 ## evaluator() function
