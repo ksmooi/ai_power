@@ -1,2 +1,31 @@
 # ai_tech
-A repository of technical articles on AI algorithms, model finetuning, AI agents, open-source libraries, and system design. Perfect for researchers and enthusiasts looking for in-depth insights.
+
+AI 科技進步迅速，各種演算法和 AI library 不斷更新迭代。為了讓更多人掌握最新的 AI 科技並參與開源專案，我創建了這個 ai_tech GitHub repository。
+
+## 目標
+
+ai_tech 的目標如下：
+
+- **有效理解 AI 演算法**：透過閱讀程式碼，深入理解各種 AI 演算法。
+- **快速學習 AI library**：利用大量範例程式，加速掌握各種 AI library。
+- **分析程式碼**：解析各種 AI framework 和 application 的程式碼，促進學習。
+- **學習模型訓練技巧**：通過豐富的範例程式與經驗分享，快速掌握 AI 模型訓練所需的技巧。
+- **系統架構設計**：借助案例學習 AI 應用的系統架構設計，包括軟體架構和雲端架構設計。
+- **MLOps 流程設計**：學習並實踐機器學習運營 (MLOps) 流程設計，提升模型部署和管理的效率與可靠性。
+
+## 如何貢獻
+
+如果您希望協助以下工作，歡迎有志者一同加入：
+
+- **協助翻譯即有文章**: 幫助翻譯和改進現有的文章和教學材料。
+- **貢獻新文章**: 每月至少貢獻一篇新文章，分享您的 AI 知識和經驗。
+
+## 加入我們
+
+我們歡迎所有對 AI 技術有興趣的人士加入我們的社群，無論您的經驗水平如何。您的每一份貢獻都將對推動 AI 技術的普及和發展起到重要作用。
+
+## 聯絡我們
+
+如果您有任何問題或建議，請通過 [GitHub Issues](https://github.com/your-repo/issues) 與我們聯繫。
+
+感謝您的參與和支持！
