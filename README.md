@@ -1,10 +1,10 @@
-# ai_tech
+# AI 源動力 (AI Power Source)
 
-AI 科技進步迅速，各種演算法和 AI library 不斷更新迭代。為了讓更多人掌握最新的 AI 科技並參與開源專案，我創建了這個 ai_tech GitHub repository。
+AI 科技進步迅速，各種演算法和 AI library 不斷更新迭代。為了讓更多人掌握最新的 AI 科技並參與開源專案，我創建了 AI 源動力 (AI Power Source)。
 
 ## 目標
 
-ai_tech 的目標如下：
+AI 源動力 (AI Power Source) 的目標如下：
 
 - **有效理解 AI 演算法**：透過閱讀程式碼，深入理解各種 AI 演算法。
 - **快速學習 AI library**：利用大量範例程式，加速掌握各種 AI library。
