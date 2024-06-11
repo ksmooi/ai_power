@@ -6,12 +6,14 @@ The architecture of CLIP (Contrastive Language-Image Pre-training) comprises two
 ### 1. Vision Encoder
 The Vision Encoder in CLIP can be either a modified ResNet or a Vision Transformer (ViT). Both architectures are designed to extract meaningful features from images.
 
-#### Modified ResNet:
+**Modified ResNet:**
+
 - **Stem**: The stem consists of three convolutional layers with an average pooling layer, instead of the single convolutional layer with max pooling found in standard ResNets.
 - **Residual Blocks**: The network uses Bottleneck blocks with anti-aliasing strided convolutions, where an average pooling layer precedes convolutions with stride > 1.
 - **Attention Pooling**: The final pooling layer is replaced by an Attention Pooling layer, which uses QKV (query, key, value) attention mechanism to pool the spatial features.
 
-#### Vision Transformer (ViT):
+**Vision Transformer (ViT):**
+
 - **Patch Embedding**: The input image is divided into fixed-size patches, and each patch is linearly embedded.
 - **Positional Embedding**: Positional embeddings are added to the patch embeddings to retain spatial information.
 - **Transformer Encoder**: The transformer encoder consists of multiple layers of multi-head self-attention and feed-forward neural networks. Each layer is equipped with residual connections and layer normalization.
@@ -30,22 +32,6 @@ During training, CLIP uses a contrastive loss to align the visual and textual re
 - **Normalization**: The output features from both the vision and text encoders are normalized to unit length.
 - **Similarity Calculation**: The cosine similarity between all pairs of image and text features in a batch is computed.
 - **Contrastive Loss**: A contrastive loss is applied, encouraging the similarity of matching image-text pairs while minimizing the similarity of non-matching pairs.
-
-### Overview of the Process:
-1. **Image Processing**:
-   - The image is preprocessed (resized, cropped, and normalized).
-   - The preprocessed image is passed through the vision encoder to obtain an image feature vector.
-2. **Text Processing**:
-   - The input text is tokenized.
-   - The tokenized text is passed through the text encoder to obtain a text feature vector.
-3. **Feature Alignment**:
-   - Both image and text feature vectors are normalized to unit length.
-   - The similarity between image and text features is calculated using the dot product.
-4. **Training**:
-   - The model is trained using a contrastive loss that maximizes the similarity of matching image-text pairs and minimizes the similarity of non-matching pairs.
-5. **Inference**:
-   - For a given image and a set of text descriptions, the model calculates the similarity scores.
-   - The description with the highest similarity score is selected as the most relevant to the image.
 
 
 ## 2. Main Classes of CLIP
@@ -1338,8 +1324,122 @@ clip.tokenize()
 └── return result
 ```
 
+## 4. CLIP Model Inference Process
 
-## 4. Examples of Using CLIP
+### Essential Steps of the CLIP Model Inference Process
+
+1. **`clip.load`**: Loads the CLIP model and the preprocessing function for the specified model architecture.
+2. **`preprocess`**: Preprocesses the input image by resizing, cropping, and normalizing it.
+3. **`clip.tokenize`**: Tokenizes input text into a format suitable for the CLIP model.
+4. **`model.encode_image`**: Encodes the preprocessed image into feature vectors.
+5. **`model.encode_text`**: Encodes the tokenized text into feature vectors.
+6. **`model.forward`**: Computes the similarity logits between image and text features.
+7. **Softmax**: Converts logits to probabilities, indicating how well each text description matches the image.
+
+### Breaking Down the CLIP Model Inference Process
+
+1. **Load the Model**:
+   - **Function**: `clip.load`
+
+```python
+import clip
+import torch
+from PIL import Image
+
+device = "cuda" if torch.cuda.is_available() else "cpu"
+model, preprocess = clip.load("ViT-B/32", device=device)
+```
+
+2. **Image Processing**:
+   - **Code**: Preprocessing the image
+
+```python
+# Preprocess the input image and add a batch dimension
+image = preprocess(Image.open("path/to/image.png")).unsqueeze(0).to(device)
+```
+
+3. **Text Processing**:
+   - **Function**: `clip.tokenize`
+
+```python
+# Tokenize the input text and move it to the specified device
+text = clip.tokenize(["a description of the image"]).to(device)
+```
+
+4. **Feature Extraction**:
+   - **Function**: `model.encode_image` and `model.encode_text`
+
+```python
+with torch.no_grad():
+    # Encode the image and text to obtain their feature representations
+    image_features = model.encode_image(image)  # Shape: [batch_size, 512]
+    text_features = model.encode_text(text)    # Shape: [num_texts, 512]
+```
+
+5. **Normalization**:
+   - **Code**: Normalizing the features
+
+```python
+    # Normalize the features
+    image_features /= image_features.norm(dim=-1, keepdim=True)
+    text_features /= text_features.norm(dim=-1, keepdim=True)
+```
+
+6. **Similarity Calculation**:
+   - **Function**: `model.forward` (implicitly called)
+
+```python
+    # Calculate similarity between image and text features
+    logits_per_image, logits_per_text = model(image, text)  # Shape: [1, 3] and [3, 1]
+```
+
+7. **Softmax to Get Probabilities**:
+   - **Code**: Apply softmax to the logits
+
+```python
+    # Apply softmax to the logits to obtain probabilities
+    probs = logits_per_image.softmax(dim=-1).cpu().numpy()  # Shape: [1, 3]
+```
+
+### Complete Inference Process Code
+
+```python
+import torch
+import clip
+from PIL import Image
+
+# Load the model and preprocessing function
+device = "cuda" if torch.cuda.is_available() else "cpu"
+model, preprocess = clip.load("ViT-B/32", device=device)
+
+# 1. Image Processing
+image = preprocess(Image.open("path/to/image.png")).unsqueeze(0).to(device)
+
+# 2. Text Processing
+text = clip.tokenize(["a description of the image", "another possible description", "yet another description"]).to(device)
+
+# 3. Feature Extraction and Inference
+with torch.no_grad():
+    # Encode the image and text to obtain their feature representations
+    image_features = model.encode_image(image)  # Shape: [1, 512]
+    text_features = model.encode_text(text)    # Shape: [3, 512]
+
+    # Normalize the features
+    image_features /= image_features.norm(dim=-1, keepdim=True)
+    text_features /= text_features.norm(dim=-1, keepdim=True)
+
+    # Calculate similarity between image and text features
+    logits_per_image, logits_per_text = model(image, text)  # Shape: [1, 3] and [3, 1]
+
+    # Apply softmax to the logits to obtain probabilities
+    probs = logits_per_image.softmax(dim=-1).cpu().numpy()  # Shape: [1, 3]
+
+# Print the label probabilities
+print("Label probs:", probs)  # Example output: [[0.9927937  0.00421068 0.00299572]]
+```
+
+
+## 5. Examples of Using CLIP
 
 ### Example 1: Basic Image-Text Matching with CLIP
 This example demonstrates the fundamental use of the CLIP model for image and text matching. It loads the CLIP model, preprocesses an input image, and tokenizes input text. The model then encodes both the image and text to obtain their feature representations. It calculates the similarity between the image and text using the model's forward pass, resulting in probabilities that indicate how well the text descriptions match the image. This example highlights the core functionality of CLIP for image-text similarity tasks.
@@ -1481,11 +1581,11 @@ print(f"Accuracy = {accuracy:.3f}")  # Print the accuracy
 ```
 
 
-## 5. Conclusion
+## 6. Conclusion
 In this document, we have explored the architecture, functionality, and practical applications of CLIP (Contrastive Language-Image Pre-training). CLIP is a powerful model developed by OpenAI that leverages the synergy between images and text to achieve state-of-the-art performance on various vision and language tasks. We delved into the main classes and functions that constitute CLIP, providing an in-depth understanding of its inner workings. Through practical examples, we demonstrated how CLIP can be used for image-text matching, zero-shot prediction, and linear-probe evaluation. These examples highlight the versatility and efficacy of CLIP in performing complex tasks without the need for extensive fine-tuning. As a versatile tool in the field of AI, CLIP opens up new possibilities for seamless integration of visual and textual data, paving the way for innovative applications across diverse domains.
 
 
-## 6. References
+## 7. References
 - OpenAI. CLIP: Connecting Vision and Language. Retrieved from [OpenAI](https://openai.com/index/clip/)
 - Hugging Face. CLIP ViT-Large-Patch14 Model. Retrieved from [Hugging Face](https://huggingface.co/openai/clip-vit-large-patch14)
 - Radford, A., Kim, J. W., Hallacy, C., et al. (2021). Learning Transferable Visual Models From Natural Language Supervision. arXiv preprint arXiv:2103.00020. Retrieved from [arXiv](https://arxiv.org/abs/2103.00020)
