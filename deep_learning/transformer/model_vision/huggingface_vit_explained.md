@@ -1074,29 +1074,6 @@ VisionTransformer.forward(x)
 
 ## 3. How Vision Transformer Works
 
-<img src="res/vit_explained_encoder2.jpg" alt="Positional Encodings" width="800"><br/>
-
-The image provides a detailed breakdown of the Vision Transformer (ViT) architecture, focusing on the processing flow within a single transformer encoder layer. Here's a brief explanation of each component depicted:
-
-| **Component**                 | **Description**            | **Shape**              |
-|-------------------------------|----------------------------|------------------------|
-| **Combined Embeddings**       | 197 tokens with 768 dimensions each, including patch and class tokens.                                             | (197 x 768)            |
-| **Layer Norm**                | Normalizes the combined embeddings to stabilize training.                                                           | (197 x 768)            |
-| **Multi-Head Attention**      | Transformer layer core with several sub-components:                                                                |                        |
-| - **QKV Linear Projection**   | Projects embeddings into query (Q), key (K), and value (V) matrices. Output dimension is 2304 (768 * 3).            | (197 x 2304)           |
-| - **QKV Reshaping**           | Reshapes QKV matrix to separate Q, K, and V. Produces three matrices each with dimension (12 x 197 x 64).          | (197 x 3 x 12 x 64)    |
-| - **Attention Calculation**   | Computes attention scores via dot product of Q and K^T, applies softmax to get weights, multiplies by V.            | Q: (12, 197, 64)<br>K^T: (12, 64, 197)<br>V: (12, 197, 64) |
-| - **Output Linear Projection**| Reshapes attention output back to (197 x 768) and passes through a linear layer for final attention output.         | (197 x 768)            |
-| **Add & Norm**                | Adds attention output to original input and applies Layer Normalization.                                            | (197 x 768)            |
-| **MLP (Multi-Layer Perceptron)** | Two linear layers with GELU activation in between:                                                              |                        |
-| - **First Linear Layer**      | Expands dimensions from 768 to 3072.                                                                                | (197 x 3072)           |
-| - **Second Linear Layer**     | Reduces dimensions back to 768.                                                                                     | (197 x 768)            |
-| **Add & Norm**                | Adds MLP output to original input and applies Layer Normalization.                                                  | (197 x 768)            |
-| **Output**                    | Maintains same dimensions as input, 197 tokens each with 768 dimensions, for the next transformer layer or head.    | (197 x 768)            |
-
-This table outlines each component involved in the Vision Transformer encoder layer, describing its function and the corresponding shape transformations at each step.
-
-
 ### Input Preprocessing
 
 **Input preprocessing** involves loading the image, resizing it to the required input size, and normalizing the pixel values. This process is typically handled in the data loading pipeline using libraries like `torchvision`.
@@ -1168,8 +1145,30 @@ self.blocks = nn.Sequential(*[
 
 # In the forward pass
 x = self.blocks(x)  # Shape: (B, num_patches + num_prefix_tokens, embed_dim)
-
 ```
+
+The image provides a detailed breakdown of the Vision Transformer (ViT) architecture, focusing on the processing flow within a single transformer encoder layer. Here's a brief explanation of each component depicted:
+
+<img src="res/vit_explained_encoder2.jpg" alt="Positional Encodings" width="800"><br/>
+
+This table outlines each component involved in the Vision Transformer encoder layer, describing its function and the corresponding shape transformations at each step.
+
+| **Component**                 | **Description**            | **Shape**              |
+|-------------------------------|----------------------------|------------------------|
+| **Combined Embeddings**       | 197 tokens with 768 dimensions each, including patch and class tokens.                                             | (197 x 768)            |
+| **Layer Norm**                | Normalizes the combined embeddings to stabilize training.                                                           | (197 x 768)            |
+| **Multi-Head Attention**      | Transformer layer core with several sub-components:                                                                |                        |
+| - **QKV Linear Projection**   | Projects embeddings into query (Q), key (K), and value (V) matrices. Output dimension is 2304 (768 * 3).            | (197 x 2304)           |
+| - **QKV Reshaping**           | Reshapes QKV matrix to separate Q, K, and V. Produces three matrices each with dimension (12 x 197 x 64).          | (197 x 3 x 12 x 64)    |
+| - **Attention Calculation**   | Computes attention scores via dot product of Q and K^T, applies softmax to get weights, multiplies by V.            | Q: (12, 197, 64)<br>K^T: (12, 64, 197)<br>V: (12, 197, 64) |
+| - **Output Linear Projection**| Reshapes attention output back to (197 x 768) and passes through a linear layer for final attention output.         | (197 x 768)            |
+| **Add & Norm**                | Adds attention output to original input and applies Layer Normalization.                                            | (197 x 768)            |
+| **MLP (Multi-Layer Perceptron)** | Two linear layers with GELU activation in between:                                                              |                        |
+| - **First Linear Layer**      | Expands dimensions from 768 to 3072.                                                                                | (197 x 3072)           |
+| - **Second Linear Layer**     | Reduces dimensions back to 768.                                                                                     | (197 x 768)            |
+| **Add & Norm**                | Adds MLP output to original input and applies Layer Normalization.                                                  | (197 x 768)            |
+| **Output**                    | Maintains same dimensions as input, 197 tokens each with 768 dimensions, for the next transformer layer or head.    | (197 x 768)            |
+
 
 ### Output and Classification
 
