@@ -52,7 +52,6 @@ This class implements stochastic depth, a regularization technique that drops en
   - Applies the `drop_path` function, which probabilistically drops paths during training. 
 
 ```python
-
 class DropPath(nn.Module):
     """
     Drop paths (Stochastic Depth) per sample when applied in the main path of residual blocks.
@@ -102,7 +101,6 @@ This class implements multi-head self-attention (MHSA) used in Vision Transforme
   - Reshapes and projects the output.
 
 ```python
-
 class Attention(nn.Module):
     """
     Multi-Head Self-Attention (MHSA) module for Vision Transformer.
@@ -187,8 +185,8 @@ This class scales the input tensor by a learnable parameter, useful for stabiliz
 
 - **Forward Method (`forward`):** 
   - Scales the input tensor `x` by `gamma`.
-```python
 
+```python
 class LayerScale(nn.Module):
     """
     LayerScale module for Vision Transformer.
@@ -236,7 +234,6 @@ This class defines a transformer block, consisting of a multi-head self-attentio
   - Applies MLP with residual connection.
 
 ```python
-
 class Block(nn.Module):
     """
     Transformer Block for Vision Transformer.
@@ -324,7 +321,6 @@ This class defines a multi-layer perceptron used in Vision Transformers and rela
   - Applies the layers in sequence: linear projection, activation, dropout, normalization, and another linear projection.
 
 ```python
-
 class Mlp(nn.Module):
     """ MLP (Multi-Layer Perceptron) as used in Vision Transformer, MLP-Mixer and related networks
     """
@@ -402,7 +398,6 @@ This class defines the Vision Transformer model.
   - Combines `forward_features` and `forward_head` to compute the final output.
 
 ```python
-
 class VisionTransformer(nn.Module):
     """ Vision Transformer
 
@@ -890,7 +885,9 @@ class VisionTransformer(nn.Module):
 ```
 
 #### Calling Sequence of Constructor
+
 This tree view provides a clear understanding of the sequence of calls and operations performed in the `VisionTransformer.__init__` method.
+
 1. **Validation and Argument Assignment**: Validates and assigns the arguments to the instance variables.
 2. **Embed Layer Initialization**: Initializes the patch embedding layer using the provided `embed_layer` class.
 3. **Class Token and Positional Embeddings**: Initializes class tokens and positional embeddings if specified.
@@ -981,6 +978,7 @@ VisionTransformer.__init__
 ```
 
 #### Calling Sequence of Forward Pass
+
 This tree view provides a detailed sequence of the calls and operations performed in the `VisionTransformer.forward()` method.
 
 1. **VisionTransformer.forward_features(x)**: This method processes the input `x` through the patch embedding, position embedding, normalization, and transformer blocks, resulting in the output `x` with embedded features.
@@ -1197,7 +1195,6 @@ def forward_head(self, x: torch.Tensor, pre_logits: bool = False) -> torch.Tenso
 **Create Vision Transformer** involves defining a main function to initialize and use the Vision Transformer model for image classification. The steps include setting up the device (CPU or GPU), initializing the VisionTransformer model with the desired configuration, and loading a sample image. The image is preprocessed by resizing, converting to a tensor, and normalizing it. The model is then put in evaluation mode to perform a forward pass without gradient calculations. Finally, the predicted class is obtained from the model's output and printed. This section demonstrates the practical implementation of Vision Transformer for image classification tasks.
 
 ```python
-
 def main():
     # Define the device (CPU or GPU)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
