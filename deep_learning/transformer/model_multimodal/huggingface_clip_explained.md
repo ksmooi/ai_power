@@ -1,7 +1,12 @@
 # Inside CLIP: Understanding Its Core Mechanisms
 
 ## Architecture of CLIP
+
+<img src="res/clip_explained_overview1.jpg" alt="CLIP Overview" width="600">
+
 The architecture of CLIP (Contrastive Language-Image Pre-training) comprises two main components: the Vision Encoder and the Text Encoder. These components work together to map images and text into a shared feature space where their similarities can be directly compared.
+
+<img src="res/clip_explained_overview2.jpg" alt="CLIP Overview" width="1200">
 
 ### 1. Vision Encoder
 The Vision Encoder in CLIP can be either a modified ResNet or a Vision Transformer (ViT). Both architectures are designed to extract meaningful features from images.
@@ -1325,6 +1330,8 @@ clip.tokenize()
 ```
 
 ## 4. CLIP Model Inference Process
+
+<img src="res/clip_model_pretrain.jpg" alt="CLIP Inference Process" width="1000">
 
 ### Essential Steps of the CLIP Model Inference Process
 
