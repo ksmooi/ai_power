@@ -1,4 +1,4 @@
-# Unveiling Llava: A Deep Dive into Multi-Modal Language Models
+# Deep Dive into LLaVA
 
 ## 1. Introduction
 ### Overview of Llava

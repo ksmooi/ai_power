@@ -9,10 +9,10 @@ AI technology is advancing at lightning speed, with new algorithms and AI librar
 | Title                 | Description           | Keywords              |
 |-----------------------|-----------------------|-----------------------|
 | [Understanding Transformer Attentions](deep_learning/transformer/transformer_attentions.md)                   | An in-depth explanation of the attention mechanism in transformers, covering self-attention, multi-head attention, and their implementation in modern NLP models. | Transformers, Self-Attention, MHA |
-| [Vanilla Transformer Explained](deep_learning/transformer/vanilla_transformer_explained_enus.md)       | A comprehensive guide to the vanilla transformer model, detailing its architecture, components, and the forward pass process for sequence-to-sequence tasks. | vanilla Transformer, Architecture, Sequence-to-Sequence |
-| [Huggingface CLIP Explained](deep_learning/transformer/model_multimodal/huggingface_clip_explained.md)               | An in-depth explanation of the CLIP model, covering its architecture, training process, and applications in linking images and text. | CLIP, Architecture |
-| [LLaVA Implementation Explained](deep_learning/transformer/model_multimodal/llava_implementation_explained.md)           | A comprehensive guide to the implementation of the LLaVA model, exploring its architecture, components, and how it enhances language understanding tasks. | LLaVA, Architecture, MultiModal |
-| [Huggingface Vision Transformer Explained](deep_learning/transformer/model_multimodal/huggingface_vit_explained.md)                | An in-depth explanation of the Vision Transformer (ViT) model, detailing its architecture, key components, and application in computer vision tasks. | Vision Transformer, ViT, Architecture |
+| [The Vanilla Transformer Explained](deep_learning/transformer/vanilla_transformer_explained_enus.md)       | A comprehensive guide to the vanilla transformer model, detailing its architecture, components, and the forward pass process for sequence-to-sequence tasks. | vanilla Transformer, Architecture, Sequence-to-Sequence |
+| [Inside CLIP](deep_learning/transformer/model_multimodal/huggingface_clip_explained.md)               | An in-depth explanation of the CLIP model, covering its architecture, training process, and applications in linking images and text. | CLIP, Architecture |
+| [Deep Dive into LLaVA](deep_learning/transformer/model_multimodal/llava_implementation_explained.md)           | A comprehensive guide to the implementation of the LLaVA model, exploring its architecture, components, and how it enhances language understanding tasks. | LLaVA, Architecture, MultiModal |
+| [Deep Dive into Vision Transformer](deep_learning/transformer/model_vision/huggingface_vit_explained.md)                | An in-depth explanation of the Vision Transformer (ViT) model, detailing its architecture, key components, and application in computer vision tasks. | Vision Transformer, ViT, Architecture |
 | [AutoEncoder Explained](deep_learning/diffusion/autoencoder_explained.md)                    | An in-depth explanation of autoencoders, their architecture, types, and applications in data compression and feature learning. | AutoEncoder, VAE, Architecture |
 
 ### Huggingface API
@@ -49,8 +49,8 @@ AI technology is advancing at lightning speed, with new algorithms and AI librar
 
 | Title                 | Description           | Keywords              |
 |-----------------------|-----------------------|-----------------------|
-| [Huggingface Transformer Trainer Fine-tuning](deep_learning/training/huggingface_transformer_trainer_finetune.md) | This guide explores how to fine-tune transformer models using the Huggingface Trainer API, covering setup, training, and evaluation processes. | Huggingface, Transformer, Trainer API, SFT |
-| [Huggingface Evaluate API](deep_learning/training/huggingface_evaluate_api.md)                 | This article introduces the Huggingface Evaluate API, detailing its purpose, setup, and usage for evaluating machine learning models. | Huggingface, Evaluate API, Metric |
+| [Huggingface Transformer Trainer API](deep_learning/training/huggingface_transformer_trainer_finetune.md) | This guide explores how to fine-tune transformer models using the Huggingface Trainer API, covering setup, training, and evaluation processes. | Huggingface, Transformer, Trainer API, SFT |
+| [Huggingface Evaluate API](deep_learning/training/huggingface_evaluate_api.md) | This article introduces the Huggingface Evaluate API, detailing its purpose, setup, and usage for evaluating machine learning models. | Huggingface, Evaluate API, Metric |
 
 
 ## Our Goals

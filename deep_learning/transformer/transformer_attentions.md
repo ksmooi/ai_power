@@ -1,3 +1,5 @@
+# Understanding Transformer Attentions
+
 ## 1. Introduction
 In the rapidly evolving field of natural language processing (NLP), attention mechanisms have emerged as a cornerstone for enabling large language models (LLMs) to understand and generate human-like text. These mechanisms allow models to selectively focus on different parts of the input sequence, capturing relevant contextual information that significantly enhances performance. As LLMs continue to grow in size and complexity, the computational cost associated with traditional attention mechanisms has become a critical challenge. This article explores Grouped Query Attention (GQA), an innovative approach designed to address these inefficiencies without sacrificing model accuracy.
 
