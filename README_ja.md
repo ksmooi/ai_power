@@ -46,6 +46,7 @@ AI テクノロジーは驚異的な速さで進化しており、新しいア�
 |-----------------------|-----------------------|-----------------------|
 | [Huggingface Datasets Loading](deep_learning/dataset/huggingface_datasets_loading.md)           | Huggingface Datasetsライブラリを使用してデータセットをロードおよび前処理する方法についての説明。様々なデータ形式とソースの取り扱いを含む。 | Huggingface, Datasets |
 | [Huggingface Datasets Main Classes](deep_learning/dataset/huggingface_datasets_main_classes.md) | Huggingface Datasetsライブラリの主要クラスについての包括的なガイド。機能と使用例を解説。 | Huggingface, Datasets, Main Classes |
+| [Alpacaセルフインストラクトガイド](deep_learning/dataset/alpaca_self_instruct_guide.md)           | このガイドは、Alpacaを使用したセルフインストラクトプロセスの包括的な概要を提供し、ステップバイステップの指示と例を含みます。 | Alpaca, Self-Instruct |
 
 ### モデル訓練
 

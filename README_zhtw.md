@@ -46,6 +46,7 @@ AI 技術正以驚人的速度進步，各種新演算法和 AI 庫不斷湧現�
 |-----------------------|-----------------------|-----------------------|
 | [Huggingface Datasets 加載](deep_learning/dataset/huggingface_datasets_loading.md)           | 本文介紹了如何使用 Huggingface Datasets 庫加載和預處理數據集，包括處理各種數據格式和來源。 | Huggingface, Datasets |
 | [Huggingface Datasets 主要類別](deep_learning/dataset/huggingface_datasets_main_classes.md) | 詳盡介紹 Huggingface Datasets 庫的主要類別，解釋其功能及應用案例。 | Huggingface, Datasets, Main Classes |
+| [Alpaca自我指導指南](deep_learning/dataset/alpaca_self_instruct_guide.md)           | 本指南全面概述了使用Alpaca的自我指導過程，包括逐步說明和示例。 | Alpaca, Self-Instruct       |
 
 ### 模型訓練
 

@@ -46,6 +46,7 @@ AI technology is advancing at lightning speed, with new algorithms and AI librar
 |-----------------------|-----------------------|-----------------------|
 | [Huggingface Datasets Loading](deep_learning/dataset/huggingface_datasets_loading.md)           | This article covers how to load and preprocess datasets using the Huggingface Datasets library, including handling various data formats and sources. | Huggingface, Datasets |
 | [Huggingface Datasets Main Classes](deep_learning/dataset/huggingface_datasets_main_classes.md) | A comprehensive guide to the main classes of the Huggingface Datasets library, explaining their functionalities and use cases. | Huggingface, Datasets, Main Classes |
+| [Alpaca Self-Instruct Guide](deep_learning/dataset/alpaca_self_instruct_guide.md)           | This guide provides a comprehensive overview of the Self-Instruct process using Alpaca, including step-by-step instructions and examples. | Alpaca, Self-Instruct |
 
 ### Model Training
 
