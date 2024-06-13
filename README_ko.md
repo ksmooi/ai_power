@@ -12,7 +12,7 @@ AI 기술은 빠른 속도로 발전하고 있으며, 새로운 알고리즘과 
 |-----------------------|-----------------------|-----------------------|
 | [Understanding Transformer Attentions](deep_learning/transformer/transformer_attentions.md)                   | 트랜스포머의 어텐션 메커니즘에 대한 심층 설명으로, 셀프 어텐션, 멀티 헤드 어텐션 및 최신 NLP 모델에서의 구현을 다룹니다. | Transformers, Self-Attention, MHA |
 | [The Vanilla Transformer Explained](deep_learning/transformer/vanilla_transformer_explained_enus.md)       | 바닐라 트랜스포머 모델에 대한 종합 가이드로, 아키텍처, 구성 요소 및 시퀀스-투-시퀀스 작업에 대한 전방 패스 프로세스를 자세히 설명합니다. | vanilla Transformer, Architecture, Sequence-to-Sequence |
-| [Inside CLIP](deep_learning/transformer/model_multimodal/huggingface_clip_explained.md)               | CLIP 모델에 대한 심층 설명으로, 아키텍처, 훈련 과정 및 이미지와 텍스트를 연결하는 응용 프로그램을 다룹니다. | CLIP, Architecture |
+| [Inside CLIP](deep_learning/transformer/model_multimodal/openai_clip_explained.md)               | CLIP 모델에 대한 심층 설명으로, 아키텍처, 훈련 과정 및 이미지와 텍스트를 연결하는 응용 프로그램을 다룹니다. | CLIP, Architecture |
 | [Deep Dive into LLaVA](deep_learning/transformer/model_multimodal/llava_implementation_explained.md)           | LLaVA 모델의 구현에 대한 종합 가이드로, 아키텍처, 구성 요소 및 언어 이해 작업을 향상시키는 방법을 탐구합니다. | LLaVA, Architecture, MultiModal |
 | [Deep Dive into Vision Transformer](deep_learning/transformer/model_vision/huggingface_vit_explained.md)                | Vision Transformer (ViT) 모델에 대한 심층 설명으로, 아키텍처, 주요 구성 요소 및 컴퓨터 비전 작업에의 응용을 다룹니다. | Vision Transformer, ViT, Architecture |
 | [AutoEncoder Explained](deep_learning/diffusion/autoencoder_explained.md)                    | 오토인코더에 대한 심층 설명으로, 아키텍처, 유형 및 데이터 압축과 특징 학습에서의 응용을 다룹니다. | AutoEncoder, VAE, Architecture |
