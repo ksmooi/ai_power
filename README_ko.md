@@ -47,6 +47,8 @@ AI 기술은 빠른 속도로 발전하고 있으며, 새로운 알고리즘과 
 | [Huggingface Datasets Loading](deep_learning/dataset/huggingface_datasets_loading.md)           | Huggingface Datasets 라이브러리를 사용하여 데이터셋을 로드하고 전처리하는 방법을 다루며, 다양한 데이터 형식과 소스를 처리하는 방법을 설명합니다. | Huggingface, Datasets |
 | [Huggingface Datasets Main Classes](deep_learning/dataset/huggingface_datasets_main_classes.md) | Huggingface Datasets 라이브러리의 주요 클래스에 대한 종합 가이드로, 그 기능과 사용 사례를 설명합니다. | Huggingface, Datasets, Main Classes |
 | [Alpaca 셀프 인스트럭트 가이드](deep_learning/dataset/alpaca_self_instruct_guide.md)           | 이 가이드는 Alpaca를 사용한 셀프 인스트럭트 프로세스에 대한 포괄적인 개요를 제공하며, 단계별 지침과 예제를 포함합니다. | Alpaca, Self-Instruct |
+| [Unstructured.io와 GPT4를 사용한 데이터셋 생성](deep_learning/dataset/generate_dataset_with_unstructureio_gpt4.md) | 이 기사에서는 Unstructured.io와 GPT-4를 사용하여 PDF 파일을 처리하고 콘텐츠를 추출하여 데이터셋을 생성하는 방법을 시연합니다. | Unstructured.io, GPT-4 |
+| [Table Transformer와 GPT4를 사용한 데이터셋 생성](deep_learning/dataset/generate_dataset_with_table_transformer.md) | 이 기사에서는 Table Transformer와 GPT-4를 사용하여 PDF 파일에서 표 구조를 감지하고 추출하여 데이터셋을 생성하는 방법을 설명합니다. | Table Transformer, GPT-4 |
 
 ### 모델 훈련
 

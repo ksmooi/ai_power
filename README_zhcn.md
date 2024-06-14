@@ -47,6 +47,8 @@ AI 技术正以惊人的速度进步，各种新算法和 AI 库不断涌现和�
 | [Huggingface Datasets 加载](deep_learning/dataset/huggingface_datasets_loading.md)           | 介绍如何使用 Huggingface Datasets 库加载和预处理数据集，包括处理各种数据格式和来源。 | Huggingface, Datasets |
 | [Huggingface Datasets 主要类](deep_learning/dataset/huggingface_datasets_main_classes.md) | 全面指南，介绍 Huggingface Datasets 库的主要类，解释它们的功能和用例。 | Huggingface, Datasets, Main Classes |
 | [Alpaca自我指导指南](deep_learning/dataset/alpaca_self_instruct_guide.md)           | 本指南全面概述了使用Alpaca的自我指导过程，包括逐步说明和示例。 | Alpaca, Self-Instruct       |
+| [使用 Unstructured.io 和 GPT4 生成数据集](deep_learning/dataset/generate_dataset_with_unstructureio_gpt4.md) | 本文演示了如何使用 Unstructured.io 和 GPT-4 处理 PDF 文件并通过提取和组织内容生成数据集。 | Unstructured.io, GPT-4 |
+| [使用 Table Transformer 和 GPT4 生成数据集](deep_learning/dataset/generate_dataset_with_table_transformer.md) | 本文解释了如何使用 Table Transformer 和 GPT-4 通过检测和提取表格结构从 PDF 文件生成数据集。 | Table Transformer, GPT-4 |
 
 ### 模型训练
 

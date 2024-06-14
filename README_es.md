@@ -47,6 +47,8 @@ La tecnología AI avanza a una velocidad vertiginosa, con nuevos algoritmos y bi
 | [Huggingface Datasets Loading](deep_learning/dataset/huggingface_datasets_loading.md)           | Este artículo cubre cómo cargar y preprocesar conjuntos de datos utilizando la biblioteca Huggingface Datasets, incluyendo el manejo de varios formatos y fuentes de datos. | Huggingface, Datasets |
 | [Huggingface Datasets Main Classes](deep_learning/dataset/huggingface_datasets_main_classes.md) | Una guía comprensiva sobre las clases principales de la biblioteca Huggingface Datasets, explicando sus funcionalidades y casos de uso. | Huggingface, Datasets, Main Classes |
 | [Guía de Auto-Instrucción de Alpaca](deep_learning/dataset/alpaca_self_instruct_guide.md)           | Esta guía proporciona una visión general completa del proceso de Auto-Instrucción utilizando Alpaca, incluyendo instrucciones paso a paso y ejemplos. | Alpaca, Self-Instruct |
+| [Generación de Conjuntos de Datos con Unstructured.io y GPT4](deep_learning/dataset/generate_dataset_with_unstructureio_gpt4.md) | Este artículo demuestra cómo usar Unstructured.io y GPT-4 para procesar archivos PDF y generar conjuntos de datos extrayendo y organizando contenido. | Unstructured.io, GPT-4 |
+| [Generación de Conjuntos de Datos con Table Transformer y GPT4](deep_learning/dataset/generate_dataset_with_table_transformer.md) | Este artículo explica cómo usar Table Transformer y GPT-4 para generar conjuntos de datos a partir de archivos PDF detectando y extrayendo estructuras de tablas. | Table Transformer, GPT-4 |
 
 ### Entrenamiento de Modelos
 
