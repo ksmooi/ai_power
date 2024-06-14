@@ -9,7 +9,7 @@ This article demonstrates how to integrate Unstructured.IO with GPT-4 to transfo
 By the end of this article, you will have a comprehensive understanding of how to utilize Unstructured.IO and GPT-4 to automate the creation of AI-ready datasets, enabling you to harness the full potential of your unstructured data.
 
 
-## Prepare the `unstructured` Library
+## Prepare the `unstructured` library
 If you haven’t installed Docker on your machine, you can find the installation guide [here](https://docs.docker.com/get-docker/).
 
 > **Note**: We build multi-platform images to support both x86\_64 and Apple silicon hardware. Using `docker pull` should download the appropriate image for your architecture. However, if needed, you can specify the platform with the `--platform` flag, e.g., `--platform linux/amd64`.
@@ -60,7 +60,7 @@ python3
 ```
 
 
-## Prepare the `openai` Library
+## Prepare the `openai` library
 We provide a Python library, which you can install by running:
 
 ```bash
