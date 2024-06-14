@@ -69,12 +69,12 @@ class TableExtractionPipeline:
 
 # Instantiate the pipeline with the necessary configurations and model paths
 pipeline = TableExtractionPipeline(
-    det_device='cuda', 
-    str_device='cuda',
-    det_config_path='path/to/det_config.json', 
-    det_model_path='path/to/det_model.pth',
-    str_config_path='path/to/str_config.json', 
-    str_model_path='path/to/str_model.pth'
+    det_device='cuda',            # Device for the detection model (e.g., 'cuda' for GPU)
+    str_device='cuda',            # Device for the structure model (e.g., 'cuda' for GPU)
+    det_config_path='path/to/det_config.json',  # Path to the detection model config file
+    det_model_path='path/to/det_model.pth',     # Path to the detection model weights
+    str_config_path='path/to/str_config.json',  # Path to the structure model config file
+    str_model_path='path/to/str_model.pth'      # Path to the structure model weights
 )
 
 # Load an image and tokens
@@ -88,13 +88,13 @@ tokens = [
     # Add more tokens as needed
 ]
 
-# Call the detect method with all parameters
+# Call the detect method of the TableExtractionPipeline with all parameters
 result = pipeline.detect(
-    img,
-    tokens=tokens,
-    out_objects=True,
-    out_crops=True,
-    crop_padding=10
+    img,              # The input image to be processed
+    tokens=tokens,    # List of tokens extracted from the image using OCR
+    out_objects=True, # Whether to output detected objects (e.g., table boundaries)
+    out_crops=True,   # Whether to output cropped tables (sub-images of detected tables)
+    crop_padding=10   # Padding around the cropped tables
 )
 
 # Handle the result
