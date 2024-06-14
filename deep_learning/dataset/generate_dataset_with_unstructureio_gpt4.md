@@ -77,7 +77,7 @@ client = OpenAI(
 )
 
 chat_completion = client.chat.completions.create(
-    model="gpt-3.5-turbo",
+    model="gpt-4-turbo",
     messages=[{"role": "user", "content": "Hello world"}]
 )
 ```
@@ -85,7 +85,7 @@ chat_completion = client.chat.completions.create(
 The bindings also will install a command-line utility you can use as follows:
 
 ```bash
-$ openai api chat_completions.create -m gpt-3.5-turbo -g user "Hello world"
+$ openai api chat_completions.create -m gpt-4-turbo -g user "Hello world"
 ```
 
 

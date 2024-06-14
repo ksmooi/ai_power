@@ -40,7 +40,7 @@ client = OpenAI(
 )
 
 chat_completion = client.chat.completions.create(
-    model="gpt-3.5-turbo",
+    model="gpt-4-turbo",
     messages=[{"role": "user", "content": "Hello world"}]
 )
 ```
@@ -48,7 +48,7 @@ chat_completion = client.chat.completions.create(
 The bindings also will install a command-line utility you can use as follows:
 
 ```bash
-$ openai api chat_completions.create -m gpt-3.5-turbo -g user "Hello world"
+$ openai api chat_completions.create -m gpt-4-turbo -g user "Hello world"
 ```
 
 
@@ -366,7 +366,7 @@ if csv_output:
 
 
 ## Example 4: Comprehensive Table Extraction from PDFs
-This example demonstrates how to extract tables from a PDF file using the PDFTableExtractor class, which leverages a detection and structure recognition pipeline (TableExtractionPipeline). The process involves partitioning the PDF to identify table elements, converting specific pages to images, performing OCR to extract tokens, and using the pipeline to detect and extract tables, which are then saved in various formats (JSON, HTML, CSV) in the specified output directory.
+This example demonstrates how to extract tables from a PDF file using the PDFTableExtractor class, which leverages a detection and structure recognition pipeline (TableExtractionPipeline) and GPT-4-turbo for generating question prompts. The process involves partitioning the PDF to identify table elements, converting specific pages to images, performing OCR to extract tokens, and using the pipeline to detect and extract tables. The extracted tables are then saved in various formats (JSON, HTML, CSV) in the specified output directory, and relevant question prompts about the tables are generated and saved as text files.
 
 ### Example Code
 ```python
@@ -375,7 +375,7 @@ import json
 from pdf2image import convert_from_path
 import pytesseract
 from PIL import Image
-import torch
+import openai
 from partition import partition_pdf  # Assuming you have a partition_pdf function available
 
 class PDFTableExtractor:
@@ -394,16 +394,42 @@ class PDFTableExtractor:
             det_model_path (str): Path to the detection model weights.
             str_config_path (str): Path to the structure model config file.
             str_model_path (str): Path to the structure model weights.
-        """     
+        """
         # Instantiate the pipeline with the necessary configurations and model paths
         self.pipeline = TableExtractionPipeline(
-            det_device='cuda',            # Device for the detection model (e.g., 'cuda' for GPU)
-            str_device='cuda',            # Device for the structure model (e.g., 'cuda' for GPU)
-            det_config_path='path/to/det_config.json',  # Path to the detection model config file
-            det_model_path='path/to/det_model.pth',     # Path to the detection model weights
-            str_config_path='path/to/str_config.json',  # Path to the structure model config file
-            str_model_path='path/to/str_model.pth'      # Path to the structure model weights
+            det_device=det_device,            # Device for the detection model (e.g., 'cuda' for GPU)
+            str_device=str_device,            # Device for the structure model (e.g., 'cuda' for GPU)
+            det_config_path=det_config_path,  # Path to the detection model config file
+            det_model_path=det_model_path,    # Path to the detection model weights
+            str_config_path=str_config_path,  # Path to the structure model config file
+            str_model_path=str_model_path     # Path to the structure model weights
         )
+
+    def generate_question_prompt(self, table_content):
+        """
+        Generate a question prompt about the extracted tables using GPT-4-turbo.
+
+        Args:
+            table_content (str): The content of the table to generate a question about.
+
+        Returns:
+            str: Generated question prompt.
+        """
+        response = openai.ChatCompletion.create(
+            model="gpt-4-turbo",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are an AI assistant that generates questions about table content."
+                },
+                {
+                    "role": "user",
+                    "content": f"Given the following table content, generate a relevant question: {table_content}"
+                }
+            ]
+        )
+        question_prompt = response['choices'][0]['message']['content'].strip()
+        return question_prompt
 
     def extract_tables_from_pdf(self, pdf_path, output_dir):
         """
@@ -423,7 +449,6 @@ class PDFTableExtractor:
                 img = convert_from_path(pdf_path, 300, first_page=page_num, last_page=page_num)[0]
 
                 # Perform OCR (Optical Character Recognition) on the image to get text tokens
-                # Initialize an empty list to store the tokens
                 ocr_data = pytesseract.image_to_data(img, output_type=pytesseract.Output.DICT)
                 tokens = []
                 
@@ -475,6 +500,14 @@ class PDFTableExtractor:
                         with open(csv_path, 'w') as f:
                             f.write(table['csv'][0])  # If there are multiple tables, handle accordingly
 
+                    # Generate question prompt using OpenAI GPT-4-turbo
+                    table_content = table.get('html', [''])[0]  # Use HTML content of the table as input
+                    question_prompt = self.generate_question_prompt(table_content)
+                    
+                    # Save the generated question prompt
+                    question_path = os.path.join(page_output_dir, f'table_{table_idx + 1}_question.txt')
+                    with open(question_path, 'w') as f:
+                        f.write(question_prompt)
 
 def main():
     """
@@ -497,16 +530,16 @@ def main():
     # Extract tables from the PDF
     extractor.extract_tables_from_pdf(pdf_path, output_dir)
 
-
 if __name__ == "__main__":
     main()
 ```
 
 ### Explanation
 
-1. **PDFTableExtractor Class**: This class encapsulates the functionality to extract tables from a PDF file.
+1. **PDFTableExtractor Class**: This class encapsulates the functionality to extract tables from a PDF file and generate question prompts using GPT-4-turbo.
     - **__init__**: Initializes the pipeline with specified model paths and devices.
-    - **extract_tables_from_pdf**: Extracts tables from a given PDF file and saves the results.
+    - **generate_question_prompt**: Generates a question prompt about the extracted tables using GPT-4-turbo.
+    - **extract_tables_from_pdf**: Extracts tables from a given PDF file, saves the results, and generates question prompts for the extracted tables.
 2. **extract_tables_from_pdf Method**:
     - Uses `partition_pdf` to partition the PDF and retrieve elements.
     - Checks if the element type is 'table'.
@@ -514,9 +547,11 @@ if __name__ == "__main__":
     - Performs OCR on the image to get text tokens using `pytesseract`.
     - Calls the `extract` method of the pipeline to extract tables.
     - Saves the extracted tables in JSON, HTML, and CSV formats in the specified output directory.
+    - Generates a question prompt for each extracted table using the `generate_question_prompt` method.
+    - Saves the generated question prompts to text files in the specified output directory.
 3. **main Function**:
     - Instantiates the `PDFTableExtractor` with appropriate model paths and devices.
-    - Calls the `extract_tables_from_pdf` method to extract tables from the given PDF file.
+    - Calls the `extract_tables_from_pdf` method to extract tables from the given PDF file and generate question prompts.
 
 
 ## Conclusion
