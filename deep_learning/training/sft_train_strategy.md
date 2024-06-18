@@ -37,9 +37,9 @@ class SimpleCNN(nn.Module):
     """
     def __init__(self, num_classes=10):
         super(SimpleCNN, self).__init__()
-		
-		# Load the pre-trained ResNet50 model
-		# Modify the final layer
+                  
+        # Load the pre-trained ResNet50 model
+        # Modify the final layer
         self.model = models.resnet50(pretrained=True)
         self.model.fc = nn.Linear(self.model.fc.in_features, num_classes)
 
@@ -204,25 +204,25 @@ for epoch in range(epochs):
         with autocast():          # Enable mixed precision
             output = model(data)  # Forward pass
             loss = nn.CrossEntropyLoss()(output, target)  # Compute loss
-		
-		# Scaling the Loss: 
-		# In this step, the GradScaler scales the loss by a certain factor. 
-		# This scaled loss is then used in the backward pass to compute the gradients. 
-		# By scaling the loss, the gradients are also scaled, making them larger and less likely to underflow. 
-		# The backward() function computes the gradients of the loss with respect to the model parameters.
-		
-		# Updating the Model Parameters: 
-		# After computing the scaled gradients, the scaler.step(optimizer) function is called. 
-		# This function first unscales the gradients back to their original scale and then passes them to the optimizer 
-		# to update the model parameters. If any of the gradients are found to be NaN or Inf after unscaling, 
-		# the optimizer step is skipped to maintain stability.
-		
-		# Updating the Scaler: 
-		# Finally, the scaler.update() function updates the scale factor used by the GradScaler. 
-		# If gradients were too small and caused underflow, the scaler will increase the scale factor for the next 
-		# iteration to avoid this issue. Conversely, if no such issues were encountered, the scaler might decrease 
-		# the scale factor to improve training efficiency. This dynamic adjustment helps maintain the balance between 
-		# training speed and numerical stability.
+        
+        # Scaling the Loss: 
+        # In this step, the GradScaler scales the loss by a certain factor. 
+        # This scaled loss is then used in the backward pass to compute the gradients. 
+        # By scaling the loss, the gradients are also scaled, making them larger and less likely to underflow. 
+        # The backward() function computes the gradients of the loss with respect to the model parameters.
+        
+        # Updating the Model Parameters: 
+        # After computing the scaled gradients, the scaler.step(optimizer) function is called. 
+        # This function first unscales the gradients back to their original scale and then passes them to the optimizer 
+        # to update the model parameters. If any of the gradients are found to be NaN or Inf after unscaling, 
+        # the optimizer step is skipped to maintain stability.
+        
+        # Updating the Scaler: 
+        # Finally, the scaler.update() function updates the scale factor used by the GradScaler. 
+        # If gradients were too small and caused underflow, the scaler will increase the scale factor for the next 
+        # iteration to avoid this issue. Conversely, if no such issues were encountered, the scaler might decrease 
+        # the scale factor to improve training efficiency. This dynamic adjustment helps maintain the balance between 
+        # training speed and numerical stability.
         
         scaler.scale(loss).backward() # Scaling the Loss
         scaler.step(optimizer)        # Updating the Model Parameters
