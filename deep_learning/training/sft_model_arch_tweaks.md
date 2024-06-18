@@ -1,4 +1,4 @@
-# SFT: Leveraging Pre-trained Models with Architecture Adjustments
+# SFT: Leveraging Pre-trained Models with Architecture Tweaks
 
 ## Introduction
 In recent years, leveraging pre-trained models has become a crucial strategy in deep learning, allowing researchers and practitioners to utilize models that have already learned rich feature representations from vast amounts of data. However, merely using pre-trained models as they are might not always yield optimal results for specific tasks. Adjusting the architecture of these models can lead to significant improvements in performance and efficiency. This article explores various methods of modifying pre-trained models, specifically focusing on replacing fully connected (FC) layers with convolutional layers, adding dropout and batch normalization layers, incorporating residual connections, introducing Squeeze-and-Excitation (SE) blocks, and using a pre-trained encoder with a custom decoder in autoencoders. Each method offers distinct advantages, from preserving spatial information to enhancing model robustness and efficiency.
