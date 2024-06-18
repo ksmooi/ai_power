@@ -9,7 +9,7 @@ To address these challenges, advanced loss functions have been developed. Focal 
 This article explores these comprehensive loss functions, detailing their benefits, use cases, and implementation in PyTorch to help practitioners enhance model training and performance in various machine learning applications.
 
 
-## Implementing Focal Loss for Imbalanced Datasets
+## Focal Loss for Imbalanced Datasets
 
 Focal Loss is designed to address class imbalance by down-weighting the loss assigned to well-classified examples, thereby focusing more on hard-to-classify examples.
 
@@ -436,7 +436,7 @@ loss = loss_fn(preds, targets)
 print(loss)
 ```
 
-## Implementing Model Distillation for Lightweight Models
+## Model Distillation for Lightweight Models
 
 Model distillation is a technique where a smaller, more efficient "student" model is trained to replicate the behavior of a larger, more complex "teacher" model. This process helps in creating lightweight models that are suitable for deployment on resource-constrained devices.
 
