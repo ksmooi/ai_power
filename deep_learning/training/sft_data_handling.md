@@ -107,7 +107,7 @@ Stratified sampling ensures that each class is equally represented in each batch
 3. **Better Generalization**: Stratified sampling promotes better generalization by exposing the model to a balanced variety of samples during training.
 4. **Stabilized Training**: Reduces the variance in gradient updates by providing a consistent class distribution, leading to more stable and effective training.
 
-For example:
+**For Examples:**
 1. **Calculate Class Weights**: If class 0 has 80 samples and class 1 has 20 samples, the weights could be 1/80 for class 0 and 1/20 for class 1.
 2. **Assign Weights to Samples**: Each sample in class 0 gets a weight of 1/80, and each sample in class 1 gets a weight of 1/20.
 3. **Create a Sampler**: Use `WeightedRandomSampler` with these weights to sample data.
@@ -204,7 +204,7 @@ Generating synthetic data for rare classes can help balance the dataset and impr
 3. **Enhanced Robustness**: A balanced dataset ensures that the model is exposed to a variety of scenarios and features, making it more robust and capable of handling diverse inputs.
 4. **Reduced Overfitting**: With more synthetic samples for rare classes, the model is less likely to overfit to the limited real samples available, improving its generalization to new data.
 
-For example, using SMOTE:
+**For Examples:**
 1. **Select a Minority Sample**: Choose a sample from the minority class.
 2. **Find Nearest Neighbors**: Identify the k-nearest neighbors of this sample within the minority class.
 3. **Create Synthetic Samples**: For each neighbor, create a synthetic sample by interpolating between the original sample and the neighbor, based on a random weight.
