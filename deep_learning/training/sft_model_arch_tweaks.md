@@ -37,9 +37,9 @@ class ResNet50WithConvReplaceFC(nn.Module):
         
         # Add new convolutional layers
         self.conv1 = nn.Conv2d(2048, 512, kernel_size=3, padding=1)  # Output: (batch_size, 512, 7, 7)
-        self.conv2 = nn.Conv2d(512, 256, kernel_size=3, padding=1)  # Output: (batch_size, 256, 7, 7)
-        self.pool = nn.AdaptiveAvgPool2d((1, 1))  # Output: (batch_size, 256, 1, 1)
-        self.conv3 = nn.Conv2d(256, num_classes, kernel_size=1)  # Output: (batch_size, num_classes, 1, 1)
+        self.conv2 = nn.Conv2d(512, 256, kernel_size=3, padding=1)   # Output: (batch_size, 256, 7, 7)
+        self.pool = nn.AdaptiveAvgPool2d((1, 1))                     # Output: (batch_size, 256, 1, 1)
+        self.conv3 = nn.Conv2d(256, num_classes, kernel_size=1)      # Output: (batch_size, num_classes, 1, 1)
 
     def forward(self, x):
         """
@@ -59,11 +59,11 @@ class ResNet50WithConvReplaceFC(nn.Module):
         x = torch.relu(self.conv2(x))  # Output: (batch_size, 256, 7, 7)
         
         # Apply the adaptive average pooling layer
-        x = self.pool(x)  # Output: (batch_size, 256, 1, 1)
+        x = self.pool(x)               # Output: (batch_size, 256, 1, 1)
         
         # Apply the final convolutional layer and flatten the output
-        x = self.conv3(x)  # Output: (batch_size, num_classes, 1, 1)
-        x = x.view(x.size(0), -1)  # Flatten the tensor to shape (batch_size, num_classes)
+        x = self.conv3(x)              # Output: (batch_size, num_classes, 1, 1)
+        x = x.view(x.size(0), -1)      # Flatten the tensor to shape (batch_size, num_classes)
         
         return x
 
@@ -78,7 +78,7 @@ output_tensor = model(input_tensor)
 print(output_tensor.shape)  # Output: torch.Size([32, 10])
 ```
 
-## Adding Dropout and Batch Normalization Layers into Pre-trained Model
+## Adding Dropout and BN Layers into Pre-trained Model
 
 Dropout layers help prevent overfitting by randomly setting a fraction of input units to zero during training, which encourages the network to learn more robust features. Batch normalization helps accelerate training and improve the stability of deep networks by normalizing the input of each layer, which mitigates the problem of internal covariate shift. This example adds both dropout and batch normalization layers to a pre-trained ResNet50 model.
 
@@ -244,7 +244,7 @@ output_tensor = model(input_tensor)
 print(output_tensor.shape)  # Output: torch.Size([32, 10])
 ```
 
-## Adding Squeeze-and-Excitation Blocks into Pre-trained Model
+## Adding SE Blocks into Pre-trained Model
 
 Squeeze-and-Excitation (SE) blocks adaptively recalibrate channel-wise feature responses, which can improve the model's representational power. This example adds SE blocks to a pre-trained ResNet50 model.
 
@@ -369,8 +369,8 @@ class PretrainedEncoder(nn.Module):
     """
     def __init__(self, pretrained_model):
         super(PretrainedEncoder, self).__init__()
-		
-		# Use all layers except the last fully connected layer
+
+        # Use all layers except the last fully connected layer
         self.encoder = nn.Sequential(*list(pretrained_model.children())[:-1])
 
     def forward(self, x):
