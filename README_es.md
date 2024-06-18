@@ -54,6 +54,10 @@ La tecnología AI avanza a una velocidad vertiginosa, con nuevos algoritmos y bi
 
 | Título                | Descripción           | Palabras Clave        |
 |-----------------------|-----------------------|-----------------------|
+| [Ajustes de Arquitectura de Modelo SFT](deep_learning/training/sft_model_arch_tweaks.md) | Este artículo discute varias modificaciones y ajustes a la arquitectura del modelo para optimizar el rendimiento en el ajuste fino supervisado.           |
+| [Estrategia de Entrenamiento SFT](deep_learning/training/sft_train_strategy.md) | Este artículo proporciona información sobre estrategias de entrenamiento efectivas para el ajuste fino supervisado, incluyendo consejos y mejores prácticas.         |
+| [Manejo de Datos SFT](deep_learning/training/sft_data_handling.md)        | Este artículo explica las técnicas para manejar y preparar datos para tareas de ajuste fino supervisado.          |
+| [Función de Pérdida SFT](deep_learning/training/sft_loss_function.md)     | Este artículo explora diferentes funciones de pérdida utilizadas en el ajuste fino supervisado y su impacto en el rendimiento del modelo.           |
 | [Huggingface Transformer Trainer API](deep_learning/training/huggingface_transformer_trainer_finetune.md) | Esta guía explora cómo afinar modelos de transformers utilizando la API de Huggingface Trainer, cubriendo la configuración, el entrenamiento y los procesos de evaluación. | Huggingface, Transformer, Trainer API, SFT |
 | [Huggingface Evaluate API](deep_learning/training/huggingface_evaluate_api.md) | Este artículo introduce la API de Huggingface Evaluate, detallando su propósito, configuración y uso para evaluar modelos de aprendizaje automático. | Huggingface, Evaluate API, Metric |
 

@@ -54,6 +54,10 @@ AI 技术正以惊人的速度进步，各种新算法和 AI 库不断涌现和�
 
 | 标题                 | 描述           | 关键词              |
 |-----------------------|-----------------------|-----------------------|
+| [SFT: 模型架构调整](deep_learning/training/sft_model_arch_tweaks.md) | 本文讨论了各种模型架构调整和优化，以提高监督微调的性能。           |
+| [SFT: 训练策略](deep_learning/training/sft_train_strategy.md)       | 本文提供了监督微调的有效训练策略，包括提示和最佳实践。         |
+| [SFT: 数据处理](deep_learning/training/sft_data_handling.md)        | 本文解释了用于监督微调任务的数据处理和准备技术。          |
+| [SFT: 损失函数](deep_learning/training/sft_loss_function.md)        | 本文探讨了用于监督微调的不同损失函数及其对模型性能的影响。           |
 | [Huggingface Transformer Trainer API](deep_learning/training/huggingface_transformer_trainer_finetune.md) | 探讨如何使用 Huggingface Trainer API 微调 Transformer 模型，涵盖设置、训练和评估过程。 | Huggingface, Transformer, Trainer API, SFT |
 | [Huggingface Evaluate API](deep_learning/training/huggingface_evaluate_api.md) | 介绍 Huggingface Evaluate API，详细说明其用途、设置及其在评估机器学习模型中的应用。 | Huggingface, Evaluate API, Metric |
 

@@ -54,6 +54,10 @@ AI テクノロジーは驚異的な速さで進化しており、新しいア�
 
 | タイトル                 | 説明           | キーワード              |
 |-----------------------|-----------------------|-----------------------|
+| [SFT: モデルアーキテクチャの調整](deep_learning/training/sft_model_arch_tweaks.md) | この記事では、教師付きファインチューニングのパフォーマンスを最適化するためのさまざまなモデルアーキテクチャの調整について説明します。           |
+| [SFT: トレーニング戦略](deep_learning/training/sft_train_strategy.md)       | この記事では、教師付きファインチューニングの効果的なトレーニング戦略についての洞察を提供し、ヒントやベストプラクティスを含みます。         |
+| [SFT: データ処理](deep_learning/training/sft_data_handling.md)        | この記事では、教師付きファインチューニングタスクのためのデータ処理と準備技術について説明します。          |
+| [SFT: 損失関数](deep_learning/training/sft_loss_function.md)        | この記事では、教師付きファインチューニングで使用されるさまざまな損失関数とそれがモデルのパフォーマンスに与える影響について探ります。           |
 | [Huggingface Transformer Trainer API](deep_learning/training/huggingface_transformer_trainer_finetune.md) | Huggingface Trainer APIを使用してトランスフォーマーモデルを微調整する方法についてのガイド。セットアップ、トレーニング、および評価プロセスをカバー。 | Huggingface, Transformer, Trainer API, SFT |
 | [Huggingface Evaluate API](deep_learning/training/huggingface_evaluate_api.md) | Huggingface Evaluate APIの紹介。目的、セットアップ、および機械学習モデルの評価のための使用法について解説。 | Huggingface, Evaluate API, Metric |
 

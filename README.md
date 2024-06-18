@@ -55,6 +55,10 @@ AI technology is advancing at lightning speed, with new algorithms and AI librar
 
 | Title                 | Description           | Keywords              |
 |-----------------------|-----------------------|-----------------------|
+| [SFT: Model Architecture Tweaks](deep_learning/training/sft_model_arch_tweaks.md) | This article discusses various tweaks and adjustments to model architecture for optimizing performance in supervised fine-tuning. | Model Architecture, SFT |
+| [SFT: Training Strategy](deep_learning/training/sft_train_strategy.md)       | This article provides insights into effective training strategies for supervised fine-tuning, including tips and best practices. | Training Strategy, SFT |
+| [SFT: Data Handling](deep_learning/training/sft_data_handling.md)            | This article explains the techniques for handling and preparing data for supervised fine-tuning tasks. | Data Handling, SFT   |
+| [SFT: Loss Function](deep_learning/training/sft_loss_function.md)            | This article explores different loss functions used in supervised fine-tuning and their impact on model performance. | Loss Function, SFT   |
 | [Huggingface Transformer Trainer API](deep_learning/training/huggingface_transformer_trainer_finetune.md) | This guide explores how to fine-tune transformer models using the Huggingface Trainer API, covering setup, training, and evaluation processes. | Huggingface, Transformer, Trainer API, SFT |
 | [Huggingface Evaluate API](deep_learning/training/huggingface_evaluate_api.md) | This article introduces the Huggingface Evaluate API, detailing its purpose, setup, and usage for evaluating machine learning models. | Huggingface, Evaluate API, Metric |
 

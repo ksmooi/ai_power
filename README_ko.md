@@ -54,6 +54,10 @@ AI 기술은 빠른 속도로 발전하고 있으며, 새로운 알고리즘과 
 
 | 제목                 | 설명           | 키워드              |
 |-----------------------|-----------------------|-----------------------|
+| [SFT: 모델 아키텍처 조정](deep_learning/training/sft_model_arch_tweaks.md) | 이 기사에서는 감독 학습의 성능을 최적화하기 위한 다양한 모델 아키텍처 조정에 대해 논의합니다.           |
+| [SFT: 훈련 전략](deep_learning/training/sft_train_strategy.md)       | 이 기사에서는 감독 학습을 위한 효과적인 훈련 전략에 대한 통찰력을 제공하며, 팁과 모범 사례를 포함합니다.         |
+| [SFT: 데이터 처리](deep_learning/training/sft_data_handling.md)        | 이 기사에서는 감독 학습을 위한 데이터 처리 및 준비 기술을 설명합니다.          |
+| [SFT: 손실 함수](deep_learning/training/sft_loss_function.md)        | 이 기사에서는 감독 학습에서 사용되는 다양한 손실 함수와 모델 성능에 미치는 영향을 탐구합니다.           |
 | [Huggingface Transformer Trainer API](deep_learning/training/huggingface_transformer_trainer_finetune.md) | Huggingface Trainer API를 사용하여 트랜스포머 모델을 파인튜닝하는 방법을 탐구하는 가이드로, 설정, 훈련 및 평가 과정을 다룹니다. | Huggingface, Transformer, Trainer API, SFT |
 | [Huggingface Evaluate API](deep_learning/training/huggingface_evaluate_api.md) | Huggingface Evaluate API를 소개하는 이 기사에서는 목적, 설정 및 기계 학습 모델 평가를 위한 사용법을 설명합니다. | Huggingface, Evaluate API, Metric |
 
