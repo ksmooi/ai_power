@@ -7,7 +7,7 @@
 ### Training Language Models with RLHF
 The process of training a language model using reinforcement learning with human feedback (RLHF) involves three key steps. 
 
-<img src="res/rlhf_ppo_overview.jpg" alt="RLHF PPO" width="800">
+<img src="res/rlhf_ppo_overview.jpg" alt="RLHF PPO" width="1000">
 
 **Step 1: Collect Demonstration Data and Train a Supervised Policy**:
 1. **Prompt Sampling**: A prompt is selected from a dataset.

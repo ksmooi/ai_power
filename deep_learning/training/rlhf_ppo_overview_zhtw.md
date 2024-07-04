@@ -7,7 +7,7 @@
 ### 使用 RLHF 訓練語言模型
 使用強化學習與人類反饋（RLHF）訓練語言模型的過程包含三個主要步驟。
 
-<img src="res/rlhf_ppo_overview.jpg" alt="RLHF PPO" width="800">
+<img src="res/rlhf_ppo_overview.jpg" alt="RLHF PPO" width="1000">
 
 **步驟 1：收集示範數據並訓練監督策略**：
 1. **提示抽樣**：從數據集中選擇一個提示。
