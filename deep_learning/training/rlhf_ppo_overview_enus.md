@@ -1,3 +1,5 @@
+[ English ] [ [繁體中文](rlhf_ppo_overview_zhtw.md) ]
+
 # RLHF with PPO Explained
 
 ## Introduction to PPO
@@ -53,7 +55,7 @@ Proximal Policy Optimization involves several key models that work together to o
 
 ## The PPO Training Process
 
-<img src="res/rlhf_ppo_process.jpg" alt="RLHF PPO" width="1000">
+<img src="res/rlhf_ppo_process.jpg" alt="RLHF PPO Process" width="1000">
 
 ### Input Data
 The training process begins with input data, which in this context is textual data used to train the language model. This data forms the basis for the model's learning, allowing it to understand and generate human-like text.
