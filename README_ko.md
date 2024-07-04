@@ -60,6 +60,7 @@ AI 기술은 빠른 속도로 발전하고 있으며, 새로운 알고리즘과 
 | [SFT: 손실 함수](deep_learning/training/sft_loss_function.md)        | 이 기사에서는 감독 학습에서 사용되는 다양한 손실 함수와 모델 성능에 미치는 영향을 탐구합니다.           |
 | [Huggingface Transformer Trainer API](deep_learning/training/huggingface_transformer_trainer_finetune.md) | Huggingface Trainer API를 사용하여 트랜스포머 모델을 파인튜닝하는 방법을 탐구하는 가이드로, 설정, 훈련 및 평가 과정을 다룹니다. | Huggingface, Transformer, Trainer API, SFT |
 | [Huggingface Evaluate API](deep_learning/training/huggingface_evaluate_api.md) | Huggingface Evaluate API를 소개하는 이 기사에서는 목적, 설정 및 기계 학습 모델 평가를 위한 사용법을 설명합니다. | Huggingface, Evaluate API, Metric |
+| [RLHF 및 PPO 개요](deep_learning/training/rlhf_ppo_overview_enus.md) | 언어 모델을 훈련하기 위해 근접 정책 최적화를 사용하여 인간 피드백이 포함된 강화 학습 (RLHF) 의 개요입니다. | RLHF, PPO, Language Models |
 
 
 ## 우리의 목표

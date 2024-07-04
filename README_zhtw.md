@@ -60,6 +60,7 @@ AI 技術正以驚人的速度進步，各種新演算法和 AI 庫不斷湧現�
 | [SFT: 損失函數](deep_learning/training/sft_loss_function.md)        | 本文探討了用於監督微調的不同損失函數及其對模型性能的影響。           |
 | [Huggingface Transformer 訓練 API](deep_learning/training/huggingface_transformer_trainer_finetune.md) | 本指南探討了如何使用 Huggingface Trainer API 微調 Transformer 模型，涵蓋設置、訓練及評估過程。 | Huggingface, Transformer, Trainer API, SFT |
 | [Huggingface 評估 API](deep_learning/training/huggingface_evaluate_api.md) | 本文介紹了 Huggingface Evaluate API，詳細描述其用途、設置及用於評估機器學習模型的方法。 | Huggingface, Evaluate API, Metric |
+| [RLHF 與 PPO 概述](deep_learning/training/rlhf_ppo_overview_enus.md) | 使用近端策略優化 (PPO) 進行人類反饋強化學習 (RLHF) 訓練語言模型的概述。                          | RLHF, PPO, Language Models |
 
 
 ## 我們的目標

@@ -61,6 +61,7 @@ AI technology is advancing at lightning speed, with new algorithms and AI librar
 | [SFT: Loss Function](deep_learning/training/sft_loss_function.md)            | This article explores different loss functions used in supervised fine-tuning and their impact on model performance. | Loss Function, SFT   |
 | [Huggingface Transformer Trainer API](deep_learning/training/huggingface_transformer_trainer_finetune.md) | This guide explores how to fine-tune transformer models using the Huggingface Trainer API, covering setup, training, and evaluation processes. | Huggingface, Transformer, Trainer API, SFT |
 | [Huggingface Evaluate API](deep_learning/training/huggingface_evaluate_api.md) | This article introduces the Huggingface Evaluate API, detailing its purpose, setup, and usage for evaluating machine learning models. | Huggingface, Evaluate API, Metric |
+| [RLHF with PPO Overview](deep_learning/training/rlhf_ppo_overview_enus.md)| An overview of Reinforcement Learning with Human Feedback (RLHF) using Proximal Policy Optimization (PPO) to train language models. | RLHF, PPO, Language Models |
 
 
 ## Our Goals

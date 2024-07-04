@@ -60,6 +60,7 @@ La tecnología AI avanza a una velocidad vertiginosa, con nuevos algoritmos y bi
 | [Función de Pérdida SFT](deep_learning/training/sft_loss_function.md)     | Este artículo explora diferentes funciones de pérdida utilizadas en el ajuste fino supervisado y su impacto en el rendimiento del modelo.           |
 | [Huggingface Transformer Trainer API](deep_learning/training/huggingface_transformer_trainer_finetune.md) | Esta guía explora cómo afinar modelos de transformers utilizando la API de Huggingface Trainer, cubriendo la configuración, el entrenamiento y los procesos de evaluación. | Huggingface, Transformer, Trainer API, SFT |
 | [Huggingface Evaluate API](deep_learning/training/huggingface_evaluate_api.md) | Este artículo introduce la API de Huggingface Evaluate, detallando su propósito, configuración y uso para evaluar modelos de aprendizaje automático. | Huggingface, Evaluate API, Metric |
+| [Resumen de RLHF con PPO](deep_learning/training/rlhf_ppo_overview_enus.md) | Una descripción general del Aprendizaje por Refuerzo con Retroalimentación Humana (RLHF) utilizando la Optimización Proximal de Políticas (PPO) para entrenar modelos de lenguaje. | RLHF, PPO, Language Models |
 
 
 ## Nuestros Objetivos

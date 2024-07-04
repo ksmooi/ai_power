@@ -60,6 +60,7 @@ AI テクノロジーは驚異的な速さで進化しており、新しいア�
 | [SFT: 損失関数](deep_learning/training/sft_loss_function.md)        | この記事では、教師付きファインチューニングで使用されるさまざまな損失関数とそれがモデルのパフォーマンスに与える影響について探ります。           |
 | [Huggingface Transformer Trainer API](deep_learning/training/huggingface_transformer_trainer_finetune.md) | Huggingface Trainer APIを使用してトランスフォーマーモデルを微調整する方法についてのガイド。セットアップ、トレーニング、および評価プロセスをカバー。 | Huggingface, Transformer, Trainer API, SFT |
 | [Huggingface Evaluate API](deep_learning/training/huggingface_evaluate_api.md) | Huggingface Evaluate APIの紹介。目的、セットアップ、および機械学習モデルの評価のための使用法について解説。 | Huggingface, Evaluate API, Metric |
+| [RLHF と PPO の概要](deep_learning/training/rlhf_ppo_overview_enus.md) | 人間のフィードバックを使用した強化学習 (RLHF) の概要を示し、言語モデルをトレーニングするための近接政策最適化 (PPO) を使用します。 | RLHF, PPO, Language Models |
 
 
 ## 私たちの目標
