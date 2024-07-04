@@ -7,17 +7,17 @@ The process of training a language model using reinforcement learning with human
 
 <img src="res/rlhf_ppo_overview.jpg" alt="RLHF PPO" width="800">
 
-### Step 1: Collect Demonstration Data and Train a Supervised Policy
+**Step 1: Collect Demonstration Data and Train a Supervised Policy**:
 1. **Prompt Sampling**: A prompt is selected from a dataset.
 2. **Demonstration**: A labeler demonstrates the desired output behavior for the prompt.
 3. **Supervised Fine-Tuning (SFT)**: This demonstrated data is used to fine-tune the GPT-3.5 model using supervised learning.
 
-### Step 2: Collect Comparison Data and Train a Reward Model
+**Step 2: Collect Comparison Data and Train a Reward Model**:
 1. **Output Sampling**: A prompt and several model outputs are sampled.
 2. **Ranking Outputs**: A labeler ranks the outputs from best to worst.
 3. **Training Reward Model (RM)**: The ranking data is used to train the reward model.
 
-### Step 3: Optimize a Policy Against the Reward Model Using PPO
+**Step 3: Optimize a Policy Against the Reward Model Using PPO**:
 1. **Prompt Sampling**: A new prompt is selected from the dataset.
 2. **Initialize PPO Model**: The PPO model is initialized from the supervised policy.
 3. **Generate Output**: The policy model generates an output.
@@ -30,22 +30,22 @@ Proximal Policy Optimization (PPO) is an advanced reinforcement learning algorit
 ### Key Components in PPO Training
 Proximal Policy Optimization involves several key models that work together to optimize the policy effectively:
 
-#### Policy Model (Trained LM)
+**Policy Model (Trained LM)**:
 - **Purpose**: Generates actions or decisions based on the current policy.
 - **Effect**: Determines the actions to be taken by the agent in given states.
 - **Features**: This is the primary model being optimized in PPO. It generates the probability distribution over possible actions given the current state.
 
-#### Reference Model (Frozen LM)
+**Reference Model (Frozen LM)**:
 - **Purpose**: Serves as a benchmark to evaluate the improvements of the current policy.
 - **Effect**: Helps calculate the Kullback-Leibler (KL) divergence, ensuring the new policy does not deviate excessively from the old policy.
 - **Features**: Typically a frozen copy of the policy model, used to compare and constrain the updates to the trained policy model, maintaining stability and preventing drastic changes.
 
-#### Reward Model
+**Reward Model**:
 - **Purpose**: Generates reward signals based on human feedback.
 - **Effect**: Translates human preferences into quantifiable rewards, guiding the learning process.
 - **Features**: Often pre-trained to generate immediate rewards based on the quality of actions or outputs produced by the policy model. This model ensures that the actions taken are aligned with desired outcomes.
 
-#### Value Function Model
+**Value Function Model**:
 - **Purpose**: Estimates the value of each state.
 - **Effect**: Assists in evaluating the long-term return of actions, aiding in computing the advantage function.
 - **Features**: Helps the policy model make better decisions by providing value estimates. This model is critical for reducing variance in policy gradient estimates, making training more stable and efficient.
