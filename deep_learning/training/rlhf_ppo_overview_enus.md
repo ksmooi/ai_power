@@ -122,15 +122,22 @@ The reward model evaluates the predicted word based on how well it fits the cont
 ### KL Divergence Loss
 KL Divergence Loss measures the difference between the probability distributions of the trained model and the frozen model. It helps ensure the new predictions are not drastically different from the previous ones. For our example, suppose the KL divergence is calculated as 0.05.
 
+
 ### Reward Calculation
-The final reward combines the reward model output and the KL divergence loss. Suppose we use a coefficient \( \beta = 0.1 \):
-\[ \text{Final Reward} = R - \beta \times \text{KL} \]
+The final reward combines the reward model output and the KL divergence loss. Suppose we use a coefficient \(\beta = 0.1\):
+```
+Final Reward = R - β × KL
+```
 
 For the word "mat":
-\[ \text{Final Reward} = 0.9 - 0.1 \times 0.05 = 0.9 - 0.005 = 0.895 \]
+```
+Final Reward = 0.9 - 0.1 × 0.05 = 0.9 - 0.005 = 0.895
+```
 
 For the word "chair":
-\[ \text{Final Reward} = 0.6 - 0.1 \times 0.05 = 0.6 - 0.005 = 0.595 \]
+```
+Final Reward = 0.6 - 0.1 × 0.05 = 0.6 - 0.005 = 0.595
+```
 
 ### RL Update (PPO)
 Using the final reward, the PPO update module adjusts the weights of the trained language model. This step ensures the policy model learns to favor more relevant words while maintaining stability.
