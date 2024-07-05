@@ -61,6 +61,7 @@ AI テクノロジーは驚異的な速さで進化しており、新しいア�
 | [Huggingface Transformer Trainer API](deep_learning/training/huggingface_transformer_trainer_finetune.md) | Huggingface Trainer APIを使用してトランスフォーマーモデルを微調整する方法についてのガイド。セットアップ、トレーニング、および評価プロセスをカバー。 | Huggingface, Transformer, Trainer API, SFT |
 | [Huggingface Evaluate API](deep_learning/training/huggingface_evaluate_api.md) | Huggingface Evaluate APIの紹介。目的、セットアップ、および機械学習モデルの評価のための使用法について解説。 | Huggingface, Evaluate API, Metric |
 | [RLHF と PPO の概要](deep_learning/training/rlhf_ppo_overview_enus.md) | 人間のフィードバックを使用した強化学習 (RLHF) の概要を示し、言語モデルをトレーニングするための近接政策最適化 (PPO) を使用します。 | RLHF, PPO, Language Models |
+| [Understanding DPO and ORPO](deep_learning/training/rlhf_dpo_orpo_overview.md) | この記事では、Direct Preference Optimization (DPO) と Odds Ratio Preference Optimization (ORPO) について、それらの方法論、損失関数、および人間の好みに合わせて言語モデルを微調整する際の実際の応用を詳しく説明します。 | RLHF, DPO, ORPO |
 
 
 ## 私たちの目標

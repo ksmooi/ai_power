@@ -61,6 +61,7 @@ La tecnología AI avanza a una velocidad vertiginosa, con nuevos algoritmos y bi
 | [Huggingface Transformer Trainer API](deep_learning/training/huggingface_transformer_trainer_finetune.md) | Esta guía explora cómo afinar modelos de transformers utilizando la API de Huggingface Trainer, cubriendo la configuración, el entrenamiento y los procesos de evaluación. | Huggingface, Transformer, Trainer API, SFT |
 | [Huggingface Evaluate API](deep_learning/training/huggingface_evaluate_api.md) | Este artículo introduce la API de Huggingface Evaluate, detallando su propósito, configuración y uso para evaluar modelos de aprendizaje automático. | Huggingface, Evaluate API, Metric |
 | [Resumen de RLHF con PPO](deep_learning/training/rlhf_ppo_overview_enus.md) | Una descripción general del Aprendizaje por Refuerzo con Retroalimentación Humana (RLHF) utilizando la Optimización Proximal de Políticas (PPO) para entrenar modelos de lenguaje. | RLHF, PPO, Language Models |
+| [Understanding DPO and ORPO](deep_learning/training/rlhf_dpo_orpo_overview.md) | Este artículo explora la Optimización de Preferencias Directas (DPO) y la Optimización de Preferencias por Cociente de Probabilidades (ORPO), detallando sus metodologías, funciones de pérdida y aplicaciones prácticas en el ajuste fino de modelos de lenguaje para alinearlos con las preferencias humanas. | RLHF, DPO, ORPO |
 
 
 ## Nuestros Objetivos
