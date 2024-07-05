@@ -74,7 +74,39 @@ DPO (Direct Preference Optimization) requires a reference model, whereas ORPO (O
 3. **Simplicity and Efficiency**:
    - Without the need to maintain and update a reference model, ORPO can be simpler to implement and computationally more efficient. The training process directly adapts based on the model’s outputs and the relative preferences derived from them.
 
---
+
+## Integrating ORPO Directly into SFT
+By integrating preference optimization directly into the SFT process, ORPO eliminates the need for a separate reference model, simplifying the overall training pipeline and making it more efficient and straightforward. Imagine we are training a language model to generate helpful responses to customer queries. We have a dataset where each query is paired with two responses: one preferred (chosen) and one less preferred (rejected).
+
+### Traditional Approach (DPO)
+1. **Training Setup**: In DPO, you need a reference model that provides a stable reward signal. The training process involves calculating the log probabilities of both chosen and rejected responses using the reference model.
+2. **Reward Calculation**: The reward is computed based on the difference in log probabilities between the chosen and rejected responses.
+3. **Optimization**: The model is then optimized using these computed rewards to improve its alignment with human preferences.
+
+### Simplified Approach (ORPO)
+1. **Training Setup**: In ORPO, there's no need for a reference model. The process involves using the current model's predictions to directly optimize the odds ratio of chosen versus rejected responses.
+2. **Log Probability Calculation**: For each query-response pair, compute the log probabilities of both chosen and rejected responses using the current model.
+3. **Odds Ratio Calculation**: Calculate the odds ratio, which involves comparing the log probabilities of chosen responses to those of rejected responses.
+4. **Loss Integration**: Integrate this odds ratio directly into the SFT loss function. This means the model's training objective is modified to not only minimize the standard negative log-likelihood loss but also to maximize the odds ratio of preferred responses.
+
+### Example in Action (ORPO + SFT)
+Let's say we have the following query and responses:
+- **Query**: "How can I reset my password?"
+- **Chosen Response**: "You can reset your password by clicking on the 'Forgot Password' link on the login page."
+- **Rejected Response**: "Just try to remember it, it's the best way."
+
+**ORPO Training Steps**
+
+1. **Compute Log Probabilities**:
+   - Chosen Response: Log probability = -2.0
+   - Rejected Response: Log probability = -4.0
+2. **Calculate Odds Ratio**:
+   - Log Odds Ratio = -2.0 (chosen) - (-4.0) (rejected) = 2.0
+   - This positive value indicates a preference for the chosen response.
+3. **Integrate into Loss Function**:
+   - The loss function is adjusted to incorporate this log odds ratio, ensuring that the model is directly encouraged to generate responses with higher odds ratios for preferred responses.
+4. **Model Update**:
+   - The model parameters are updated in such a way that future predictions will ideally have higher log probabilities for preferred responses.
 
 
 ## Conclusion
