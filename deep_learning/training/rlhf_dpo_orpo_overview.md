@@ -44,10 +44,38 @@ The loss function of Odds Ratio Preference Optimization (ORPO) combines supervis
 <img src="res/orpo_loss_function_example1.jpg" width="700">
 
 ## Reference Model in DPO
-- why DPO needs reference model but ORPO does not
-DPO relies on a reference model to provide a baseline for comparing the outputs of the fine-tuned model. The reference model helps in evaluating the preferred and disfavored responses, guiding the training process to enhance the likelihood of generating preferred completions while reducing the likelihood of undesired ones. This dependency on a reference model ensures that the training is aligned with human preferences as captured by the reference model.
+DPO (Direct Preference Optimization) requires a reference model, whereas ORPO (Odds Ratio Preference Optimization) does not. This distinction arises from their different methods of constructing and utilizing reward signals during training.
 
-On the other hand, ORPO does not require a reference model. Instead, it focuses on maximizing the odds ratio between the likelihood of generating preferred and disfavored responses. By using the log odds ratio wrapped in a log sigmoid function, ORPO effectively adjusts the model to favor preferred completions without the need for a separate reference model, streamlining the training process.
+- **DPO** uses a reference model to generate a stable, comparative reward signal. This helps in measuring relative improvements and ensures training stability. The reference model defines the reward function based on the difference in log probabilities between chosen and rejected samples.
+- **ORPO** bypasses the need for a reference model by directly optimizing the odds ratio of preferred to disfavored responses using the current model's predictions. This approach simplifies the training process by focusing on maximizing relative preferences directly through the model’s output.
+
+### Why DPO requires a reference model:
+
+1. **Reference-Based Reward Calculation**:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="res/dpo_reference_mode_explain.jpg" width="700">
+
+2. **Relative Improvement**:
+   - The reference model helps in capturing the relative improvement of the current model over a baseline. Without a reference, it would be challenging to discern if a model’s performance is genuinely improving or if it is just assigning higher probabilities indiscriminately.
+
+3. **Stability in Training**:
+   - The reference model introduces stability by mitigating the risk of the current model deviating too far from a known good state. This controlled deviation helps in maintaining a balance between learning new preferences and retaining previously learned information.
+
+### Why ORPO does not require a reference model:
+
+1. **Direct Odds Ratio Maximization**:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="res/orpo_reference_mode_explain.jpg" width="700">
+
+2. **Self-Contained Training Signal**:
+   - ORPO relies on the current model’s own predictions to generate the training signal. The relative comparison between preferred and disfavored responses is sufficient to guide the model’s learning process.
+   - By focusing on the odds ratio, ORPO inherently emphasizes the relative preference without needing an external benchmark.
+
+3. **Simplicity and Efficiency**:
+   - Without the need to maintain and update a reference model, ORPO can be simpler to implement and computationally more efficient. The training process directly adapts based on the model’s outputs and the relative preferences derived from them.
+
+--
+
 
 ## Conclusion
 DPO and ORPO represent significant advancements in the fine-tuning of language models, each with its unique approach to optimizing performance. DPO utilizes a reference model to guide the training process, ensuring alignment with human preferences through a structured comparison of outputs. ORPO simplifies the process by eliminating the need for a reference model, instead focusing on maximizing the odds ratio between preferred and disfavored responses. Understanding the nuances of these techniques and their respective loss functions can help practitioners select the most appropriate method for their specific fine-tuning tasks, ultimately enhancing the performance and alignment of language models with human preferences.
