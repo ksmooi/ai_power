@@ -339,6 +339,76 @@ print(output_tensor.shape)                        # Output: torch.Size([5, 10])
 ```
 
 
+## Freezing Batch Normalization Layers While Training
+
+Freezing Batch Normalization (BN) layers can be useful during fine-tuning to prevent the statistics of pre-trained BN layers from being updated, which might degrade the performance. This is useful because the pre-trained BN layers' statistics are well-tuned to the original training data. Updating these statistics on a new, smaller dataset can degrade performance by making the model less stable. Freezing BN layers helps maintain the benefits of pre-training, ensuring consistent normalization and better transfer learning performance.
+
+**Main Benefits:**
+1. **Maintaining Stable Performance**:
+    - **Preservation of Pre-trained Statistics**: Freezing BN layers ensures that the running statistics (mean and variance) collected during the pre-training phase are preserved. These statistics are well-tuned to the original training data and contribute to the model's stability.
+    - **Avoiding Degradation**: When fine-tuning on a new, typically smaller dataset, updating these BN statistics can lead to instability and degrade the model's performance. Freezing BN layers prevents this degradation, maintaining the benefits of the pre-trained model.
+2. **Improved Transfer Learning**:
+    - **Consistent Normalization**: By keeping the BN statistics unchanged, the model can consistently normalize the inputs, leading to better performance on the new task. This consistency helps in transferring the learned features more effectively.
+    - **Enhanced Generalization**: Preserving the pre-trained statistics helps the model generalize better to new data, as the normalization process remains aligned with the broader, original dataset.
+3. **Reduced Risk of Overfitting**:
+    - **Stability in Smaller Datasets**: Fine-tuning on smaller datasets can lead to overfitting, especially if BN layers start updating their statistics based on limited data. Freezing BN layers reduces this risk, as the normalization process remains governed by the robust statistics from the larger pre-training dataset.
+    - **Focus on Fine-Tuning**: Freezing BN layers allows the model to focus on fine-tuning the weights of other layers without the added variability from changing normalization parameters, leading to a more stable and controlled fine-tuning process.
+4. **Simplified Training Process**:
+    - **Less Computational Overhead**: Freezing BN layers simplifies the training process by reducing the number of parameters that need to be updated. This can lead to faster convergence and reduced computational overhead during fine-tuning.
+    - **Ease of Implementation**: Implementing BN layer freezing is straightforward and can be easily integrated into existing training pipelines, providing a quick and effective way to enhance model performance during fine-tuning.
+
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torchvision import models
+from torch.utils.data import DataLoader, TensorDataset
+
+# Function to freeze batch normalization layers
+def set_bn_eval(m):
+    """
+    Sets batch normalization layers to evaluation mode to freeze their statistics.
+
+    Args:
+        m (torch.nn.Module): A module in the neural network.
+    """
+    if isinstance(m, nn.BatchNorm2d):
+        m.eval()
+
+
+# Instantiate the model
+num_classes = 10
+model = SimpleCNN(num_classes=num_classes).cuda()
+
+# Apply the freeze function to batch normalization layers
+model.apply(set_bn_eval)
+
+# Define the optimizer with AdamW
+optimizer = optim.AdamW(model.parameters(), lr=0.01)
+
+# Generate random data for demonstration purposes
+input_data = torch.randn(100, 3, 224, 224)          # 100 samples of 3x224x224 images
+target_data = torch.randint(0, num_classes, (100,)) # 100 labels in range 0-9
+
+# Create a DataLoader with batch size of 5
+dataset = TensorDataset(input_data, target_data)
+dataloader = DataLoader(dataset, batch_size=5, shuffle=True)
+
+# Example training step
+for data, target in dataloader:
+    optimizer.zero_grad()                         # Clear gradients
+    output = model(data)                          # Forward pass
+    loss = nn.CrossEntropyLoss()(output, target)  # Compute loss
+    loss.backward()                               # Backward pass
+    optimizer.step()                              # Update parameters
+
+# Example input tensor for a forward pass
+input_tensor = torch.randn(5, 3, 224, 224).cuda() # Batch of 5 images, each 3x224x224, on GPU
+output_tensor = model(input_tensor)
+print(output_tensor.shape)                        # Output: torch.Size([5, 10])
+```
+
+
 ## Utilizing Mixed Precision Training
 
 Mixed precision training involves using both 16-bit and 32-bit floating-point types, which can significantly speed up training and reduce memory usage. This approach significantly speeds up training and reduces memory usage without sacrificing model accuracy. By performing computations in 16-bit precision and maintaining important variables in 32-bit precision, it leverages the faster processing capabilities of modern GPUs while ensuring numerical stability and precision in critical operations.
@@ -420,75 +490,6 @@ for epoch in range(epochs):
 input_tensor = torch.randn(5, 3, 224, 224).cuda()  # Batch of 5 images, each 3x224x224, on GPU
 output_tensor = model(input_tensor)
 print(output_tensor.shape)                         # Output: torch.Size([5, 10])
-```
-
-## Freezing Batch Normalization Layers While Training
-
-Freezing Batch Normalization (BN) layers can be useful during fine-tuning to prevent the statistics of pre-trained BN layers from being updated, which might degrade the performance. This is useful because the pre-trained BN layers' statistics are well-tuned to the original training data. Updating these statistics on a new, smaller dataset can degrade performance by making the model less stable. Freezing BN layers helps maintain the benefits of pre-training, ensuring consistent normalization and better transfer learning performance.
-
-**Main Benefits:**
-1. **Maintaining Stable Performance**:
-    - **Preservation of Pre-trained Statistics**: Freezing BN layers ensures that the running statistics (mean and variance) collected during the pre-training phase are preserved. These statistics are well-tuned to the original training data and contribute to the model's stability.
-    - **Avoiding Degradation**: When fine-tuning on a new, typically smaller dataset, updating these BN statistics can lead to instability and degrade the model's performance. Freezing BN layers prevents this degradation, maintaining the benefits of the pre-trained model.
-2. **Improved Transfer Learning**:
-    - **Consistent Normalization**: By keeping the BN statistics unchanged, the model can consistently normalize the inputs, leading to better performance on the new task. This consistency helps in transferring the learned features more effectively.
-    - **Enhanced Generalization**: Preserving the pre-trained statistics helps the model generalize better to new data, as the normalization process remains aligned with the broader, original dataset.
-3. **Reduced Risk of Overfitting**:
-    - **Stability in Smaller Datasets**: Fine-tuning on smaller datasets can lead to overfitting, especially if BN layers start updating their statistics based on limited data. Freezing BN layers reduces this risk, as the normalization process remains governed by the robust statistics from the larger pre-training dataset.
-    - **Focus on Fine-Tuning**: Freezing BN layers allows the model to focus on fine-tuning the weights of other layers without the added variability from changing normalization parameters, leading to a more stable and controlled fine-tuning process.
-4. **Simplified Training Process**:
-    - **Less Computational Overhead**: Freezing BN layers simplifies the training process by reducing the number of parameters that need to be updated. This can lead to faster convergence and reduced computational overhead during fine-tuning.
-    - **Ease of Implementation**: Implementing BN layer freezing is straightforward and can be easily integrated into existing training pipelines, providing a quick and effective way to enhance model performance during fine-tuning.
-
-```python
-import torch
-import torch.nn as nn
-import torch.optim as optim
-from torchvision import models
-from torch.utils.data import DataLoader, TensorDataset
-
-# Function to freeze batch normalization layers
-def set_bn_eval(m):
-    """
-    Sets batch normalization layers to evaluation mode to freeze their statistics.
-
-    Args:
-        m (torch.nn.Module): A module in the neural network.
-    """
-    if isinstance(m, nn.BatchNorm2d):
-        m.eval()
-
-
-# Instantiate the model
-num_classes = 10
-model = SimpleCNN(num_classes=num_classes).cuda()
-
-# Apply the freeze function to batch normalization layers
-model.apply(set_bn_eval)
-
-# Define the optimizer with AdamW
-optimizer = optim.AdamW(model.parameters(), lr=0.01)
-
-# Generate random data for demonstration purposes
-input_data = torch.randn(100, 3, 224, 224)          # 100 samples of 3x224x224 images
-target_data = torch.randint(0, num_classes, (100,)) # 100 labels in range 0-9
-
-# Create a DataLoader with batch size of 5
-dataset = TensorDataset(input_data, target_data)
-dataloader = DataLoader(dataset, batch_size=5, shuffle=True)
-
-# Example training step
-for data, target in dataloader:
-    optimizer.zero_grad()                         # Clear gradients
-    output = model(data)                          # Forward pass
-    loss = nn.CrossEntropyLoss()(output, target)  # Compute loss
-    loss.backward()                               # Backward pass
-    optimizer.step()                              # Update parameters
-
-# Example input tensor for a forward pass
-input_tensor = torch.randn(5, 3, 224, 224).cuda() # Batch of 5 images, each 3x224x224, on GPU
-output_tensor = model(input_tensor)
-print(output_tensor.shape)                        # Output: torch.Size([5, 10])
 ```
 
 
