@@ -151,6 +151,84 @@ output_tensor = model(input_tensor)
 print(output_tensor.shape)  # Output: torch.Size([5, 10])
 ```
 
+
+## Progressive Layer Unfreezing
+
+Progressive layer unfreezing is a training technique used to fine-tune pre-trained neural network models. Initially, most or all layers of the model are frozen, meaning their weights are not updated during training. Only a subset of layers, typically the final layers, are unfrozen and trained. As training progresses, additional layers are gradually unfrozen, allowing their weights to be updated. This approach helps in stabilizing the training process, preventing large updates to the earlier layers' weights, which could disrupt the pre-trained features. It allows the model to learn new tasks while preserving the useful features learned during pre-training. This technique is particularly effective when fine-tuning large models on new datasets with limited data.
+
+**Main Benefits:**
+1. **Stabilized Training Process**:
+    - **Controlled Updates**: By initially freezing most layers and only gradually unfreezing them, progressive layer unfreezing ensures that the model does not undergo large, disruptive updates. This controlled approach helps maintain the stability of the pre-trained features.
+    - **Smooth Transition**: The gradual unfreezing allows the model to smoothly transition from leveraging pre-trained features to adapting to the new task. This helps in avoiding sudden shifts in the learned representations that could destabilize training.
+2. **Preservation of Pre-trained Features**:
+    - **Retaining Useful Features**: Initially freezing the earlier layers ensures that the useful features learned during pre-training are preserved. These features often capture generic patterns that are beneficial across various tasks.
+    - **Focused Fine-Tuning**: By focusing the initial training on the final layers, the model can quickly adapt to the new task without losing the valuable features captured in the earlier layers.
+3. **Enhanced Model Performance**:
+    - **Optimized Adaptation**: The progressive unfreezing allows the model to adapt more effectively to the new task by fine-tuning each layer in a controlled manner. This often leads to better overall performance compared to fine-tuning all layers simultaneously.
+    - **Layer-wise Learning**: Each layer can be fine-tuned with the appropriate learning rate and training duration, ensuring that the adaptation process is optimized for each part of the network.
+4. **Reduced Risk of Overfitting**:
+    - **Gradual Learning**: The gradual approach reduces the risk of overfitting to the new dataset, as it prevents the model from making drastic changes too quickly. This is especially important when dealing with small or noisy datasets.
+    - **Conservation of Pre-trained Knowledge**: By preserving the pre-trained knowledge in the earlier layers, the model maintains a strong foundation, reducing the likelihood of overfitting to the specific characteristics of the new data.
+
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torchvision import models
+from torch.utils.data import DataLoader, TensorDataset
+
+# Function to progressively unfreeze layers
+def unfreeze_layers(model, layers):
+    """
+    Unfreezes specified layers of the model by setting their parameters to require gradients.
+
+    Args:
+        model (nn.Module): The neural network model.
+        layers (list): List of layers to unfreeze.
+    """
+    for layer in layers:
+        for param in layer.parameters():
+            param.requires_grad = True
+
+
+# Instantiate the model
+num_classes = 10
+model = SimpleCNN(num_classes=num_classes).cuda()
+
+# Initially freeze all layers
+for param in model.parameters():
+    param.requires_grad = False
+	
+# Unfreeze specific layers progressively
+# Unfreeze the last residual block and fully connected layer
+unfreeze_layers(model, [model.model.layer4, model.model.fc])
+
+# Define the optimizer with unfrozen layers
+optimizer = optim.AdamW(filter(lambda p: p.requires_grad, model.parameters()), lr=0.01)
+
+# Generate random data for demonstration purposes
+input_data = torch.randn(100, 3, 224, 224)           # 100 samples of 3x224x224 images
+target_data = torch.randint(0, num_classes, (100,))  # 100 labels in range 0-9
+
+# Create a DataLoader with batch size of 5
+dataset = TensorDataset(input_data, target_data)
+dataloader = DataLoader(dataset, batch_size=5, shuffle=True)
+
+# Example training step
+for data, target in dataloader:
+    optimizer.zero_grad()                         # Clear gradients
+    output = model(data)                          # Forward pass
+    loss = nn.CrossEntropyLoss()(output, target)  # Compute loss
+    loss.backward()                               # Backward pass
+    optimizer.step()                              # Update parameters
+
+# Example input tensor for a forward pass
+input_tensor = torch.randn(5, 3, 224, 224).cuda() # Batch of 5 images, each 3x224x224, on GPU
+output_tensor = model(input_tensor)
+print(output_tensor.shape)                        # Output: torch.Size([5, 10])
+```
+
+
 ## Utilizing Mixed Precision Training
 
 Mixed precision training involves using both 16-bit and 32-bit floating-point types, which can significantly speed up training and reduce memory usage. This approach significantly speeds up training and reduces memory usage without sacrificing model accuracy. By performing computations in 16-bit precision and maintaining important variables in 32-bit precision, it leverages the faster processing capabilities of modern GPUs while ensuring numerical stability and precision in critical operations.
@@ -284,82 +362,6 @@ optimizer = optim.AdamW(model.parameters(), lr=0.01)
 # Generate random data for demonstration purposes
 input_data = torch.randn(100, 3, 224, 224)          # 100 samples of 3x224x224 images
 target_data = torch.randint(0, num_classes, (100,)) # 100 labels in range 0-9
-
-# Create a DataLoader with batch size of 5
-dataset = TensorDataset(input_data, target_data)
-dataloader = DataLoader(dataset, batch_size=5, shuffle=True)
-
-# Example training step
-for data, target in dataloader:
-    optimizer.zero_grad()                         # Clear gradients
-    output = model(data)                          # Forward pass
-    loss = nn.CrossEntropyLoss()(output, target)  # Compute loss
-    loss.backward()                               # Backward pass
-    optimizer.step()                              # Update parameters
-
-# Example input tensor for a forward pass
-input_tensor = torch.randn(5, 3, 224, 224).cuda() # Batch of 5 images, each 3x224x224, on GPU
-output_tensor = model(input_tensor)
-print(output_tensor.shape)                        # Output: torch.Size([5, 10])
-```
-
-## Progressive Layer Unfreezing
-
-Progressive layer unfreezing is a training technique used to fine-tune pre-trained neural network models. Initially, most or all layers of the model are frozen, meaning their weights are not updated during training. Only a subset of layers, typically the final layers, are unfrozen and trained. As training progresses, additional layers are gradually unfrozen, allowing their weights to be updated. This approach helps in stabilizing the training process, preventing large updates to the earlier layers' weights, which could disrupt the pre-trained features. It allows the model to learn new tasks while preserving the useful features learned during pre-training. This technique is particularly effective when fine-tuning large models on new datasets with limited data.
-
-**Main Benefits:**
-1. **Stabilized Training Process**:
-    - **Controlled Updates**: By initially freezing most layers and only gradually unfreezing them, progressive layer unfreezing ensures that the model does not undergo large, disruptive updates. This controlled approach helps maintain the stability of the pre-trained features.
-    - **Smooth Transition**: The gradual unfreezing allows the model to smoothly transition from leveraging pre-trained features to adapting to the new task. This helps in avoiding sudden shifts in the learned representations that could destabilize training.
-2. **Preservation of Pre-trained Features**:
-    - **Retaining Useful Features**: Initially freezing the earlier layers ensures that the useful features learned during pre-training are preserved. These features often capture generic patterns that are beneficial across various tasks.
-    - **Focused Fine-Tuning**: By focusing the initial training on the final layers, the model can quickly adapt to the new task without losing the valuable features captured in the earlier layers.
-3. **Enhanced Model Performance**:
-    - **Optimized Adaptation**: The progressive unfreezing allows the model to adapt more effectively to the new task by fine-tuning each layer in a controlled manner. This often leads to better overall performance compared to fine-tuning all layers simultaneously.
-    - **Layer-wise Learning**: Each layer can be fine-tuned with the appropriate learning rate and training duration, ensuring that the adaptation process is optimized for each part of the network.
-4. **Reduced Risk of Overfitting**:
-    - **Gradual Learning**: The gradual approach reduces the risk of overfitting to the new dataset, as it prevents the model from making drastic changes too quickly. This is especially important when dealing with small or noisy datasets.
-    - **Conservation of Pre-trained Knowledge**: By preserving the pre-trained knowledge in the earlier layers, the model maintains a strong foundation, reducing the likelihood of overfitting to the specific characteristics of the new data.
-
-```python
-import torch
-import torch.nn as nn
-import torch.optim as optim
-from torchvision import models
-from torch.utils.data import DataLoader, TensorDataset
-
-# Function to progressively unfreeze layers
-def unfreeze_layers(model, layers):
-    """
-    Unfreezes specified layers of the model by setting their parameters to require gradients.
-
-    Args:
-        model (nn.Module): The neural network model.
-        layers (list): List of layers to unfreeze.
-    """
-    for layer in layers:
-        for param in layer.parameters():
-            param.requires_grad = True
-
-
-# Instantiate the model
-num_classes = 10
-model = SimpleCNN(num_classes=num_classes).cuda()
-
-# Initially freeze all layers
-for param in model.parameters():
-    param.requires_grad = False
-	
-# Unfreeze specific layers progressively
-# Unfreeze the last residual block and fully connected layer
-unfreeze_layers(model, [model.model.layer4, model.model.fc])
-
-# Define the optimizer with unfrozen layers
-optimizer = optim.AdamW(filter(lambda p: p.requires_grad, model.parameters()), lr=0.01)
-
-# Generate random data for demonstration purposes
-input_data = torch.randn(100, 3, 224, 224)           # 100 samples of 3x224x224 images
-target_data = torch.randint(0, num_classes, (100,))  # 100 labels in range 0-9
 
 # Create a DataLoader with batch size of 5
 dataset = TensorDataset(input_data, target_data)
