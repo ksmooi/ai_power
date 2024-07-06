@@ -100,8 +100,6 @@ print(output_tensor.shape)  # Output: torch.Size([5, 10])
 ## Learning Rate Decay Adjustment with ExponentialLR
 The ExponentialLR scheduler is best suited for scenarios where a smooth and continuous decay of the learning rate is desired throughout the entire training process. A continuous decay can help the model converge more steadily, avoiding abrupt changes that could destabilize the training. This is particularly useful in training large, complex models where small, consistent adjustments to the learning rate are beneficial.
 
-### Example
-
 ```python
 import torch
 import torch.nn as nn
@@ -154,8 +152,6 @@ In this example:
 
 ## Stepwise Learning Rate Adjustment with MultiStepLR
 The MultiStepLR scheduler is ideal for scenarios where you expect to hit certain key milestones during training and want to reduce the learning rate abruptly at those points. Abrupt changes in the learning rate can help the model jump out of local minima and converge more effectively, especially after significant phases of training. This is useful when certain epochs are known to mark a shift in the training dynamics.
-
-### Example
 
 ```python
 import torch
