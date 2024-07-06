@@ -59,6 +59,9 @@ class SimpleCNN(nn.Module):
 num_classes = 10
 model = SimpleCNN(num_classes=num_classes).cuda()
 
+# Create cross entropy loss function
+loss_fn = nn.CrossEntropyLoss()
+
 # Define layer-wise learning rates
 layer_learning_rates = [
     {'params': model.layer1.parameters(), 'lr': 0.001},
@@ -80,18 +83,129 @@ dataset = TensorDataset(input_data, target_data)
 dataloader = DataLoader(dataset, batch_size=5, shuffle=True)
 
 # Example training step with batch size of 5
-for data, target in dataloader:
-    optimizer.zero_grad()
-    output = model(data)
-    loss = nn.CrossEntropyLoss()(output, target)
-    loss.backward()
-    optimizer.step()
+for data, target in dataloader:      # Iterate over batches of data and target from the dataloader
+    optimizer.zero_grad()            # Zero the parameter gradients to prepare for the next backward pass
+    output = model(data)             # Forward pass: compute model output for the current batch of data
+    loss = loss_fn(output, target)   # Compute loss (Cross Entropy Loss) between model output and target labels
+    loss.backward()                  # Backward pass: compute the gradients of the loss with respect to model parameters
+    optimizer.step()                 # Update model parameters using the computed gradients
 
 # Example input tensor for a forward pass
 input_tensor = torch.randn(5, 3, 224, 224)  # Batch of 5 images, each 3x224x224
 output_tensor = model(input_tensor)
 print(output_tensor.shape)  # Output: torch.Size([5, 10])
 ```
+
+
+## Learning Rate Decay Adjustment with ExponentialLR
+The ExponentialLR scheduler is best suited for scenarios where a smooth and continuous decay of the learning rate is desired throughout the entire training process. A continuous decay can help the model converge more steadily, avoiding abrupt changes that could destabilize the training. This is particularly useful in training large, complex models where small, consistent adjustments to the learning rate are beneficial.
+
+### Example
+
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.optim.lr_scheduler import ExponentialLR
+
+# Instantiate the model
+num_classes = 10
+model = SimpleCNN(num_classes=num_classes).cuda()
+
+# Create MSE loss function
+loss_fn = nn.MSELoss()
+
+# Define an optimizer (Stochastic Gradient Descent) with an initial learning rate
+optimizer = optim.SGD(model.parameters(), lr=0.1)
+
+# Define the ExponentialLR scheduler with gamma=0.9
+# This means the learning rate will be multiplied by 0.9 every epoch
+scheduler = ExponentialLR(optimizer, gamma=0.9)
+
+# Training loop
+for epoch in range(10):
+    # Dummy input and target for illustration purposes
+    inputs = torch.randn(5, 10)
+    targets = torch.randn(5, 1)
+    
+    optimizer.zero_grad()               # Zero the parameter gradients
+    outputs = model(inputs)             # Forward pass
+    loss = loss_fn(outputs, targets)    # Compute loss (mean squared error)
+    loss.backward()                     # Computes the gradients of the loss with respect to each parameter in the model
+    optimizer.step()                    # Uses these gradients to update the parameters according to the optimization algorithm
+    scheduler.step()                    # Step the scheduler to update the learning rate
+    
+    # Print the learning rate for each epoch
+    print(f"Epoch {epoch+1}: learning rate is {scheduler.get_last_lr()[0]}")
+```
+
+In this example:
+1. A simple neural network model with a single fully connected layer is defined.
+2. An `SGD` optimizer is instantiated with an initial learning rate of 0.1.
+3. The `ExponentialLR` scheduler is defined with a `gamma` value of 0.9, meaning the learning rate will be reduced by 10% every epoch.
+4. The training loop runs for 10 epochs. In each epoch:
+   - Dummy inputs and targets are created for illustration.
+   - The model's gradients are zeroed.
+   - A forward pass is performed, and the loss is computed.
+   - A backward pass is performed, and the optimizer updates the model parameters.
+   - The scheduler updates the learning rate.
+   - The current learning rate is printed.
+
+
+## Stepwise Learning Rate Adjustment with MultiStepLR
+The MultiStepLR scheduler is ideal for scenarios where you expect to hit certain key milestones during training and want to reduce the learning rate abruptly at those points. Abrupt changes in the learning rate can help the model jump out of local minima and converge more effectively, especially after significant phases of training. This is useful when certain epochs are known to mark a shift in the training dynamics.
+
+### Example
+
+```python
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.optim.lr_scheduler import MultiStepLR
+
+# Instantiate the model
+num_classes = 10
+model = SimpleCNN(num_classes=num_classes).cuda()
+
+# Create MSE loss function
+loss_fn = nn.MSELoss()
+
+# Define an optimizer (Stochastic Gradient Descent) with an initial learning rate
+optimizer = optim.SGD(model.parameters(), lr=0.1)
+
+# Define the MultiStepLR scheduler with milestones and gamma
+# Milestones are [30, 60, 90], meaning the learning rate will be adjusted at these epochs
+# Gamma is 0.1, meaning the learning rate will be multiplied by 0.1 at each milestone
+scheduler = MultiStepLR(optimizer, milestones=[3, 6, 9], gamma=0.1)
+
+# Training loop
+for epoch in range(10):
+    # Dummy input and target for illustration purposes
+    inputs = torch.randn(5, 10)
+    targets = torch.randn(5, 1)
+    
+    optimizer.zero_grad()               # Zero the parameter gradients
+    outputs = model(inputs)             # Forward pass
+    loss = loss_fn(outputs, targets)    # Compute loss (mean squared error)
+    loss.backward()                     # Computes the gradients of the loss with respect to each parameter in the model
+    optimizer.step()                    # Uses these gradients to update the parameters according to the optimization algorithm
+    scheduler.step()                    # Step the scheduler to update the learning rate if the current epoch is a milestone
+    
+    # Print the learning rate for each epoch
+    print(f"Epoch {epoch+1}: learning rate is {scheduler.get_last_lr()[0]}")
+```
+
+In this example:
+1. A simple neural network model with a single fully connected layer is defined.
+2. An `SGD` optimizer is instantiated with an initial learning rate of 0.1.
+3. The `MultiStepLR` scheduler is defined with milestones `[3, 6, 9]` and a `gamma` value of 0.1. This means the learning rate will be reduced by 90% at epochs 3, 6, and 9.
+4. The training loop runs for 10 epochs. In each epoch:
+   - Dummy inputs and targets are created for illustration.
+   - The model's gradients are zeroed.
+   - A forward pass is performed, and the loss is computed.
+   - A backward pass is performed, and the optimizer updates the model parameters.
+   - The scheduler updates the learning rate if the current epoch is one of the milestones.
+   - The current learning rate is printed.
 
 
 ## Implementing Cyclical Learning Rates
