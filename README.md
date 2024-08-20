@@ -64,6 +64,12 @@ AI technology is advancing at lightning speed, with new algorithms and AI librar
 | [RLHF with PPO Overview](deep_learning/training/rlhf_ppo_overview_enus.md)| An overview of Reinforcement Learning with Human Feedback (RLHF) using Proximal Policy Optimization (PPO) to train language models. | RLHF, PPO, Language Models |
 | [Understanding DPO and ORPO](deep_learning/training/rlhf_dpo_orpo_overview.md) | This article explores Direct Preference Optimization (DPO) and Odds Ratio Preference Optimization (ORPO), detailing their methodologies, loss functions, and practical applications in fine-tuning language models to align with human preferences. | RLHF, DPO, ORPO |
 
+### Model Serving and Inference
+
+| Title                 | Description           | Keywords              |
+|-----------------------|-----------------------|-----------------------|
+| [ONNX Model Optimization Techniques](deep_learning/inference/onnx_export_examples.md) | This article explores various techniques to optimize ONNX models for faster inference, including quantization, pruning, and hardware-specific optimizations. | ONNX, Optimization, Quantization, Pruning |
+
 
 ## Our Goals
 
