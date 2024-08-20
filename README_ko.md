@@ -63,6 +63,12 @@ AI 기술은 빠른 속도로 발전하고 있으며, 새로운 알고리즘과 
 | [RLHF 및 PPO 개요](deep_learning/training/rlhf_ppo_overview_enus.md) | 언어 모델을 훈련하기 위해 근접 정책 최적화를 사용하여 인간 피드백이 포함된 강화 학습 (RLHF) 의 개요입니다. | RLHF, PPO, Language Models |
 | [Understanding DPO and ORPO](deep_learning/training/rlhf_dpo_orpo_overview.md) | 이 기사는 Direct Preference Optimization (DPO) 및 Odds Ratio Preference Optimization (ORPO)을 탐구하고, 언어 모델을 인간의 선호도에 맞추기 위한 미세 조정의 방법론, 손실 함수 및 실제 적용에 대해 자세히 설명합니다. | RLHF, DPO, ORPO |
 
+### Model Serving and Inference
+
+| Title                 | Description           | Keywords              |
+|-----------------------|-----------------------|-----------------------|
+| [ONNX Model Optimization Techniques](deep_learning/inference/onnx_export_examples.md) | 이 기사에서는 ONNX 모델의 추론 속도를 높이기 위한 다양한 최적화 기술을 탐구하며, 양자화, 가지치기 및 하드웨어 특정 최적화 등을 다룹니다. | ONNX, Optimization, Quantization, Pruning |
+
 
 ## 우리의 목표
 
