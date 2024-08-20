@@ -63,6 +63,12 @@ AI 技术正以惊人的速度进步，各种新算法和 AI 库不断涌现和�
 | [RLHF 与 PPO 概述](deep_learning/training/rlhf_ppo_overview_enus.md) | 使用近端策略优化 (PPO) 进行人类反馈强化学习 (RLHF) 训练语言模型的概述。                          | RLHF, PPO, Language Models |
 | [Understanding DPO and ORPO](deep_learning/training/rlhf_dpo_orpo_overview.md) | 本文探讨了直接偏好优化（DPO）和赔率比偏好优化（ORPO），详细介绍了它们的方法、损失函数以及在微调语言模型以符合人类偏好中的实际应用。 | RLHF, DPO, ORPO |
 
+### Model Serving and Inference
+
+| Title                 | Description           | Keywords              |
+|-----------------------|-----------------------|-----------------------|
+| [ONNX Model Optimization Techniques](deep_learning/inference/onnx_export_examples.md) | 本文探讨了各种优化ONNX模型的技术，以加快推理速度，包括量化、剪枝和硬件特定优化。 | ONNX, Optimization, Quantization, Pruning |
+
 
 ## 我们的目标
 
