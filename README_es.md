@@ -68,6 +68,7 @@ La tecnología AI avanza a una velocidad vertiginosa, con nuevos algoritmos y bi
 | Title                 | Description           | Keywords              |
 |-----------------------|-----------------------|-----------------------|
 | [ONNX Model Optimization Techniques](deep_learning/inference/onnx_export_examples.md) | Este artículo explora varias técnicas para optimizar modelos ONNX para una inferencia más rápida, incluyendo cuantización, poda y optimizaciones específicas de hardware. | ONNX, Optimization, Quantization, Pruning |
+| [Entendiendo y Usando trtexec con TensorRT](deep_learning/inference/trtexec_with_examples.md) | Este artículo proporciona una guía detallada sobre cómo usar la herramienta `trtexec` en TensorRT, cubriendo sus diversas opciones y proporcionando ejemplos prácticos. | TensorRT, trtexec     |
 
 
 ## Nuestros Objetivos
