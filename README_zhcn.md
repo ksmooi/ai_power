@@ -68,6 +68,7 @@ AI 技术正以惊人的速度进步，各种新算法和 AI 库不断涌现和�
 | Title                 | Description           | Keywords              |
 |-----------------------|-----------------------|-----------------------|
 | [ONNX Model Optimization Techniques](deep_learning/inference/onnx_export_examples.md) | 本文探讨了各种优化ONNX模型的技术，以加快推理速度，包括量化、剪枝和硬件特定优化。 | ONNX, Optimization, Quantization, Pruning |
+| [理解并使用 TensorRT 的 trtexec](deep_learning/inference/trtexec_with_examples.md) | 本文提供了关于如何使用 TensorRT 中的 `trtexec` 工具的深入指南，涵盖了它的各种选项并提供了实用示例。 | TensorRT, trtexec     |
 
 
 ## 我们的目标
