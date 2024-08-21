@@ -68,6 +68,7 @@ AI テクノロジーは驚異的な速さで進化しており、新しいア�
 | Title                 | Description           | Keywords              |
 |-----------------------|-----------------------|-----------------------|
 | [ONNX Model Optimization Techniques](deep_learning/inference/onnx_export_examples.md) | この記事では、推論を高速化するためのONNXモデルのさまざまな最適化手法について説明します。量子化、剪定、ハードウェア固有の最適化などが含まれます。 | ONNX, Optimization, Quantization, Pruning |
+| [TensorRTでのtrtexecの理解と使用](deep_learning/inference/trtexec_with_examples.md) | この記事では、TensorRT の `trtexec` ツールを使用する方法について、さまざまなオプションをカバーし、実用的な例を提供する詳細なガイドを提供します。 | TensorRT, trtexec     |
 
 
 ## 私たちの目標
