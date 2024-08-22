@@ -70,7 +70,7 @@ AI technology is advancing at lightning speed, with new algorithms and AI librar
 |-----------------------|-----------------------|-----------------------|
 | [ONNX Model Optimization Techniques](deep_learning/inference/onnx_export_examples.md) | This article explores various techniques to optimize ONNX models for faster inference, including quantization, pruning, and hardware-specific optimizations. | ONNX, Optimization, Quantization, Pruning |
 | [Understanding and Using trtexec with TensorRT](deep_learning/inference/trtexec_with_examples.md) | This article provides an in-depth guide on how to use the `trtexec` tool in TensorRT, covering its various options and providing practical examples. | TensorRT, trtexec     |
-
+| [Introduction to TensorRT Capabilities](deep_learning/inference/tensorrt_capabilities.md)  | This article explains the key capabilities of TensorRT, NVIDIA's high-performance deep learning inference library, with detailed C++ examples.       | TensorRT, Capabilities|
 
 ## Our Goals
 
