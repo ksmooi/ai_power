@@ -70,6 +70,7 @@ AI 技术正以惊人的速度进步，各种新算法和 AI 库不断涌现和�
 | [ONNX Model Optimization Techniques](deep_learning/inference/onnx_export_examples.md) | 本文探讨了各种优化ONNX模型的技术，以加快推理速度，包括量化、剪枝和硬件特定优化。 | ONNX, Optimization, Quantization, Pruning |
 | [理解并使用 TensorRT 的 trtexec](deep_learning/inference/trtexec_with_examples.md) | 本文提供了关于如何使用 TensorRT 中的 `trtexec` 工具的深入指南，涵盖了它的各种选项并提供了实用示例。 | TensorRT, trtexec     |
 | [TensorRT 关键功能介绍](deep_learning/inference/tensorrt_capabilities.md)  | 本文介绍了 TensorRT 的关键功能，NVIDIA 的高性能深度学习推理库，并附有详细的 C++ 示例。                                                         | TensorRT, Capabilities|
+| [理解TensorRT的内部工作机制](deep_learning/inference/tensorrt_working_details.md)  | 本文深入解释了TensorRT的操作原理，包括对象生命周期、错误处理、内存管理、线程管理和确定性，辅以C++示例进行说明。 | TensorRT, Object Lifetimes, Error Handling |
 
 
 ## 我们的目标
