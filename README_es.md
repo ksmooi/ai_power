@@ -70,6 +70,7 @@ La tecnología AI avanza a una velocidad vertiginosa, con nuevos algoritmos y bi
 | [ONNX Model Optimization Techniques](deep_learning/inference/onnx_export_examples.md) | Este artículo explora varias técnicas para optimizar modelos ONNX para una inferencia más rápida, incluyendo cuantización, poda y optimizaciones específicas de hardware. | ONNX, Optimization, Quantization, Pruning |
 | [Entendiendo y Usando trtexec con TensorRT](deep_learning/inference/trtexec_with_examples.md) | Este artículo proporciona una guía detallada sobre cómo usar la herramienta `trtexec` en TensorRT, cubriendo sus diversas opciones y proporcionando ejemplos prácticos. | TensorRT, trtexec     |
 | [Introducción a las capacidades de TensorRT](deep_learning/inference/tensorrt_capabilities.md)  | Este artículo explica las capacidades clave de TensorRT, la biblioteca de inferencia de aprendizaje profundo de alto rendimiento de NVIDIA, con ejemplos detallados en C++. | TensorRT, Capabilities|
+| [Comprensión del Funcionamiento Interno de TensorRT](deep_learning/inference/tensorrt_working_details.md)  | Este artículo ofrece una explicación detallada de cómo funciona TensorRT, incluyendo detalles sobre la duración de los objetos, el manejo de errores, la gestión de la memoria, el threading y el determinismo, ilustrado con ejemplos en C++. | TensorRT, Object Lifetimes, Error Handling |
 
 
 ## Nuestros Objetivos
