@@ -72,6 +72,7 @@ AI technology is advancing at lightning speed, with new algorithms and AI librar
 | [Understanding and Using trtexec with TensorRT](deep_learning/inference/trtexec_with_examples.md) | This article provides an in-depth guide on how to use the `trtexec` tool in TensorRT, covering its various options and providing practical examples. | TensorRT, trtexec     |
 | [Introduction to TensorRT Capabilities](deep_learning/inference/tensorrt_capabilities.md)  | This article explains the key capabilities of TensorRT, NVIDIA's high-performance deep learning inference library, with detailed C++ examples.       | TensorRT, Capabilities|
 | [Understanding the Inner Workings of TensorRT](deep_learning/inference/tensorrt_working_details.md)  | This article provides an in-depth explanation of how TensorRT operates, including details on object lifetimes, error handling, memory management, threading, and determinism, illustrated with C++ examples. | TensorRT, Object Lifetimes, Error Handling |
+| [NvMultiObjectTracker Part 1: Introduction and Core Concepts](deep_learning/inference/deepstream_nvmultiobjecttracker_part1.md) | This article introduces the key concepts, architecture, and workflow of NvMultiObjectTracker, a library for multi-object tracking in NVIDIA's DeepStream SDK. | NvMultiObjectTracker, DeepStream, Multi-Object Tracking |
 
 
 ## Our Goals
