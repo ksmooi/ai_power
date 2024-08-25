@@ -5,7 +5,7 @@
 ### 1.1 Overview of Multi-Object Tracking
 Multi-object tracking (MOT) is a crucial aspect of computer vision that involves detecting and tracking multiple objects over time within a video stream. This technique is widely used in various applications such as video surveillance, autonomous driving, robotics, and human-computer interaction. The goal of MOT is to maintain consistent identities for each detected object across frames, ensuring accurate tracking despite challenges such as occlusions, abrupt movements, and changes in the object's appearance.
 
-![](res/gst_nvtracker_plugin.jpg)
+<img src="res/tracker_gst_nvtracker_plugin.jpg" width="800">
 
 ### 1.2 Importance of Tracking in Computer Vision Applications
 Tracking plays an essential role in enhancing the understanding of dynamic scenes by providing temporal consistency to object detection. It enables applications to go beyond detecting objects in a single frame, allowing for the analysis of movement patterns, behaviors, and interactions over time. For instance:
@@ -29,7 +29,7 @@ The content is divided into two main parts:
 
 ## 2. Unified Tracker Architecture for Composable Multi-Object Tracker
 
-![](res/unified_tracker_arch.jpg)
+<img src="res/tracker_unified_tracker_arch.jpg" width="900">
 
 ### 2.1 Explanation of Composable Tracker Architecture
 The NvMultiObjectTracker library is built on a unified and modular architecture designed to provide flexibility and scalability for various multi-object tracking scenarios. This architecture allows different tracking algorithms to share common modules while maintaining the flexibility to customize and extend specific functionalities based on the tracking needs.
@@ -162,7 +162,8 @@ The image you provided explains how the `totalScore` for associating a detected 
 
 The formula to calculate the total association score is as follows:
 
-![](res/tracker_total_Association_score.jpg)
+<img src="res/tracker_total_association_score1.jpg" alt="Total Similarity Score" width="800">
+
 
 Where:
 - **IOU (Intersection Over Union)**: A metric that measures the overlap between the bounding boxes of the detected object and the target. A higher IOU indicates that the boxes are closely aligned.
@@ -213,7 +214,8 @@ Based on the `totalScore`:
 
 ## 5. Target Management and Error Handling
 
-![](res/tracker_state_transition_diagram.jpg)
+<img src="res/tracker_state_transition_diagram.jpg" alt="State Transition Diagram" width="1200">
+
 
 The provided diagram and text describe the state transitions and error handling strategies employed by the `NvMultiObjectTracker` library in NVIDIA DeepStream for managing tracked objects (targets). Here's a detailed explanation:
 
