@@ -71,6 +71,7 @@ AI 기술은 빠른 속도로 발전하고 있으며, 새로운 알고리즘과 
 | [TensorRT에서 trtexec 사용 이해하기](deep_learning/inference/trtexec_with_examples.md) | 이 기사에서는 TensorRT의 `trtexec` 도구를 사용하는 방법에 대한 심층 가이드를 제공하며, 다양한 옵션을 다루고 실용적인 예제를 제공합니다. | TensorRT, trtexec     |
 | [TensorRT 기능 소개](deep_learning/inference/tensorrt_capabilities.md) | 이 기사에서는 NVIDIA의 고성능 딥러닝 추론 라이브러리인 TensorRT의 주요 기능을 자세한 C++ 예제와 함께 설명합니다.                                      | TensorRT, Capabilities|
 | [TensorRT의 내부 작동 방식 이해](deep_learning/inference/tensorrt_working_details.md)  | 이 기사에서는 TensorRT의 내부 작동 방식에 대해 객체 수명, 오류 처리, 메모리 관리, 스레딩 및 결정론에 대한 자세한 설명과 함께 C++ 예제를 통해 설명합니다. | TensorRT, Object Lifetimes, Error Handling |
+| [NvMultiObjectTracker Part 1: 소개 및 핵심 개념](deep_learning/inference/deepstream_nvmultiobjecttracker_part1.md) | 이 글에서는 NVIDIA DeepStream SDK에서의 다중 객체 추적을 위한 라이브러리인 NvMultiObjectTracker의 주요 개념, 아키텍처 및 워크플로우를 소개합니다. | NvMultiObjectTracker, DeepStream, Multi-Object Tracking |
 
 
 ## 우리의 목표
