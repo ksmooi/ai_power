@@ -74,6 +74,7 @@ AI technology is advancing at lightning speed, with new algorithms and AI librar
 | [Understanding the Inner Workings of TensorRT](deep_learning/inference/tensorrt_working_details.md)  | This article provides an in-depth explanation of how TensorRT operates, including details on object lifetimes, error handling, memory management, threading, and determinism, illustrated with C++ examples. | TensorRT, Object Lifetimes, Error Handling |
 | [NvMultiObjectTracker Part 1: Introduction and Core Concepts](deep_learning/inference/deepstream_nvmultiobjecttracker_part1.md) | This article introduces the key concepts, architecture, and workflow of NvMultiObjectTracker, a library for multi-object tracking in NVIDIA's DeepStream SDK. | NvMultiObjectTracker, DeepStream, Multi-Object Tracking |
 | [Advanced Features and Applications of NvMultiObjectTracker](deep_learning/inference/deepstream_nvmultiobjecttracker_part2.md) | This article explores advanced features like Re-Identification, Target Re-Association, Bounding-Box Unclipping, and Single-View 3D Tracking in NvMultiObjectTracker. | NvMultiObjectTracker, Re-ID, 3D Tracking |
+| [Advanced Configuration of NvMultiObjectTracker](deep_learning/inference/deepstream_nvmultiobjecttracker_part3.md) | This article discusses the advanced configuration parameters of NvMultiObjectTracker, focusing on how to optimize the tracker for specific use cases.     | DeepStream, NvMultiObjectTracker, Configuration |
 
 
 ## Our Goals
