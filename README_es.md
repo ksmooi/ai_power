@@ -72,6 +72,7 @@ La tecnología AI avanza a una velocidad vertiginosa, con nuevos algoritmos y bi
 | [Introducción a las capacidades de TensorRT](deep_learning/inference/tensorrt_capabilities.md)  | Este artículo explica las capacidades clave de TensorRT, la biblioteca de inferencia de aprendizaje profundo de alto rendimiento de NVIDIA, con ejemplos detallados en C++. | TensorRT, Capabilities|
 | [Comprensión del Funcionamiento Interno de TensorRT](deep_learning/inference/tensorrt_working_details.md)  | Este artículo ofrece una explicación detallada de cómo funciona TensorRT, incluyendo detalles sobre la duración de los objetos, el manejo de errores, la gestión de la memoria, el threading y el determinismo, ilustrado con ejemplos en C++. | TensorRT, Object Lifetimes, Error Handling |
 | [NvMultiObjectTracker Parte 1: Introducción y Conceptos Clave](deep_learning/inference/deepstream_nvmultiobjecttracker_part1.md) | Este artículo introduce los conceptos clave, la arquitectura y el flujo de trabajo de NvMultiObjectTracker, una biblioteca para el seguimiento de múltiples objetos en el SDK DeepStream de NVIDIA. | NvMultiObjectTracker, DeepStream, Multi-Object Tracking |
+| [Funciones Avanzadas y Aplicaciones de NvMultiObjectTracker](deep_learning/inference/deepstream_nvmultiobjecttracker_part2.md) | Este artículo explora características avanzadas como la Re-Identificación, la Reasociación de Objetivos, el Desclippeo de Cajas y el Seguimiento 3D en NvMultiObjectTracker. | NvMultiObjectTracker, Re-ID, 3D Tracking |
 
 
 ## Nuestros Objetivos
