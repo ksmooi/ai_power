@@ -73,6 +73,7 @@ AI テクノロジーは驚異的な速さで進化しており、新しいア�
 | [TensorRTの内部動作の理解](deep_learning/inference/tensorrt_working_details.md)  | この記事では、TensorRTの内部動作について、オブジェクトのライフサイクル、エラーハンドリング、メモリ管理、スレッド管理、決定性などをC++の例を用いて詳しく説明します。 | TensorRT, Object Lifetimes, Error Handling |
 | [NvMultiObjectTracker パート1：概要とコアコンセプト](deep_learning/inference/deepstream_nvmultiobjecttracker_part1.md) | 本記事では、NvMultiObjectTrackerの主要な概念、アーキテクチャ、ワークフローについて説明します。NvMultiObjectTrackerは、NVIDIA DeepStream SDKでのマルチオブジェクトトラッキング用のライブラリです。 | NvMultiObjectTracker, DeepStream, Multi-Object Tracking |
 | [NvMultiObjectTracker の高度な機能と応用](deep_learning/inference/deepstream_nvmultiobjecttracker_part2.md)     | この記事では、NvMultiObjectTracker における Re-ID、ターゲットの再関連付け、バウンディングボックスのアンクリップ、シングルビュー3Dトラッキングなどの高度な機能について探ります。 | NvMultiObjectTracker, Re-ID, 3D Tracking |
+| [NvMultiObjectTrackerの高度な設定](deep_learning/inference/deepstream_nvmultiobjecttracker_part3.md)                         | この記事では、NvMultiObjectTrackerの高度な設定パラメーターについて説明し、特定の使用例に最適化する方法に焦点を当てています。                                    | DeepStream, NvMultiObjectTracker, Configuration |
 
 
 ## 私たちの目標
