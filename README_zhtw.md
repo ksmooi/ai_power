@@ -72,6 +72,7 @@ AI 技術正以驚人的速度進步，各種新演算法和 AI 庫不斷湧現�
 | [TensorRT 關鍵功能介紹](deep_learning/inference/tensorrt_capabilities.md)  | 本文介紹了 TensorRT 的關鍵功能，NVIDIA 的高性能深度學習推理庫，並附有詳細的 C++ 示例。                                                           | TensorRT, Capabilities|
 | [理解TensorRT的內部工作機制](deep_learning/inference/tensorrt_working_details.md)  | 本文深入解釋了TensorRT的操作原理，包括對象生命周期、錯誤處理、內存管理、線程管理和確定性，輔以C++示例進行說明。 | TensorRT, Object Lifetimes, Error Handling |
 | [NvMultiObjectTracker 第1部分：簡介與核心概念](deep_learning/inference/deepstream_nvmultiobjecttracker_part1.md) | 本文介紹了 NvMultiObjectTracker 的關鍵概念、架構及工作流程，這是一款用於 NVIDIA DeepStream SDK 的多目標跟蹤庫。 | NvMultiObjectTracker, DeepStream, Multi-Object Tracking |
+| [NvMultiObjectTracker 的高級功能和應用](deep_learning/inference/deepstream_nvmultiobjecttracker_part2.md)       | 本文探討了 NvMultiObjectTracker 中的高級功能，如重新識別、目標重新關聯、邊界框解鎖和單視圖 3D 跟蹤。                                                                   | NvMultiObjectTracker, Re-ID, 3D Tracking |
 
 
 ## 我們的目標
